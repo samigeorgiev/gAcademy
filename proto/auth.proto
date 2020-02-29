@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package auth;
+
+service Authentication {
+    rpc CreateUser (UserInfo) returns (Credentials);
+}
+
+service Authorization {
+
+}
+
+message UserInfo {
+    string email = 1;
+    string password = 2;
+    string firstName = 3;
+    string lastName = 4;
+    enum Gender {
+        MALE = 0;
+        FEMALE = 1;
+        OTHER = 2;
+    }
+    Gender gender = 5;
+}
+
+message Credentials {
+    string jwt = 1;
+    string userId = 2;
+}
