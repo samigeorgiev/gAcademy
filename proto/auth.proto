@@ -3,7 +3,8 @@ syntax = "proto3";
 package auth;
 
 service Authentication {
-    rpc CreateUser (UserInfo) returns (Credentials);
+    rpc registerStudent (UserInfo) returns (Credentials);
+    rpc registerTeacher (UserInfo) returns (Credentials);
 }
 
 service Authorization {
@@ -25,5 +26,5 @@ message UserInfo {
 
 message Credentials {
     string jwt = 1;
-    string userId = 2;
+    string id = 2;
 }
