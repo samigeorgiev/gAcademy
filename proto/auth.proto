@@ -3,15 +3,16 @@ syntax = "proto3";
 package auth;
 
 service Authentication {
-    rpc registerStudent (UserInfo) returns (Credentials);
-    rpc registerTeacher (UserInfo) returns (Credentials);
+    rpc SignUp (User) returns (JWT);
+    rpc LogIn (Credentials) returns (JWT);
 }
 
+// @param - token
 service Authorization {
-
+    rpc getUserInfo (string) returns (User);
 }
 
-message UserInfo {
+message User {
     string email = 1;
     string password = 2;
     string firstName = 3;
@@ -22,9 +23,20 @@ message UserInfo {
         OTHER = 2;
     }
     Gender gender = 5;
+    enum AccountType {
+        STUDENT = 0;
+        TEACHER = 1;
+    }
+    AccountType accountType = 6;
+}
+
+message JWT {
+    string token = 1;
+    string expDate = 2;
+    string userId = 3;
 }
 
 message Credentials {
-    string jwt = 1;
-    string id = 2;
+    string email = 1;
+    string password = 2;
 }
