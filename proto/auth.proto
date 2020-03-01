@@ -33,7 +33,7 @@ message User {
 
 message JWT {
     string token = 1;
-    string expDate = 2;
+    string expiresIn = 2;
     string userId = 3;
 }
 
