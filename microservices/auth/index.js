@@ -2,6 +2,8 @@ const path = require('path');
 
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
+
+const logger = require('./logger');
 const sequelize = require('./db');
 
 const authenticationService = require('./services/authenticationService');
@@ -28,4 +30,4 @@ if (process.env.NODE_ENV == 'production') {
 
 sequelize.sync()
     .then(_ => server.start())
-    .catch(error => console.log(error));
+    .catch(error => logger.error(error));

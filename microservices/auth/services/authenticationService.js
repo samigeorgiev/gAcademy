@@ -7,15 +7,24 @@ exports.signUp = async (call, callback) => {
     const { email, password, firstName, lastName, accountType, gender } = call.request;
 
     if (!email || !password || !firstName || !lastName || accountType === 'NOT_SET') {
-        console.log(123);
         return callback(grpc.status.INVALID_ARGUMENT, null);
     }
-    if (await User.findOne({ where: { email }})) {
-        return callback(grpc.status.ALREADY_EXISTS, null);
+
+    try {
+        if (await User.findOne({ where: { email }})) {
+            return callback(grpc.status.ALREADY_EXISTS, null);
+        }
+    } catch (error) {
+        return callback(grpc.status.INTERNAL, null);
     }
 
-    const user = 
-        await User.create({ email, password, firstName, lastName, accountType, gender });
+    let user;
+    try {
+        user = await User.create({ email, password, firstName, lastName, accountType, gender });
+    } catch (error) {
+        return callback(grpc.status.INTERNAL, null);
+    }
+    
     const token = jwt.sign(
         { userId: user.id },
         process.env.JWT_SECRET,
