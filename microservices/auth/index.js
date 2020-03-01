@@ -15,5 +15,10 @@ const server = new grpc.Server();
 server.addService(protoDescriptor.auth.Authentication.service, authenticationService);
 server.addService(protoDescriptor.auth.Authorization.service, authorizationService);
 
-server.bind('0.0.0.0:8000', grpc.ServerCredentials.createInsecure());
+const port = process.env.PORT ?? 8000;
+if (process.env.NODE_ENV == 'production') {
+} else {
+    server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
+}
+
 server.start();
