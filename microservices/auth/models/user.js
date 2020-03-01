@@ -22,10 +22,12 @@ User.init({
         allowNull: false
     },
     gender: {
-        type: DataTypes.ENUM('MALE', 'FEMALE', 'OTHER')
+        type: DataTypes.ENUM('NOT_SET', 'MALE', 'FEMALE', 'OTHER')
     },
     accountType: {
         type: DataTypes.ENUM('STUDENT', 'TEACHER'),
         allowNull: false
     }
 }, { sequelize });
+
+module.exports = User;
