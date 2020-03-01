@@ -2,6 +2,7 @@ const path = require('path');
 
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
+const sequelize = require('./db');
 
 const authenticationService = require('./services/authenticationService');
 const authorizationService = require('./services/authorizationService');
@@ -21,4 +22,6 @@ if (process.env.NODE_ENV == 'production') {
     server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 }
 
-server.start();
+sequelize.sync()
+    .then(_ => server.start())
+    .catch(error => console.log(error));
