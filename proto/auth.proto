@@ -17,14 +17,16 @@ message User {
     string firstName = 3;
     string lastName = 4;
     enum Gender {
-        MALE = 0;
-        FEMALE = 1;
-        OTHER = 2;
+        NOT_SET = 0;
+        MALE = 1;
+        FEMALE = 2;
+        OTHER = 3;
     }
     Gender gender = 5;
     enum AccountType {
-        STUDENT = 0;
-        TEACHER = 1;
+        NOT_SET = 0;
+        STUDENT = 1;
+        TEACHER = 2;
     }
     AccountType accountType = 6;
 }
