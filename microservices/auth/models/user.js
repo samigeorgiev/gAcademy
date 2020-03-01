@@ -22,7 +22,8 @@ User.init({
         allowNull: false
     },
     gender: {
-        type: DataTypes.ENUM('NOT_SET', 'MALE', 'FEMALE', 'OTHER')
+        type: DataTypes.ENUM('NOT_SET', 'MALE', 'FEMALE', 'OTHER'),
+        allowNull: false
     },
     accountType: {
         type: DataTypes.ENUM('STUDENT', 'TEACHER'),
