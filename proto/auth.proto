@@ -7,9 +7,8 @@ service Authentication {
     rpc LogIn (Credentials) returns (JWT);
 }
 
-// @param - token
 service Authorization {
-    rpc getUserInfo (string) returns (User);
+    rpc getUserInfo (JWT) returns (User);
 }
 
 message User {
