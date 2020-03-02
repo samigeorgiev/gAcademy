@@ -6,8 +6,8 @@ const protoLoader = require('@grpc/proto-loader');
 const logger = require('./logger');
 const sequelize = require('./db');
 
-const authenticationService = require('./services/authenticationService');
-const authorizationService = require('./services/authorizationService');
+const authenticationService = require('./services/authentication');
+const authorizationService = require('./services/authorization');
 
 const protoDefinition =
     protoLoader.loadSync(path.join(__dirname, process.env.PROTO_PATH), {

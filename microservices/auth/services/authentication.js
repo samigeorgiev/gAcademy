@@ -26,7 +26,7 @@ exports.signUp = async (call, callback) => {
     }
 
     try {
-        if (await User.findOne({ where: { email }})) {
+        if (await User.findOne({ where: { email }, attributes: [] })) {
             return callback(grpc.status.ALREADY_EXISTS, null);
         }
     } catch (error) {
@@ -45,7 +45,7 @@ exports.signUp = async (call, callback) => {
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_VALID_TIME }
     );
-    callback(null, { token, expiresIn: process.env.JWT_VALID_TIME, userId: user.id });
+    callback(null, { token, expiresIn: process.env.JWT_VALID_TIME });
 };
 
 exports.logIn = async (call, callback) => {
@@ -57,7 +57,7 @@ exports.logIn = async (call, callback) => {
 
     let user;
     try {
-        user = await User.findOne({ where: { email }});
+        user = await User.findOne({ where: { email }, attributes: [ 'password' ]});
     } catch (error) {
         return callback(grpc.status.INTERNAL);
     }
@@ -79,5 +79,5 @@ exports.logIn = async (call, callback) => {
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_VALID_TIME }
     );
-    callback(null, { token, expiresIn: process.env.JWT_VALID_TIME, userId: user.id });
+    callback(null, { token, expiresIn: process.env.JWT_VALID_TIME });
 };
