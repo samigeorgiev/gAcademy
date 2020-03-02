@@ -19,21 +19,16 @@ exports.signUp = async (call, callback) => {
     }
 
     email = validator.normalizeEmail(email);
-    try {
-        password = await bcrypt.hash(password, SALT_ROUNDS);
-    } catch (error) {
-        return callback(grpc.status.INTERNAL, null);
+
+    const [hashedPassword, user] = await Promise.all([
+        bcrypt.hash(password, SALT_ROUNDS),
+        User.findOne({ where: { email }, attributes: [ 'accountType' ] })
+    ]);
+    password = hashedPassword;
+    if (user && user.accountType === accountType) {
+        return callback(grpc.status.ALREADY_EXISTS, null);
     }
 
-    try {
-        if (await User.findOne({ where: { email }, attributes: [] })) {
-            return callback(grpc.status.ALREADY_EXISTS, null);
-        }
-    } catch (error) {
-        return callback(grpc.status.INTERNAL, null);
-    }
-
-    let user;
     try {
         user = await User.create({ email, password, firstName, lastName, accountType, gender });
     } catch (error) {
