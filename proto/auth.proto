@@ -3,32 +3,57 @@ syntax = "proto3";
 package auth;
 
 service Authentication {
-    rpc SignUp (User) returns (JWT);
-    rpc LogIn (Credentials) returns (JWT);
+    rpc SignUp (SignUpRequest) returns (SignUpResponse);
+    rpc LogIn (LogInRequest) returns (LogInResponse);
 }
 
 service Authorization {
-    rpc getUserInfo (JWT) returns (User);
+    rpc GetUser (GetUserRequest) returns (GetUserResponse);
+}
+
+message SignUpRequest {
+    User user = 1;
+    string password = 2;
+}
+
+message SignUpResponse {
+    JWT jwt = 1;
+}
+
+message LogInRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LogInResponse {
+    JWT jwt = 1;
+}
+
+message GetUserRequest {
+    string token = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
 }
 
 message User {
     string email = 1;
-    string password = 2;
-    string firstName = 3;
-    string lastName = 4;
+    string firstName = 2;
+    string lastName = 3;
     enum Gender {
         NOT_SET = 0;
         MALE = 1;
         FEMALE = 2;
         OTHER = 3;
     }
-    Gender gender = 5;
+    Gender gender = 4;
     enum AccountType {
         NOT_SET = 0;
         STUDENT = 1;
         TEACHER = 2;
     }
-    AccountType accountType = 6;
+    AccountType accountType = 5;
 }
 
 message JWT {
