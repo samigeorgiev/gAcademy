@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../../models/user');
 
-exports.getUserInfo = async (call, callback) => {
+exports.getUser = async (call, callback) => {
+    const { token } = call.request;
+
     let userId;
     try {
         userId = jwt.verify(token, process.env.JWT_SECRET).userId;
@@ -21,5 +23,5 @@ exports.getUserInfo = async (call, callback) => {
         console.log(error);
     }
 
-    callback(null, user);
+    callback(null, { user });
 };

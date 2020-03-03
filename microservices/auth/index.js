@@ -28,6 +28,6 @@ if (process.env.NODE_ENV === 'production') {
     server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 }
 
-sequelize.sync({ force: true })
+sequelize.sync()
     .then(_ => server.start())
     .catch(error => console.log(error));
