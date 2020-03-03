@@ -1,3 +1,4 @@
+// TODO logging
 const bcrypt = require('bcrypt');
 const grpc = require('grpc');
 const jwt = require('jsonwebtoken');
@@ -14,6 +15,7 @@ exports.signUp = async (call, callback) => {
         hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     } catch (error) {
         console.log(error);
+        return callback(grpc.status.INTERNAL, null);
     }
 
     let user;
@@ -27,6 +29,7 @@ exports.signUp = async (call, callback) => {
         });
     } catch (error) {
         console.log(error);
+        return callback(grpc.status.INTERNAL, null);
     }
 
     const token = jwt.sign(
@@ -49,6 +52,7 @@ exports.logIn = async (call, callback) => {
         });
     } catch (error) {
         console.log(error);
+        return callback(grpc.status.INTERNAL, null);
     }
     if (!user) {
         return callback(grpc.status.NOT_FOUND, null);
@@ -60,6 +64,7 @@ exports.logIn = async (call, callback) => {
         }
     } catch (error) {
         console.log(error);
+        return callback(grpc.status.INTERNAL, null);
     }
 
     const token = jwt.sign(

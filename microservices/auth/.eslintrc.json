@@ -18,5 +18,5 @@
         "indent": ["error", 4],
         "arrow-parens": "off"
     },
-    "ignorePatterns": ["package*", "yarn*"]
+    "ignorePatterns": ["package*", "yarn*", "logs/**"]
 }
