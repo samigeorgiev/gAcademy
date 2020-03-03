@@ -7,7 +7,7 @@ const User = require('../../models/user');
 const SALT_ROUNDS = 10;
 
 exports.signUp = async (call, callback) => {
-    const { user, password } = call.request;
+    const {user, password} = call.request;
 
     let hashedPassword;
     try {
@@ -20,29 +20,29 @@ exports.signUp = async (call, callback) => {
     try {
         createdUser = await User.create({
             ...user,
-            password: hashedPassword
+            password: hashedPassword,
         });
     } catch (error) {
         console.log(error);
     }
 
     const token = jwt.sign(
-        { userId: createdUser.id },
+        {userId: createdUser.id},
         process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_VALID_TIME }
+        {expiresIn: process.env.JWT_VALID_TIME},
     );
 
-    callback(null, { jwt: { token, expiresIn: process.env.JWT_VALID_TIME } });
+    callback(null, {jwt: {token, expiresIn: process.env.JWT_VALID_TIME}});
 };
 
 exports.logIn = async (call, callback) => {
-    const { email, password } = call.request;
+    const {email, password} = call.request;
 
     let user;
     try {
         user = await User.findOne({
-            where: { email },
-            attributes: [ 'id', 'password' ]
+            where: {email},
+            attributes: ['id', 'password'],
         });
     } catch (error) {
         console.log(error);
@@ -60,10 +60,10 @@ exports.logIn = async (call, callback) => {
     }
 
     const token = jwt.sign(
-        { userId: user.id },
+        {userId: user.id},
         process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_VALID_TIME }
+        {expiresIn: process.env.JWT_VALID_TIME},
     );
 
-    callback(null, { jwt: { token, expiresIn: process.env.JWT_VALID_TIME } });
+    callback(null, {jwt: {token, expiresIn: process.env.JWT_VALID_TIME}});
 };
