@@ -1,3 +1,4 @@
+// TODO Add logging
 const path = require('path');
 
 const grpc = require('grpc');
@@ -29,6 +30,7 @@ server.addService(
 
 const port = process.env.PORT || 8000;
 if (process.env.NODE_ENV === 'production') {
+    // TODO create tls
 } else {
     server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 }
