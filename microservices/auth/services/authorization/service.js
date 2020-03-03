@@ -1,15 +1,10 @@
 const grpc = require('grpc');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/user');
+const User = require('../../models/user');
 
 exports.getUserInfo = async (call, callback) => {
-    const { token } = call.request;
-    if (!token) {
-        return callback(grpc.status.INVALID_ARGUMENT, null);
-    }
-
-    let userId
+    let userId;
     try {
         userId = jwt.verify(token, process.env.JWT_SECRET).userId;
     } catch (error) {
@@ -18,9 +13,12 @@ exports.getUserInfo = async (call, callback) => {
 
     let user;
     try {
-        user = await User.findByPk(userId, { attributes: { exclude: 'password' }});
+        user = await User.findByPk(
+            userId,
+            { attributes: { exclude: 'password' } }
+        );
     } catch (error) {
-        return callback(grpc.status.INTERNAL, null);
+        console.log(error);
     }
 
     callback(null, user);

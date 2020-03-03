@@ -9,6 +9,10 @@ const PASSWORD_LENGTH = { min: 8, max: 64 };
 exports.signUp = async (call, callback) => {
     const { user, password } = call.request;
 
+    if (!user) {
+        return callback(grpc.status.INVALID_ARGUMENT, {});
+    }
+
     if (!validator.isEmail(user.email)) {
         return callback(grpc.status.INVALID_ARGUMENT, null);
     }
@@ -38,7 +42,7 @@ exports.signUp = async (call, callback) => {
 };
 
 exports.logIn = (call, callback) => {
-    const { email } = call.request;
+    let { email } = call.request;
     if (!validator.isEmail(email)) {
         return callback(grpc.status.INVALID_ARGUMENT, null);
     }
