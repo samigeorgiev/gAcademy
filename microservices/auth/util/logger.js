@@ -8,7 +8,7 @@ const logger = winston.createLogger({
             level: 'error'
         }),
         new winston.transports.File({
-            filename: `logs/${process.env.NODE_ENV}/combined.log`,
+            filename: `logs/${process.env.NODE_ENV}/all.log`,
         })
     ]
 });

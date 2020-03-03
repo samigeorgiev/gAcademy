@@ -3,8 +3,8 @@ const path = require('path');
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 
-const logger = require('./logger');
-const sequelize = require('./db');
+const logger = require('./util/logger');
+const sequelize = require('./util/db');
 
 const authenticationService = require('./services/authentication');
 const authorizationService = require('./services/authorization');
@@ -23,11 +23,11 @@ server.addService(protoDescriptor.auth.Authentication.service, authenticationSer
 server.addService(protoDescriptor.auth.Authorization.service, authorizationService);
 
 const port = process.env.PORT || 8000;
-if (process.env.NODE_ENV == 'production') {
+if (process.env.NODE_ENV === 'production') {
 } else {
     server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 }
 
 sequelize.sync()
     .then(_ => server.start())
-    .catch(error => logger.error(error));
+    .catch(error => console.log(error));
