@@ -1,34 +1,32 @@
-const { Model, DataTypes } = require('sequelize');
+const Sequelize = require('sequelize');
 
 const sequelize = require('../util/db');
 
-class User extends Model {}
+// eslint-disable-next-line require-jsdoc
+class User extends Sequelize.Model {}
 
 User.init({
     email: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
     },
     password: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false,
     },
     firstName: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
     },
     lastName: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    gender: {
-        type: DataTypes.ENUM('NOT_SET', 'MALE', 'FEMALE', 'OTHER'),
-        allowNull: false
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
     },
     accountType: {
-        type: DataTypes.ENUM('STUDENT', 'TEACHER'),
-        allowNull: false
-    }
-}, { sequelize });
+        // eslint-disable-next-line new-cap
+        type: Sequelize.DataTypes.ENUM('STUDENT', 'TEACHER'),
+        allowNull: false,
+    },
+}, {sequelize});
 
 module.exports = User;
