@@ -8,46 +8,14 @@ service Authentication {
 }
 
 service Authorization {
-    rpc GetUser (GetUserRequest) returns (GetUserResponse);
+    rpc GetUserId (GetUserRequest) returns (GetUserResponse);
 }
 
 message SignUpRequest {
-    User user = 1;
-    string password = 2;
-}
-
-message SignUpResponse {
-    JWT jwt = 1;
-}
-
-message LogInRequest {
     string email = 1;
     string password = 2;
-}
-
-message LogInResponse {
-    JWT jwt = 1;
-}
-
-message GetUserRequest {
-    string token = 1;
-}
-
-message GetUserResponse {
-    User user = 1;
-}
-
-message User {
-    string email = 1;
-    string firstName = 2;
-    string lastName = 3;
-    enum Gender {
-        NOT_SET = 0;
-        MALE = 1;
-        FEMALE = 2;
-        OTHER = 3;
-    }
-    Gender gender = 4;
+    string firstName = 3;
+    string lastName = 4;
     enum AccountType {
         NOT_SET = 0;
         STUDENT = 1;
@@ -56,7 +24,25 @@ message User {
     AccountType accountType = 5;
 }
 
-message JWT {
+message SignUpResponse {
     string token = 1;
     string expiresIn = 2;
+}
+
+message LogInRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LogInResponse {
+    string token = 1;
+    string expiresIn = 2;
+}
+
+message GetUserRequest {
+    string token = 1;
+}
+
+message GetUserResponse {
+    string userId = 1;
 }

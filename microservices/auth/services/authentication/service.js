@@ -7,7 +7,7 @@ const User = require('../../models/user');
 const SALT_ROUNDS = 10;
 
 exports.signUp = async (call, callback) => {
-    const {user, password} = call.request;
+    const {email, password, firstName, lastName, accountType} = call.request;
 
     let hashedPassword;
     try {
@@ -16,10 +16,13 @@ exports.signUp = async (call, callback) => {
         console.log(error);
     }
 
-    let createdUser;
+    let user;
     try {
-        createdUser = await User.create({
-            ...user,
+        user = await User.create({
+            email,
+            firstName,
+            lastName,
+            accountType,
             password: hashedPassword,
         });
     } catch (error) {
@@ -27,12 +30,12 @@ exports.signUp = async (call, callback) => {
     }
 
     const token = jwt.sign(
-        {userId: createdUser.id},
+        {userId: user.id},
         process.env.JWT_SECRET,
         {expiresIn: process.env.JWT_VALID_TIME},
     );
 
-    callback(null, {jwt: {token, expiresIn: process.env.JWT_VALID_TIME}});
+    callback(null, {token, expiresIn: process.env.JWT_VALID_TIME});
 };
 
 exports.logIn = async (call, callback) => {
@@ -65,5 +68,5 @@ exports.logIn = async (call, callback) => {
         {expiresIn: process.env.JWT_VALID_TIME},
     );
 
-    callback(null, {jwt: {token, expiresIn: process.env.JWT_VALID_TIME}});
+    callback(null, {token, expiresIn: process.env.JWT_VALID_TIME});
 };

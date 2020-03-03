@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../../models/user');
 
-exports.getUser = async (call, callback) => {
+exports.getUserId = async (call, callback) => {
     const {token} = call.request;
 
     let userId;
@@ -15,13 +15,10 @@ exports.getUser = async (call, callback) => {
 
     let user;
     try {
-        user = await User.findByPk(
-            userId,
-            {attributes: {exclude: 'password'}},
-        );
+        user = await User.findByPk(userId, {attributes: ['id']});
     } catch (error) {
         console.log(error);
     }
 
-    callback(null, {user});
+    callback(null, {userId: user.id});
 };

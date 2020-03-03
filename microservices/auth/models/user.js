@@ -22,11 +22,6 @@ User.init({
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
     },
-    gender: {
-        // eslint-disable-next-line new-cap
-        type: Sequelize.DataTypes.ENUM('NOT_SET', 'MALE', 'FEMALE', 'OTHER'),
-        allowNull: false,
-    },
     accountType: {
         // eslint-disable-next-line new-cap
         type: Sequelize.DataTypes.ENUM('STUDENT', 'TEACHER'),
