@@ -4,8 +4,9 @@
   "description": "Auth microservice",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development",
-    "start": "node -r dotenv/config index.js dotenv_config_path=.env.production"
+    "start": "node -r dotenv/config index.js dotenv_config_path=.env.production",
+    "dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development --exec 'yarn lint && node'",
+    "lint": "eslint './**'"
   },
   "author": "Samuil Georgiev",
   "license": "MIT",
@@ -22,6 +23,8 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
     "nodemon": "^2.0.2"
   }
 }

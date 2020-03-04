@@ -1,3 +1,0 @@
-exports.getUserInfo = (call, callback) => {
-    
-};
