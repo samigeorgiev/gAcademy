@@ -8,17 +8,17 @@ Course.init({
         type: Sequelize.STRING,
         allowNull: false,
     },
-    category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
     duration: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TIME,
         allowNull: true,
     },
-    teacher: {
-        type: Sequelize.STRING,
-    },
 }, {sequelize});
+
+Course.assosiate = models => {
+    Course.belognsTo(models.Category);
+};
+Course.assosiate = models => {
+    Course.belognsTo(models.Teacher);
+};
 
 module.exports = Course;
