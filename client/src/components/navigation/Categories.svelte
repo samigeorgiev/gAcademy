@@ -1,12 +1,33 @@
 <script>
     export let categories;
+
+    let list;
+    let button;
+
+    const showList = () => {
+        list.style.display = "block";
+        button.style.background = "#eee";
+    };
+    const hideList = () => {
+        list.style.display = "none";
+        button.style.background = "transparent";
+    };
 </script>
 
 <div class="categories">
-    <button>
+    <button
+        bind:this={button}
+        on:mouseover={showList}
+        on:mouseout={hideList}
+    >
         <img src="images/categories.svg" alt="categories">
     </button>
-    <div class="tooltip">
+    <div
+        class="dropdown"
+        bind:this={list}
+        on:mouseover={showList}
+        on:mouseout={hideList}  
+    >
         <ul>
             {#each categories as category}
                 <li>{category}</li>
@@ -29,11 +50,11 @@
         background: transparent;
         border: none;
         border-radius: 4px;
+        box-sizing: border-box;
     }
 
     button:hover {
         cursor: pointer;
-        background: #eee;
     }
 
     button:focus {
@@ -44,21 +65,25 @@
         height: 100%;
     }
 
-    .tooltip {
+    .dropdown {
+        display: none;
         position: absolute;
+        top: 2.75rem;
         height: 20rem;
         width: 15rem;
-        background: #ccc;
+        background: white;
+        box-shadow: -1px 1px 10px 1px rgba(0, 0, 0, .75);
+        border-radius: 2px;
     }
 
-    .tooltip::after {
-        content: " ";
+    .dropdown::after {
+        content: "";
         position: absolute;
         bottom: 100%;
-        left: 50%;
-        border-width: 5px;
+        left: .75rem;
+        border-width: .5rem;
         border-style: solid;
-        border-color: transparent transparent #ccc transparent;
+        border-color: transparent transparent white transparent;
     }
 
     ul {
