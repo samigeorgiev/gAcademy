@@ -9,7 +9,7 @@
 </script>
 
 <div class="search-bar">
-    <input type="text" placeholder="Search for anything" bind:value on:change />
+    <input type="text" placeholder="Find your passion" bind:value on:change />
     <button on:click={submit}>S</button>
 </div>
 
