@@ -21,12 +21,13 @@
         width: 30rem;
         margin: auto 0;
         background: #eee;
+        border: 1px solid transparent;
         border-radius: 3px;
     }
 
     .search-bar:focus-within {
         background: white;
-        border: 1px solid #eee;
+        border-color: #eee;
     }
 
     input {
