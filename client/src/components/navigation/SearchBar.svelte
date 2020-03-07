@@ -1,0 +1,54 @@
+<script>
+    import {createEventDispatcher} from 'svelte';
+
+    export let value;
+
+    const dispatch = createEventDispatcher();
+
+    const submit = () => dispatch('submit', {value});
+</script>
+
+<div class="search-bar">
+    <input type="text" placeholder="Search for anything" bind:value on:change />
+    <button on:click={submit}>S</button>
+</div>
+
+<style>
+    .search-bar {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        width: 30rem;
+        margin: auto 0;
+        background: #eee;
+        border-radius: 3px;
+    }
+
+    .search-bar:focus-within {
+        background: white;
+        border: 1px solid #eee;
+    }
+
+    input {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        padding: .25rem;
+        border: none;
+        background: transparent;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    button {
+        height: 100%;
+        background: transparent;
+        border: none;
+    }
+
+    button:focus {
+        outline: none;
+    }
+</style>
