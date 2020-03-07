@@ -1,11 +1,11 @@
 <script>
 	import Toolbar from '../components/navigation/Toolbar.svelte';
 
-	export let segment;
+	// export let segment;
 </script>
 
 <header>
-	<Toolbar {segment} />
+	<Toolbar />
 </header>
 
 <main>
