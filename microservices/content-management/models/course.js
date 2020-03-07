@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 // eslint-disable-next-line require-jsdoc
-// class User extends Sequelize.Model {}
+class Course extends Sequelize.Model {}
 
 Course.init({
     name: {
@@ -16,8 +16,6 @@ Course.init({
 
 Course.assosiate = models => {
     Course.belognsTo(models.Category);
-};
-Course.assosiate = models => {
     Course.belognsTo(models.Teacher);
 };
 
