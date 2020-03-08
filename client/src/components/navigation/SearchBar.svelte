@@ -6,11 +6,29 @@
     const dispatch = createEventDispatcher();
 
     const submit = () => dispatch('submit', {value});
+
+    let searchIconSrc = 'images/search-red.svg';
+    let button;
+    const buttonOnHover = () => {
+        searchIconSrc = 'images/search-white.svg';
+        button.style.background = '#ef3535';
+    };
+    const buttonOnHoverOut = () => {
+        searchIconSrc = 'images/search-red.svg';
+        button.style.background = 'transparent';
+    };
 </script>
 
 <div class="search-bar">
     <input type="text" placeholder="Find your passion" bind:value on:change />
-    <button on:click={submit}>S</button>
+    <button
+        on:click={submit}
+        on:mouseover={buttonOnHover}
+        on:mouseout={buttonOnHoverOut}
+        bind:this={button}    
+    >
+        <img src={searchIconSrc} alt="search icon">
+    </button>
 </div>
 
 <style>
@@ -45,8 +63,15 @@
 
     button {
         height: 100%;
+        padding: 0;
+        cursor: pointer;
         background: transparent;
         border: none;
+    }
+
+    button img {
+        height: 50%;
+        margin: 0 .75rem;
     }
 
     button:focus {
