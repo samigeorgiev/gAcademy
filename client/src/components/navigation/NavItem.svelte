@@ -1,7 +1,5 @@
-<!-- <script>
+<script>
     import Dropdown from '../UI/Dropdown.svelte';
-
-    export let categories;
 
     let isDropdownShown = false;
     let button;
@@ -16,29 +14,25 @@
     };
 </script>
 
-<div class="categories">
+<div class="nav-item">
     <button
         bind:this={button}
         on:mouseover={showDropdown}
         on:mouseout={hideDropdown}
     >
-        <img src="images/categories.svg" alt="categories">
+        <slot></slot>
     </button>
     <Dropdown
         on:mouseover={showDropdown}
         on:mouseout={hideDropdown}
         isShown={isDropdownShown}
     >
-        <ul>
-            {#each categories as category}
-                <li>{category}</li>
-            {/each}
-        </ul>
+        <slot name="dropdown"></slot>
     </Dropdown>
 </div>
 
 <style>
-    .categories {
+    .nav-item {
         position: relative;
         height: 80%;
         margin-right: .5rem;
@@ -60,42 +54,5 @@
 
     button:focus {
         outline: none;
-    }
-
-    button img {
-        height: 100%;
-    }
-
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-</style> -->
-
-<script>
-    import NavItem from './NavItem.svelte';
-
-    export let categories;
-</script>
-
-<NavItem>
-    <img src="images/categories.svg" alt="categories">
-    <ul slot="dropdown">
-        {#each categories as category}
-            <li>{category}</li>
-        {/each}
-    </ul>
-</NavItem>
-
-<style>
-    img {
-        height: 100%;
-    }
-
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
     }
 </style>
