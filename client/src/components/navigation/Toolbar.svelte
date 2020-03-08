@@ -1,16 +1,8 @@
 <script>
-    import Categories from './Categories.svelte';
-    import Courses from './Courses.svelte';
+    import Categories from './items/Categories.svelte';
+    import Courses from './items/Courses.svelte';
     import Logo from '../UI/Logo.svelte';
-    import SearchBar from './SearchBar.svelte';
-
-    // export let segment;
-
-    const categories = ["Math", "IT"];
-    const courses = ["1st", "2nd"];
-
-    let searchValue;
-    const searchSubmit = event => console.log(event);
+    import SearchBar from './items/SearchBar.svelte';
 </script>
 
 <nav>
@@ -18,13 +10,13 @@
         <a href="/"><Logo /></a>
     </div>
     <div class="navigation-container">
-        <Categories {categories} />
+        <Categories />
         <div class="search-bar-container">
-            <SearchBar bind:value={searchValue} on:submit={searchSubmit} />
+            <SearchBar />
         </div>
     </div>
     <div class="account-container">
-        <Courses {courses} />
+        <Courses />
     </div>
 </nav>
 

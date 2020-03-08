@@ -1,16 +1,16 @@
 <script>
-    import Dropdown from '../UI/Dropdown.svelte';
+    import Dropdown from '../../UI/Dropdown.svelte';
 
     let isDropdownShown = false;
     let button;
 
     const showDropdown = () => {
         isDropdownShown = true;
-        button.style.background = "#eee";
+        button.style.background = '#eee';
     };
     const hideDropdown = () => {
         isDropdownShown = false;
-        button.style.background = "transparent";
+        button.style.background = 'transparent';
     };
 </script>
 

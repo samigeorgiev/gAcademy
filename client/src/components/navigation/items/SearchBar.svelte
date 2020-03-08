@@ -1,11 +1,7 @@
 <script>
-    import {createEventDispatcher} from 'svelte';
-
-    export let value = '';
-
-    const dispatch = createEventDispatcher();
-
-    const submit = () => dispatch('submit', {value});
+    let value = '';
+    const changeHandler = event => console.log(event);
+    const submitHandler = event => console.log(event);
 
     let searchIconSrc = 'images/search-red.svg';
     let button;
@@ -20,9 +16,13 @@
 </script>
 
 <div class="search-bar">
-    <input type="text" placeholder="Find your passion" bind:value on:change />
+    <input
+        type="text"
+        placeholder="Find your passion"
+        bind:value on:change={changeHandler}
+    />
     <button
-        on:click={submit}
+        on:click={submitHandler}
         on:mouseover={buttonOnHover}
         on:mouseout={buttonOnHoverOut}
         bind:this={button}    

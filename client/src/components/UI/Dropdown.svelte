@@ -2,7 +2,7 @@
     export let isShown;
 
     let display;
-    $: display = isShown ? "block" : "none";
+    $: display = isShown ? 'block' : 'none';
 </script>
 
 <div class="dropdown" on:mouseover on:mouseout style="display: {display}">
