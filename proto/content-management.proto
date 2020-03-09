@@ -1,0 +1,29 @@
+syntax = "proto 3";
+
+package auth;
+
+service GetCourse{
+	rpc BrowseCourse(BrowseCourseRequest) returns (BrowseCourseResponse);
+}
+service GetAll{
+	rpc ViewCourses(ViewCoursesRequest) returns (ViewCoursesResponse);
+}
+
+message BrowseCourseRequest{
+	string name = 1;
+	string category = 2;
+	int duration = 3;
+	string tracher = 4;
+}
+
+message BrowseCourseResponse{
+	
+}
+
+message ViewCoursesRequest{
+	
+}
+
+message ViewCoursesResponse{
+	
+}
