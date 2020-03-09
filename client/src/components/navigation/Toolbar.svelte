@@ -26,6 +26,7 @@
 
 <style>
     nav {
+        padding: .5rem;
         height: 3rem;
         max-width: 80rem;
         margin: 0 auto;
@@ -35,7 +36,7 @@
 
     .logo-container {
         align-self: center;
-        height: 60%;
+        height: 80%;
         margin-left: 1rem;
     }
 
