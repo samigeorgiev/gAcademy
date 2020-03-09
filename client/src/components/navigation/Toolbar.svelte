@@ -1,4 +1,5 @@
 <script>
+    import Account from './navigationItems/Account.svelte';
     import Calendar from './navigationItems/Calendar.svelte';
     import Categories from './navigationItems/Categories.svelte';
     import Courses from './navigationItems/Courses.svelte';
@@ -19,15 +20,17 @@
     <div class="account-container">
         <Courses />
         <Calendar />
+        <Account />
     </div>
 </nav>
 
 <style>
     nav {
         height: 3rem;
+        max-width: 80rem;
+        margin: 0 auto;
         display: flex;
         justify-content: space-between;
-        border-bottom: 2px solid #aaa;
     }
 
     .logo-container {

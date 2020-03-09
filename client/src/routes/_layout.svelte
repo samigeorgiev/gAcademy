@@ -11,3 +11,9 @@
 <main>
 	<slot></slot>
 </main>
+
+<style>
+	header {
+        border-bottom: 2px solid #aaa;
+	}
+</style>
