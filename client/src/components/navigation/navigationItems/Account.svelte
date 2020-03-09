@@ -14,7 +14,6 @@
 <style>
     .nav-item-container {
         height: 100%;
-        margin-right: .5rem;
     }
 
     img {
