@@ -1,8 +1,8 @@
 <script>
-    import Categories from './items/Categories.svelte';
-    import Courses from './items/Courses.svelte';
+    import Categories from './navigationItems/Categories.svelte';
+    import Courses from './navigationItems/Courses.svelte';
     import Logo from '../UI/Logo.svelte';
-    import SearchBar from './items/SearchBar.svelte';
+    import SearchBar from './navigationItems/SearchBar.svelte';
 </script>
 
 <nav>
