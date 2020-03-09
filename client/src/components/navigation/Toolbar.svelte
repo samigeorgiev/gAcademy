@@ -1,4 +1,5 @@
 <script>
+    import Calendar from './navigationItems/Calendar.svelte';
     import Categories from './navigationItems/Categories.svelte';
     import Courses from './navigationItems/Courses.svelte';
     import Logo from '../UI/Logo.svelte';
@@ -17,6 +18,7 @@
     </div>
     <div class="account-container">
         <Courses />
+        <Calendar />
     </div>
 </nav>
 
@@ -24,12 +26,12 @@
     nav {
         height: 3rem;
         display: flex;
-        align-items: center;
         justify-content: space-between;
         border-bottom: 2px solid #aaa;
     }
 
     .logo-container {
+        align-self: center;
         height: 60%;
         margin-left: 1rem;
     }
@@ -42,5 +44,11 @@
 
     .search-bar-container {
         height: 75%;
+    }
+
+    .account-container {
+        display: flex;
+        align-items: center;
+        height: 100%;
     }
 </style>

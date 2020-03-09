@@ -19,7 +19,8 @@
 
 <style>
     .nav-item-container {
-        /* margin-right: 1rem;  */
+        height: 70%;
+        margin-right: .5rem;
         padding-right: .5rem;
         border-right: 1px solid #555;
     }
