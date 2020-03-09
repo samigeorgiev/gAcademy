@@ -4,16 +4,23 @@
     const categories = ['Math', 'It'];
 </script>
 
-<NavItem>
-    <img src="images/categories.svg" alt="categories">
-    <ul slot="dropdown">
-        {#each categories as category}
-            <li>{category}</li>
-        {/each}
-    </ul>
-</NavItem>
+<div class="nav-item-container">
+    <NavItem>
+        <img src="images/categories.svg" alt="categories">
+        <ul slot="dropdown">
+            {#each categories as category}
+                <li>{category}</li>
+            {/each}
+        </ul>
+    </NavItem>
+</div>
 
 <style>
+    .nav-item-container {
+        height: 80%;
+        margin-right: .5rem;
+    }
+
     img {
         height: 100%;
     }
