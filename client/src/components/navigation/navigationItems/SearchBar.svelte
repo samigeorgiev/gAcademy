@@ -23,8 +23,8 @@
     />
     <button
         on:click={submitHandler}
-        on:mouseover={buttonOnHover}
-        on:mouseout={buttonOnHoverOut}
+        on:mouseenter={buttonOnHover}
+        on:mouseleave={buttonOnHoverOut}
         bind:this={button}    
     >
         <img src={searchIconSrc} alt="search icon">

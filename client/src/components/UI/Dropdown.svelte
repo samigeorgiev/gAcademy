@@ -5,7 +5,7 @@
     $: display = isShown ? 'block' : 'none';
 </script>
 
-<div class="dropdown" on:mouseover on:mouseout style="display: {display}">
+<div class="dropdown" on:mouseenter on:mouseleave style="display: {display}">
     <slot></slot>
 </div>
 
