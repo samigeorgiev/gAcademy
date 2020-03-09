@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 // eslint-disable-next-line require-jsdoc
-// class User extends Sequelize.Model {}
+class Student extends Sequelize.Model {}
 
 Student.init({
     class: {
