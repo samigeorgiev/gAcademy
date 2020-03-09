@@ -1,7 +1,7 @@
 <script>
     import NavItem from './NavItem.svelte';
 
-    const imageSrc = 'images/tmp.png';
+    const imageSrc = 'images/tmp/acc.png';
 </script>
 
 <div class="nav-item-container">
