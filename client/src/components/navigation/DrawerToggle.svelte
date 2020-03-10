@@ -10,9 +10,9 @@
         flex-flow: column;
         justify-content: space-around;
         align-items: center;
-        width: 6rem;
+        padding: .5rem;
+        width: 4rem;
         height: 100%;
-        padding: 1rem;
         box-sizing: border-box;
         cursor: pointer;
     }
@@ -20,6 +20,6 @@
     .drawer-toggle div {
         width: 90%;
         height: 3px;
-        background-color: white;
+        background-color: black;
     }
 </style>
