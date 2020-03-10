@@ -6,6 +6,11 @@
     import DrawerToggle from './DrawerToggle.svelte';
     import Logo from '../UI/Logo.svelte';
     import SearchBar from './navigationItems/SearchBar.svelte';
+    import SideDrawer from './SideDrawer.svelte';
+
+    let isSideDrawerShown = false;
+    const showSideDrawer = () => isSideDrawerShown = true;
+    const hideSideDrawer = () => isSideDrawerShown = false;
 </script>
 
 <nav class="nav-desktop">
@@ -26,7 +31,10 @@
 </nav>
 
 <nav class="nav-mobile">
-    <DrawerToggle />
+    <DrawerToggle on:click={showSideDrawer} />
+    {#if isSideDrawerShown}
+        <SideDrawer close={hideSideDrawer} />
+    {/if}
     <div class="logo-container"><Logo /></div>
     <div class="search-bar-container">
         <SearchBar />
