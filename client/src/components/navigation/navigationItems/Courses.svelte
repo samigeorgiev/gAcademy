@@ -5,7 +5,7 @@
 </script>
 
 <div class="nav-item-container">
-    <NavItem>
+    <NavItem dropdownPosition="right">
         <div class="content">
             <span>My courses</span>
         </div>

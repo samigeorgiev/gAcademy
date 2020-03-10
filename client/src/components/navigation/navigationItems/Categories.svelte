@@ -36,7 +36,7 @@
 </script>
 
 <div class="nav-item-container">
-    <NavItem>
+    <NavItem dropdownPosition="left">
         <img src="images/categories.svg" alt="categories">
         <ul slot="dropdown" class="categories">
             {#each categories as category}

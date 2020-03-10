@@ -1,6 +1,8 @@
 <script>
     import Dropdown from '../../UI/Dropdown.svelte';
 
+    export let dropdownPosition;
+
     let isDropdownShown = false;
     let shouldDropdownShow = false;
     let button;
@@ -30,6 +32,7 @@
         <slot></slot>
     </button>
     <Dropdown
+        position={dropdownPosition}
         on:mouseenter={showDropdown}
         on:mouseleave={hideDropdown}
         isShown={isDropdownShown}
