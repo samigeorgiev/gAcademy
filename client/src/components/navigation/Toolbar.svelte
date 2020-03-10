@@ -33,7 +33,14 @@
 <nav class="nav-mobile">
     <DrawerToggle on:click={showSideDrawer} />
     {#if isSideDrawerShown}
-        <SideDrawer close={hideSideDrawer} />
+        <SideDrawer close={hideSideDrawer}>
+            <ul class="nav-mobile-items">
+                <li><Account /></li>
+                <li><Calendar /></li>
+                <li><Courses /></li>
+                <li><Categories /></li>
+            </ul>
+        </SideDrawer>
     {/if}
     <div class="logo-container"><Logo /></div>
     <div class="search-bar-container">
@@ -47,6 +54,14 @@
         height: 3rem;
         display: flex;
         justify-content: space-between;
+    }
+
+    .nav-mobile-items {
+        display: flex;
+        flex-flow: column;
+        margin: 0;
+        padding: 0;
+        list-style: none;
     }
 
     .nav-desktop {
@@ -69,6 +84,7 @@
         }
 
         .nav-desktop {
+            display: flex;
             max-width: 80rem;
             margin: 0 auto;
         }
