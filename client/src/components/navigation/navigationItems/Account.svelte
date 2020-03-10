@@ -5,7 +5,7 @@
 </script>
 
 <div class="nav-item-container">
-    <NavItem>
+    <NavItem dropdownPosition="right">
         <img src={imageSrc} alt="Samuil picture">
         <p slot="dropdown">Samuil</p>
     </NavItem>

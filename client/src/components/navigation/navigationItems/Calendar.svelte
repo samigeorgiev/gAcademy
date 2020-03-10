@@ -5,7 +5,7 @@
 </script>
 
 <div class="nav-item-container">
-    <NavItem>
+    <NavItem dropdownPosition="right">
         <img src="images/calendar.svg" alt="Calendar icon">
         <p slot="dropdown">{nextLesson}</p>
     </NavItem>
