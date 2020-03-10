@@ -1,4 +1,5 @@
 <script>
+    //TODO Fix button hover mechanism
     let value = '';
     const changeHandler = event => console.log(event);
     const submitHandler = event => console.log(event);
@@ -33,32 +34,11 @@
 
 <style>
     .search-bar {
-        display: inline-flex;
-        align-items: center;
         height: 100%;
-        width: 30rem;
-        margin: auto 0;
-        background: #eee;
-        border: 1px solid transparent;
-        border-radius: 3px;
-    }
-
-    .search-bar:focus-within {
-        background: white;
-        border-color: #eee;
     }
 
     input {
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        padding: .25rem;
-        border: none;
-        background: transparent;
-    }
-
-    input:focus {
-        outline: none;
+        display: none;
     }
 
     button {
@@ -76,5 +56,36 @@
 
     button:focus {
         outline: none;
+    }
+
+    @media (min-width: 60rem) {
+        .search-bar {
+            display: inline-flex;
+            align-items: center;
+            width: 30rem;
+            margin: auto 0;
+            background: #eee;
+            border: 1px solid transparent;
+            border-radius: 3px;
+        }
+
+        .search-bar:focus-within {
+            background: white;
+            border-color: #eee;
+        }
+
+        input {
+            display: block;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            padding: .25rem;
+            border: none;
+            background: transparent;
+        }
+
+        input:focus {
+            outline: none;
+        }
     }
 </style>
