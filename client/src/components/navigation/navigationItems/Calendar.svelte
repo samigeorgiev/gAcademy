@@ -1,4 +1,5 @@
 <script>
+    // TODO dropdown style
     import NavItem from './NavItem.svelte';
 
     const nextLesson = 'tomorrow';

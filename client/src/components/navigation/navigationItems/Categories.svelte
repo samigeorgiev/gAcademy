@@ -1,4 +1,5 @@
 <script>
+    // TODO display subcategories
     import NavItem from './NavItem.svelte';
 
     const categories = [
@@ -36,7 +37,7 @@
 </script>
 
 <div class="nav-item-container">
-    <NavItem dropdownPosition="left">
+    <NavItem>
         <img src="images/categories.svg" alt="categories">
         <ul slot="dropdown" class="categories">
             {#each categories as category}

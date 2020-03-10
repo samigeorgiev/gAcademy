@@ -1,4 +1,5 @@
 <script>
+    //TODO style dropdown
     import NavItem from './NavItem.svelte';
 
     const courses = ['1st', '2nd'];
