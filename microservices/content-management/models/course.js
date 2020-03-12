@@ -17,6 +17,8 @@ Course.init({
 Course.assosiate = models => {
     Course.belognsTo(models.Category);
     Course.belognsTo(models.Teacher);
+
+    Course.belognsToMany(models.Student);
 };
 
 module.exports = Course;

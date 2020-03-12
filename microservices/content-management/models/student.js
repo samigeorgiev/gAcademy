@@ -9,5 +9,8 @@ Student.init({
         allowNull: false,
     },
 }, {sequelize});
+Student.assosiate = models => {
+    Student.belongsToMany(models.Course);
+};
 
 module.exports = Student;

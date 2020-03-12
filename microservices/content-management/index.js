@@ -19,7 +19,7 @@ const protoDescriptor = grpc.loadPackageDefinition(protoDefinition);
 const server = new grpc.Server();
 
 server.addService(
-    protoDescriptor.contentManagement.getCourse.service,
+    protoDescriptor.content_management.GetCourse.service,
     browseCourseService,
 );
 
@@ -28,9 +28,9 @@ if (process.env.NODE_ENV === 'production') {
     // TODO create tls
 } else {
     server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
-    logger.info(`Running server in ${process.env.NODE_ENV} at port ${port}`);
+    // logger.info(`Running server in ${process.env.NODE_ENV} at port ${port}`);
 }
 
 sequelize.sync()
     .then(_ => server.start())
-    .catch(error => logger.error(error.message));
+    .catch(error => console.error(error.message));
