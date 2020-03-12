@@ -7,10 +7,10 @@ Course.init({
     name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
     },
     duration: {
         type: Sequelize.TIME,
-        allowNull: true,
     },
 }, {sequelize});
 
