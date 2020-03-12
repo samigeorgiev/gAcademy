@@ -59,9 +59,14 @@
     .nav-mobile-items {
         display: flex;
         flex-flow: column;
+        align-items: center;
         margin: 0;
         padding: 0;
         list-style: none;
+    }
+
+    .nav-mobile-items li {
+        width: 100%;
     }
 
     .nav-desktop {

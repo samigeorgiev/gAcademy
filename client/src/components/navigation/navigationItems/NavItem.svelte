@@ -5,19 +5,16 @@
 
     let isDropdownShown = false;
     let shouldDropdownShow = false;
-    let button;
 
     const showDropdown = () => {
         isDropdownShown = true;
         shouldDropdownShow = true;
-        button.style.background = '#eee';
     };
     const hideDropdown = () => {
         shouldDropdownShow = false;
         setTimeout(() => {
             if (!shouldDropdownShow) {
                 isDropdownShown = false;
-                button.style.background = 'transparent';
             }
         }, 50);
     };
@@ -25,7 +22,7 @@
 
 <div class="nav-item">
     <button
-        bind:this={button}
+        class:active={isDropdownShown}
         on:mouseenter={showDropdown}
         on:mouseleave={hideDropdown}
     >
@@ -48,6 +45,8 @@
     }
 
     button {
+        width: 100%;
+
         height: 100%;
         padding: .5rem;
         margin: auto;
@@ -63,5 +62,9 @@
 
     button:focus {
         outline: none;
+    }
+
+    .active {
+        background: #eee;
     }
 </style>
