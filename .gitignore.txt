@@ -1,3 +1,0 @@
-IGNORING NODE_MODULES
-node_modules/
-microservices/content-management/.env.development

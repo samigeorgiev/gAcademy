@@ -31,6 +31,6 @@ if (process.env.NODE_ENV === 'production') {
     // logger.info(`Running server in ${process.env.NODE_ENV} at port ${port}`);
 }
 
-sequelize.sync()
+sequelize.sync({force: true})
     .then(_ => server.start())
     .catch(error => console.error(error.message));
