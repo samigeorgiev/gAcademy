@@ -20,24 +20,37 @@
 
 <style>
     .nav-item-container {
-        height: 70%;
-        margin-right: .5rem;
-        padding-right: .5rem;
-        border-right: 1px solid #555;
+        height: 80%;
     }
 
     .content {
-        display: flex;
-        align-items: flex-end;
+        width: 90%;
+        margin: 0 auto;
+        text-align: left;
+        font-size: 1.25rem;
         color: #555;
     }
 
-    .content::after {
-        content: "";
-        border-width: 5px;
-        border-style: solid;
-        border-color: #555 transparent transparent;
-        margin-left: .5rem;
-    }
+    @media (min-width: 60rem) {
+        .nav-item-container {
+            margin-right: .5rem;
+            padding-right: .5rem;
+            border-right: 1px solid #555;
+        }
 
+        .content {
+            display: flex;
+            align-items: flex-end;
+            width: auto;
+            font-size: 1rem;
+        }
+
+        .content::after {
+            content: "";
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent;
+            margin-left: .5rem;
+        }
+    }
 </style>
