@@ -1,5 +1,6 @@
 <script>
     // TODO display subcategories
+    // TODO responsive design
     import NavItem from './NavItem.svelte';
 
     const categories = [
@@ -59,6 +60,7 @@
     }
 
     img {
+        display: none;
         height: 100%;
     }
 
@@ -90,5 +92,11 @@
         height: 1.5rem;
         width: 1.5rem;
         margin-right: 1rem;
+    }
+
+    @media (min-width: 60rem) {
+        img {
+            display: block;
+        }
     }
 </style>

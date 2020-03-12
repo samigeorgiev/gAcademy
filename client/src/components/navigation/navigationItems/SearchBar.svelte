@@ -1,5 +1,6 @@
 <script>
     //TODO Fix button hover mechanism
+    //TODO Responsive search bar
     let value = '';
     const changeHandler = event => console.log(event);
     const submitHandler = event => console.log(event);
