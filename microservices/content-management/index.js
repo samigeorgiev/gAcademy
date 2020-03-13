@@ -8,6 +8,12 @@ const sequelize = require('./util/db');
 
 const browseCourseService = require('./services/getCourse');
 
+require('./models/user');
+require('./models/course');
+require('./models/category');
+require('./models/student');
+require('./models/teacher');
+
 const protoDefinition =
     protoLoader.loadSync(path.join(__dirname, process.env.PROTO_PATH), {
         keepCase: true,
