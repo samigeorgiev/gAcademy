@@ -19,7 +19,7 @@ const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 const server = new grpc.Server();
 
 server.addService(
-    protoDescriptor.auth.Authentication.service,
+    protoDescriptor.authentication.Authentication.service,
     authenticationService,
 );
 

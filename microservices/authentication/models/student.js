@@ -6,11 +6,11 @@ const sequelize = require('../util/db');
 class Student extends Sequelize.Model {}
 
 Student.init({
-    class: Sequelize.DataTypes.STRING
+    class: Sequelize.DataTypes.STRING,
 }, {sequelize});
 
 Student.associate = models => {
     Student.belongsTo(models.User);
-}
+};
 
 module.exports = Student;

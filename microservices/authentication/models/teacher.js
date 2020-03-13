@@ -6,11 +6,11 @@ const sequelize = require('../util/db');
 class Teacher extends Sequelize.Model {}
 
 Teacher.init({
-    maxStudents: Sequelize.DataTypes.INTEGER
+    maxStudents: Sequelize.DataTypes.INTEGER,
 }, {sequelize});
 
 Teacher.associate = models => {
     Teacher.belongsTo(models.User);
-}
+};
 
 module.exports = Teacher;
