@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const grpc = require('grpc');
 const jwt = require('jsonwebtoken');
 
-const User = require('../../models/user');
+const User = require('../../model/user');
 
 const SALT_ROUNDS = 10;
 
@@ -74,4 +74,26 @@ exports.logIn = async (call, callback) => {
     );
 
     callback(null, {token, expiresIn: process.env.JWT_VALID_TIME});
+};
+
+exports.getUserId = async (call, callback) => {
+    const {token} = call.request;
+
+    let userId;
+    try {
+        userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+    } catch (error) {
+        logger.warn(`Invalid token at getUserId ${token}`);
+        return callback(grpc.status.UNAUTHENTICATED, null);
+    }
+
+    let user;
+    try {
+        user = await User.findByPk(userId, {attributes: ['id']});
+    } catch (error) {
+        logger.error(`Sequelize error in getUserUd: ${error.message}`);
+        return callback(grpc.status.INTERNAL, null);
+    }
+
+    callback(null, {userId: user.id});
 };
