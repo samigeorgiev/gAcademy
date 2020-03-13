@@ -1,3 +1,4 @@
+//TODO prettier logging
 const winston = require('winston');
 
 const {combine, timestamp, printf} = winston.format;
