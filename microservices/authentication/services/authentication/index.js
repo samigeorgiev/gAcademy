@@ -1,10 +1,11 @@
 // TODO oauth 2
 const grpc = require('grpc');
 const validator = require('validator');
+const {getRepository} = require('typeorm');
 
-const logger = require('../../logger');
+const errorHandler = require('../../util/errorHandler');
 const service = require('./service');
-// const User = require('../../models/user');
+const User = require('../../model/user');
 
 const PASSWORD_LENGTH = {min: 8, max: 64};
 
@@ -12,38 +13,39 @@ exports.signUp = async (call, callback) => {
     const {email, password, firstName, lastName, accountType} = call.request;
 
     if (!validator.isEmail(email)) {
-        logger.warn(`Invalid email: ${email}`);
-        return callback(grpc.status.INVALID_ARGUMENT, null);
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Invalid email');
     }
 
     if (!validator.isLength(password, PASSWORD_LENGTH)) {
-        logger.warn(`Invalid password: ${password}`);
-        return callback(grpc.status.INVALID_ARGUMENT, null);
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Invalid password');
     }
 
     if (!firstName || !lastName) {
-        logger.warn(`Invalid fn or ln: ${firstName} | ${lastName}`);
-        return callback(grpc.status.INVALID_ARGUMENT, null);
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Invalid first or last name');
     }
 
     if (accountType === 'NOT_SET') {
-        logger.warn(`Account type not set`);
-        return callback(grpc.status.INVALID_ARGUMENT, null);
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Invalid account type');
     }
 
-    // let user;
-    // try {
-    //     user = await User.findOne({
-    //         where: {email},
-    //         attributes: ['accountType'],
-    //     });
-    // } catch (error) {
-    //     logger.error(`Sequelize error in signUp: ${error.message}`);
-    //     return callback(grpc.status.INTERNAL, null);
-    // }
-    // if (user && user.accountType === accountType) {
-    //     return callback(grpc.status.ALREADY_EXISTS, null);
-    // }
+    let users;
+    try {
+        users = await getRepository(User).find({
+            select: ['accountType'],
+            where: {email},
+        });
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+    if (!users.every(user => user.accountType !== accountType)) {
+        const status = grpc.status.ALREADY_EXISTS;
+        return errorHandler(callback, status, 'User already exists');
+    }
 
     service.signUp(call, callback);
 };
@@ -51,8 +53,8 @@ exports.signUp = async (call, callback) => {
 exports.logIn = (call, callback) => {
     const {email} = call.request;
     if (!validator.isEmail(email)) {
-        logger.warn(`Invalid email: ${email}`);
-        return callback(grpc.status.INVALID_ARGUMENT, null);
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Invalid email');
     }
     service.logIn(call, callback);
 };
@@ -60,8 +62,8 @@ exports.logIn = (call, callback) => {
 exports.getUserId = (call, callback) => {
     const {token} = call.request;
     if (!token) {
-        logger.warn(`Missing token in getUserId, token: ${token}`);
-        return callback(grpc.status.INVALID_ARGUMENT, null);
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Invalid token');
     }
     service.getUserId(call, callback);
 };

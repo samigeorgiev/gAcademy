@@ -2,7 +2,9 @@
 const bcrypt = require('bcrypt');
 const grpc = require('grpc');
 const jwt = require('jsonwebtoken');
+const {getRepository} = require('typeorm');
 
+const errorHandler = require('../../util/errorHandler');
 const User = require('../../model/user');
 
 const SALT_ROUNDS = 10;
@@ -14,22 +16,23 @@ exports.signUp = async (call, callback) => {
     try {
         hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     } catch (error) {
-        console.log(error);
-        return callback(grpc.status.INTERNAL, null);
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Server error', error);
     }
 
-    let user;
+    let user = new User(
+        null,
+        email,
+        hashedPassword,
+        firstName,
+        lastName,
+        accountType,
+    );
     try {
-        user = await User.create({
-            email,
-            firstName,
-            lastName,
-            accountType,
-            password: hashedPassword,
-        });
+        user = await getRepository(User).insert(user);
     } catch (error) {
-        console.log(error);
-        return callback(grpc.status.INTERNAL, null);
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
     }
 
     const token = jwt.sign(
@@ -46,25 +49,27 @@ exports.logIn = async (call, callback) => {
 
     let user;
     try {
-        user = await User.findOne({
+        user = await getRepository(User).findOne({
+            select: ['id', 'password'],
             where: {email},
-            attributes: ['id', 'password'],
         });
     } catch (error) {
-        console.log(error);
-        return callback(grpc.status.INTERNAL, null);
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
     }
     if (!user) {
-        return callback(grpc.status.NOT_FOUND, null);
+        const status = grpc.status.NOT_FOUND;
+        return errorHandler(callback, status, 'User does not exists');
     }
 
     try {
         if (!(await bcrypt.compare(password, user.password))) {
-            return callback(grpc.status.UNAUTHENTICATED, null);
+            const status = grpc.status.UNAUTHENTICATED;
+            return errorHandler(callback, status, 'Incorrect password');
         }
     } catch (error) {
-        console.log(error);
-        return callback(grpc.status.INTERNAL, null);
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Server error', error);
     }
 
     const token = jwt.sign(
@@ -83,17 +88,24 @@ exports.getUserId = async (call, callback) => {
     try {
         userId = jwt.verify(token, process.env.JWT_SECRET).userId;
     } catch (error) {
-        logger.warn(`Invalid token at getUserId ${token}`);
-        return callback(grpc.status.UNAUTHENTICATED, null);
+        const status = grpc.status.UNAUTHENTICATED;
+        return errorHandler(callback, status, 'Invalid token', error);
     }
 
     let user;
     try {
-        user = await User.findByPk(userId, {attributes: ['id']});
+        user = await getRepository(User).findOne({
+            select: ['id', 'accountType'],
+            where: {id: userId},
+        });
     } catch (error) {
-        logger.error(`Sequelize error in getUserUd: ${error.message}`);
-        return callback(grpc.status.INTERNAL, null);
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+    if (!user) {
+        const status = grpc.status.NOT_FOUND;
+        return errorHandler(callback, status, 'User id in token is invalid');
     }
 
-    callback(null, {userId: user.id});
+    callback(null, {userId: user.id, accountType: user.accountType});
 };

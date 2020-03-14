@@ -2,12 +2,10 @@ const path = require('path');
 
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
-
 const {createConnection} = require('typeorm');
 
-const logger = require('./logger');
-
 const authenticationService = require('./services/authentication');
+const logger = require('./util/logger');
 
 const packageDefinition =
     protoLoader.loadSync(path.join(__dirname, process.env.PROTO_PATH), {
@@ -31,6 +29,6 @@ if (process.env.NODE_ENV === 'production') {
     logger.info(`Running server in ${process.env.NODE_ENV} at port ${port}`);
 }
 
-createConnection();
-
-server.start();
+createConnection()
+    .then(() => server.start())
+    .catch(error => console.log(error));
