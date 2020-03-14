@@ -31,4 +31,4 @@ if (process.env.NODE_ENV === 'production') {
 
 createConnection()
     .then(() => server.start())
-    .catch(error => console.log(error));
+    .catch(error => logger.error(error.stack));
