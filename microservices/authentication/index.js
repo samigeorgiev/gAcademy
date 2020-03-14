@@ -26,9 +26,10 @@ if (process.env.NODE_ENV === 'production') {
     // TODO create tls
 } else {
     server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
-    logger.info(`Running server in ${process.env.NODE_ENV} at port ${port}`);
 }
 
 createConnection()
-    .then(() => server.start())
-    .catch(error => logger.error(error.stack));
+    .then(() => {
+        server.start();
+        logger.info(`Running in ${process.env.NODE_ENV} at port ${port}`);
+    }).catch(error => logger.error(error.stack));
