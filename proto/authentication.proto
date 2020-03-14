@@ -19,12 +19,12 @@ message SignUpRequest {
 message SignUpResponse {
     string token = 1;
     string expiresIn = 2;
-    AccountType accountType = 3;
 }
 
 message LogInRequest {
     string email = 1;
     string password = 2;
+    AccountType accountType = 3;
 }
 
 message LogInResponse {

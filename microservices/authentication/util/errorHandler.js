@@ -13,11 +13,11 @@ const errorHandler = (callback, status, message, error) => {
 
     if (status === grpc.status.INTERNAL) {
         logger.warn(message);
+        if (error) {
+            logger.error(error.stack);
+        }
     } else {
         logger.info(message);
-    }
-    if (error) {
-        logger.error(error.stack);
     }
 };
 

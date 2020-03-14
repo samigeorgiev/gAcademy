@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const {getRepository} = require('typeorm');
 
 const errorHandler = require('../../util/errorHandler');
+const Student = require('../../model/student');
+const Teacher = require('../../model/teacher');
 const User = require('../../model/user');
 
 const SALT_ROUNDS = 10;
@@ -20,7 +22,7 @@ exports.signUp = async (call, callback) => {
         return errorHandler(callback, status, 'Server error', error);
     }
 
-    let user = new User(
+    const user = new User(
         null,
         email,
         hashedPassword,
@@ -28,15 +30,25 @@ exports.signUp = async (call, callback) => {
         lastName,
         accountType,
     );
+
+    let Account;
+    if (accountType === 'STUDENT') {
+        Account = Student;
+    } else {
+        Account = Teacher;
+    }
+
+    let createdUser;
     try {
-        user = await getRepository(User).insert(user);
+        createdUser = await getRepository(User).save(user);
+        await getRepository(Account).insert(new Account(null, createdUser));
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
     }
 
     const token = jwt.sign(
-        {userId: user.id},
+        {userId: createdUser.id},
         process.env.JWT_SECRET,
         {expiresIn: process.env.JWT_VALID_TIME},
     );
@@ -45,13 +57,13 @@ exports.signUp = async (call, callback) => {
 };
 
 exports.logIn = async (call, callback) => {
-    const {email, password} = call.request;
+    const {email, password, accountType} = call.request;
 
     let user;
     try {
         user = await getRepository(User).findOne({
             select: ['id', 'password'],
-            where: {email},
+            where: {email, accountType},
         });
     } catch (error) {
         const status = grpc.status.INTERNAL;

@@ -32,17 +32,17 @@ exports.signUp = async (call, callback) => {
         return errorHandler(callback, status, 'Invalid account type');
     }
 
-    let users;
+    let existingUser;
     try {
-        users = await getRepository(User).find({
-            select: ['accountType'],
-            where: {email},
+        existingUser = await getRepository(User).findOne({
+            where: {email, accountType},
         });
+        console.log(existingUser);
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
     }
-    if (!users.every(user => user.accountType !== accountType)) {
+    if (existingUser) {
         const status = grpc.status.ALREADY_EXISTS;
         return errorHandler(callback, status, 'User already exists');
     }
@@ -51,10 +51,14 @@ exports.signUp = async (call, callback) => {
 };
 
 exports.logIn = (call, callback) => {
-    const {email} = call.request;
+    const {email, accountType} = call.request;
     if (!validator.isEmail(email)) {
         const status = grpc.status.INVALID_ARGUMENT;
         return errorHandler(callback, status, 'Invalid email');
+    }
+    if (accountType === 'NOT_SET') {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Account type not set');
     }
     service.logIn(call, callback);
 };
