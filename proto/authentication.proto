@@ -5,7 +5,7 @@ package authentication;
 service Authentication {
     rpc SignUp (SignUpRequest) returns (SignUpResponse);
     rpc LogIn (LogInRequest) returns (LogInResponse);
-    rpc GetUserId (GetUserRequest) returns (GetUserResponse);
+    rpc GetUserId (GetUserIdRequest) returns (GetUserIdResponse);
 }
 
 message SignUpRequest {
@@ -31,11 +31,11 @@ message LogInResponse {
     string expiresIn = 2;
 }
 
-message GetUserRequest {
+message GetUserIdRequest {
     string token = 1;
 }
 
-message GetUserResponse {
+message GetUserIdResponse {
     string userId = 1;
     AccountType accountType = 2;
 }
