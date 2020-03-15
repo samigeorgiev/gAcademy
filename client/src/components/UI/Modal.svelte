@@ -17,7 +17,8 @@
         top: 10%;
         left: 50%;
         transform: translateX(-50%);
-        background: #eee;
+        max-width: 90%;
+        background: white;
         box-shadow: -.25px .25px 10px .25px rgba(0, 0, 0, .75);
     }
 </style>

@@ -1,20 +1,17 @@
-<script>
-</script>
-
 <button on:click>
-    Sign up
+    Log in
 </button>
 
 <style>
     button {
         width: 5rem;
-        padding: .8rem;
+        padding: .75rem;
+        margin-right: .5rem;
         background: none;
-        color: white;
-        background: red;
+        border: 1px solid #555;
+        color: #555;
         cursor: pointer;
         font: inherit;
-        border: none;
         font-weight: 600;
     }
 
