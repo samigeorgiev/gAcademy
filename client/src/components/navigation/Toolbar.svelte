@@ -2,14 +2,15 @@
     import {token, accountType} from '../../store.js';
 
     import Account from './navigationItems/Account.svelte';
-    import AuthButton from './navigationItems/AuthButton.svelte';
     import Calendar from './navigationItems/Calendar.svelte';
     import Categories from './navigationItems/Categories.svelte';
     import Courses from './navigationItems/Courses.svelte';
     import DrawerToggle from './DrawerToggle.svelte';
+    import LogInToggle from './navigationItems/LogInToggle.svelte';
     import Logo from '../UI/Logo.svelte';
     import SearchBar from './navigationItems/SearchBar.svelte';
     import SideDrawer from './SideDrawer.svelte';
+    import SignUpToggle from './navigationItems/SignUpToggle.svelte';
 
     let isSideDrawerShown = false;
     const showSideDrawer = () => isSideDrawerShown = true;
@@ -32,8 +33,8 @@
             <Calendar />
             <Account />
         {:else}
-            <AuthButton>Login</AuthButton>
-            <AuthButton color="red">Signup</AuthButton>
+            <LogInToggle />
+            <SignUpToggle />
         {/if}
     </div>
 </nav>
