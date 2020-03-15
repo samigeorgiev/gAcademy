@@ -1,5 +1,8 @@
 <script>
+    import {token, accountType} from '../../store.js';
+
     import Account from './navigationItems/Account.svelte';
+    import AuthButton from './navigationItems/AuthButton.svelte';
     import Calendar from './navigationItems/Calendar.svelte';
     import Categories from './navigationItems/Categories.svelte';
     import Courses from './navigationItems/Courses.svelte';
@@ -24,9 +27,14 @@
         </div>
     </div>
     <div class="account-container">
-        <Courses />
-        <Calendar />
-        <Account />
+        {#if $token}
+            <Courses />
+            <Calendar />
+            <Account />
+        {:else}
+            <AuthButton>Login</AuthButton>
+            <AuthButton color="red">Signup</AuthButton>
+        {/if}
     </div>
 </nav>
 
