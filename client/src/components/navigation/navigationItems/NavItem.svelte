@@ -46,14 +46,13 @@
 
     button {
         width: 100%;
-
         height: 100%;
         padding: .5rem;
         margin: auto;
         background: transparent;
         border: none;
         border-radius: 4px;
-        box-sizing: border-box;
+        font: inherit;
     }
 
     button:hover {

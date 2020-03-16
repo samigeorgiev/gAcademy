@@ -1,12 +1,22 @@
 <script>
-    import Account from './navigationItems/Account.svelte';
-    import Calendar from './navigationItems/Calendar.svelte';
+    // TODO add login/signup in nav-mobile
+    // TDOD some styling in ul in nav-mobile
+    // TODO different layout for teachers and students
+    import {token, accountType} from '../../store.js';
+
+    import Account from './navigationItems/account/Account.svelte';
+    import Calendar from './navigationItems/account/Calendar.svelte';
     import Categories from './navigationItems/Categories.svelte';
-    import Courses from './navigationItems/Courses.svelte';
+    import Courses from './navigationItems/account/Courses.svelte';
     import DrawerToggle from './DrawerToggle.svelte';
+    import LogInButton from './navigationItems/auth/LogInButton.svelte';
     import Logo from '../UI/Logo.svelte';
     import SearchBar from './navigationItems/SearchBar.svelte';
     import SideDrawer from './SideDrawer.svelte';
+    import SignUpButton from './navigationItems/auth/SignUpButton.svelte';
+
+    export let showLogIn;
+    export let showSignUp;
 
     let isSideDrawerShown = false;
     const showSideDrawer = () => isSideDrawerShown = true;
@@ -24,9 +34,14 @@
         </div>
     </div>
     <div class="account-container">
-        <Courses />
-        <Calendar />
-        <Account />
+        {#if $token}
+            <Courses />
+            <Calendar />
+            <Account />
+        {:else}
+            <LogInButton on:click={showLogIn} />
+            <SignUpButton on:click={showSignUp} />
+        {/if}
     </div>
 </nav>
 

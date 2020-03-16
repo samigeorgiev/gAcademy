@@ -83,7 +83,7 @@
 
     .categories li:hover {
         background: #eee;
-        color: #007791;
+        color: var(--light-blue);
         cursor: pointer;
     }
 

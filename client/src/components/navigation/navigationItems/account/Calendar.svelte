@@ -1,6 +1,6 @@
 <script>
     // TODO dropdown style
-    import NavItem from './NavItem.svelte';
+    import NavItem from '../NavItem.svelte';
 
     const nextLesson = 'tomorrow';
 </script>
