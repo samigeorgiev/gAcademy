@@ -5,14 +5,12 @@ const jwt = require('jsonwebtoken');
 const {getRepository} = require('typeorm');
 
 const errorHandler = require('../../util/errorHandler');
-const Student = require('../../model/student');
-const Teacher = require('../../model/teacher');
 const User = require('../../model/user');
 
 const SALT_ROUNDS = 10;
 
 exports.signUp = async (call, callback) => {
-    const {email, password, firstName, lastName, accountType} = call.request;
+    const {email, password, firstName, lastName} = call.request;
 
     let hashedPassword;
     try {
@@ -22,26 +20,11 @@ exports.signUp = async (call, callback) => {
         return errorHandler(callback, status, 'Server error', error);
     }
 
-    const user = new User(
-        null,
-        email,
-        hashedPassword,
-        firstName,
-        lastName,
-        accountType,
-    );
-
-    let Account;
-    if (accountType === 'STUDENT') {
-        Account = Student;
-    } else {
-        Account = Teacher;
-    }
+    const user = new User(null, email, hashedPassword, firstName, lastName);
 
     let createdUser;
     try {
-        createdUser = await getRepository(User).save(user);
-        await getRepository(Account).insert(new Account(null, createdUser));
+        createdUser = await getRepository(User).insert(user);
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
@@ -57,13 +40,13 @@ exports.signUp = async (call, callback) => {
 };
 
 exports.logIn = async (call, callback) => {
-    const {email, password, accountType} = call.request;
+    const {email, password} = call.request;
 
     let user;
     try {
         user = await getRepository(User).findOne({
             select: ['id', 'password'],
-            where: {email, accountType},
+            where: {email},
         });
     } catch (error) {
         const status = grpc.status.INTERNAL;
@@ -107,7 +90,7 @@ exports.getUserId = async (call, callback) => {
     let user;
     try {
         user = await getRepository(User).findOne({
-            select: ['id', 'accountType'],
+            select: ['id'],
             where: {id: userId},
         });
     } catch (error) {
@@ -119,5 +102,5 @@ exports.getUserId = async (call, callback) => {
         return errorHandler(callback, status, 'User id in token is invalid');
     }
 
-    callback(null, {userId: user.id, accountType: user.accountType});
+    callback(null, {userId: user.id});
 };

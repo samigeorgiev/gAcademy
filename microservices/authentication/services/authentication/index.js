@@ -10,7 +10,7 @@ const User = require('../../model/user');
 const PASSWORD_LENGTH = {min: 8, max: 64};
 
 exports.signUp = async (call, callback) => {
-    const {email, password, firstName, lastName, accountType} = call.request;
+    const {email, password, firstName, lastName} = call.request;
 
     if (!validator.isEmail(email)) {
         const status = grpc.status.INVALID_ARGUMENT;
@@ -27,17 +27,9 @@ exports.signUp = async (call, callback) => {
         return errorHandler(callback, status, 'Invalid first or last name');
     }
 
-    if (accountType === 'NOT_SET') {
-        const status = grpc.status.INVALID_ARGUMENT;
-        return errorHandler(callback, status, 'Invalid account type');
-    }
-
     let existingUser;
     try {
-        existingUser = await getRepository(User).findOne({
-            where: {email, accountType},
-        });
-        console.log(existingUser);
+        existingUser = await getRepository(User).findOne({where: {email}});
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
@@ -51,14 +43,10 @@ exports.signUp = async (call, callback) => {
 };
 
 exports.logIn = (call, callback) => {
-    const {email, accountType} = call.request;
+    const {email} = call.request;
     if (!validator.isEmail(email)) {
         const status = grpc.status.INVALID_ARGUMENT;
         return errorHandler(callback, status, 'Invalid email');
-    }
-    if (accountType === 'NOT_SET') {
-        const status = grpc.status.INVALID_ARGUMENT;
-        return errorHandler(callback, status, 'Account type not set');
     }
     service.logIn(call, callback);
 };
