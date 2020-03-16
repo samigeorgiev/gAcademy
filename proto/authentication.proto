@@ -13,7 +13,6 @@ message SignUpRequest {
     string password = 2;
     string firstName = 3;
     string lastName = 4;
-    AccountType accountType = 5;
 }
 
 message SignUpResponse {
@@ -24,7 +23,6 @@ message SignUpResponse {
 message LogInRequest {
     string email = 1;
     string password = 2;
-    AccountType accountType = 3;
 }
 
 message LogInResponse {
@@ -38,11 +36,4 @@ message GetUserIdRequest {
 
 message GetUserIdResponse {
     string userId = 1;
-    AccountType accountType = 2;
-}
-
-enum AccountType {
-    NOT_SET = 0;
-    STUDENT = 1;
-    TEACHER = 2;
 }

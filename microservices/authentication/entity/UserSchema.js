@@ -24,10 +24,6 @@ const UserSchema = new EntitySchema({
         lastName: {
             type: 'varchar',
         },
-        accountType: {
-            type: 'enum',
-            enum: ['STUDENT', 'TEACHER'],
-        },
     },
 });
 
