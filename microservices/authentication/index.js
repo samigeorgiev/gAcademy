@@ -4,29 +4,24 @@ const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const {createConnection} = require('typeorm');
 
-const CourseService = require('./services/Course');
+const authenticationService = require('./services/authentication');
+const logger = require('./util/logger');
 
-require('./model/user');
-require('./model/course');
-require('./model/category');
-require('./model/teacher');
-
-const protoDefinition =
+const packageDefinition =
     protoLoader.loadSync(path.join(__dirname, process.env.PROTO_PATH), {
         keepCase: true,
         enums: String,
         defaults: true,
     });
-const protoDescriptor = grpc.loadPackageDefinition(protoDefinition);
+const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
-
 server.addService(
-    protoDescriptor.content_management.Course.service,
-    CourseService,
+    protoDescriptor.authentication.Authentication.service,
+    authenticationService,
 );
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 if (process.env.NODE_ENV === 'production') {
     // TODO create tls
 } else {
@@ -36,4 +31,5 @@ if (process.env.NODE_ENV === 'production') {
 createConnection()
     .then(() => {
         server.start();
-    }).catch(error => console.error(error.stack));
+        logger.info(`Running in ${process.env.NODE_ENV} at port ${port}`);
+    }).catch(error => logger.error(error.stack));

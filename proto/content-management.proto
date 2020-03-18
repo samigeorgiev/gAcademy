@@ -2,28 +2,29 @@ syntax = "proto3";
 
 package content_management;
 
-service GetCourse{
-	rpc BrowseCourse(BrowseCourseRequest) returns (BrowseCourseResponse);
-}
-service GetAll{
-	rpc ViewCourses(ViewCoursesRequest) returns (ViewCoursesResponse);
+service Course {
+    rpc BrowseCourse(BrowseCourseRequest) returns (BrowseCourseResponse);
+    rpc NewCourse(NewCourseRequest) returns (NewCourseResponse);
 }
 
-message BrowseCourseRequest{
-	string name = 1;
-	string category = 2;
-	int32 duration = 3;
-	string teacher = 4;
+message BrowseCourseRequest {
+    string name = 1;
+    string category = 2;
+    int32 duration = 3;
+    string teacher = 4;
 }
 
-message BrowseCourseResponse{
+message BrowseCourseResponse {
 	
 }
 
-message ViewCoursesRequest{
-	
+message NewCourseRequest {
+    string name = 1;
+    string category = 2;
+    int32 duration = 3;
+    string teacher = 4;
 }
 
-message ViewCoursesResponse{
+message NewCourseResponse {
 	
 }
