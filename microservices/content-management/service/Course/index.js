@@ -1,7 +1,9 @@
 const grpc = require('grpc');
+const {getRepository} = require('typeorm');
 
-const Course = require('../../models/course');
-const Category = require('../../models/category');
+const service = require('./service');
+const Course = require('../../model/course');
+const Category = require('../../model/category');
 
 exports.newCourse = async (call, callback) => {
     const {name, category, teacher} = call.request;

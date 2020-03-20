@@ -1,8 +1,8 @@
 const grpc = require('grpc');
 
-const Course = require('../../models/course');
+const Course = require('../../model/course');
 
-exports.browseCourse = async (call, callback) => {
+exports.newCourse = async (call, callback) => {
     const {name, category, duration, teacher} = call.request;
 
     // let course;

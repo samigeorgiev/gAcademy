@@ -3,19 +3,7 @@ syntax = "proto3";
 package content_management;
 
 service Course {
-    rpc BrowseCourse(BrowseCourseRequest) returns (BrowseCourseResponse);
     rpc NewCourse(NewCourseRequest) returns (NewCourseResponse);
-}
-
-message BrowseCourseRequest {
-    string name = 1;
-    string category = 2;
-    int32 duration = 3;
-    string teacher = 4;
-}
-
-message BrowseCourseResponse {
-	
 }
 
 message NewCourseRequest {

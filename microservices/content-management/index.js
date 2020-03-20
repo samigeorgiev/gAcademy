@@ -4,7 +4,7 @@ const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const {createConnection} = require('typeorm');
 
-const CourseService = require('./services/Course');
+const CourseService = require('./service/Course');
 
 require('./model/user');
 require('./model/course');
