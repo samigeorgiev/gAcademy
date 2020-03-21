@@ -1,1 +1,1 @@
-mkdir -p proto && cp ../../../../proto/account-operations.proto ./proto
+mkdir -p proto && cp ../../../../proto/*.proto ./proto
