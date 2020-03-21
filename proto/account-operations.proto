@@ -1,16 +1,19 @@
 syntax = "proto3";
 
-option java_package = "edu.gacademy.account_operations.prototypes";
+option java_package = "edu.gacademy.account_operations.grpc.prototypes";
 option java_multiple_files = true;
 
 service AccountOperations {
-    rpc GetNextLesson (GetNextLessonRequest) returns (GetNextLessonResponse);
+    rpc GetAccount (GetAccountRequest) returns (GetAccountResponse);
 }
 
-message GetNextLessonRequest {
-    string reqq = 1;
+message GetAccountRequest {
+    // Only metadata
 }
 
-message GetNextLessonResponse {
-    string ress = 1;
+message GetAccountResponse {
+    string firstName = 1;
+    string lastName = 2;
+    string email = 3;
+    bool isTeacher = 4;
 }
