@@ -36,5 +36,5 @@ message GetUserIdRequest {
 }
 
 message GetUserIdResponse {
-    string userId = 1;
+    uint32 userId = 1;
 }

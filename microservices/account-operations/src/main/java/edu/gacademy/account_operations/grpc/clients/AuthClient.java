@@ -23,13 +23,9 @@ public class AuthClient {
         blockingStub = AuthenticationGrpc.newBlockingStub(channel);
     }
 
-    public static String getUserId(String token) throws StatusRuntimeException {
-        GetUserIdRequest request = GetUserIdRequest
-                .newBuilder()
-                .setToken(token)
-                .build();
-        GetUserIdResponse response;
-        response = blockingStub.getUserId(request);
+    public static int getUserId(String token) throws StatusRuntimeException {
+        GetUserIdRequest request = GetUserIdRequest.newBuilder().setToken(token).build();
+        GetUserIdResponse response = blockingStub.getUserId(request);
         return response.getUserId();
     }
 

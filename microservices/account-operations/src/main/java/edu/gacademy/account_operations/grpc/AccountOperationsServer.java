@@ -1,6 +1,6 @@
 package edu.gacademy.account_operations.grpc;
 
-import edu.gacademy.account_operations.grpc.prototypes.AccountOperationsGrpc.AccountOperationsImplBase;
+import edu.gacademy.account_operations.grpc.prototypes.AccountOperationsGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptor;
@@ -13,12 +13,12 @@ public class AccountOperationsServer {
 
     private Server server;
 
-    private AccountOperationsImplBase accountOperationsService;
+    private AccountOperationsGrpc.AccountOperationsImplBase accountOperationsService;
 
     private ServerInterceptor authInterceptor;
 
     public AccountOperationsServer(
-            AccountOperationsImplBase accountOperationsService,
+            AccountOperationsGrpc.AccountOperationsImplBase accountOperationsService,
             ServerInterceptor authInterceptor
     ) {
         this.accountOperationsService = accountOperationsService;
@@ -29,9 +29,7 @@ public class AccountOperationsServer {
         int port = 9002;
         server = ServerBuilder
                 .forPort(port)
-                .addService(ServerInterceptors.intercept(
-                        accountOperationsService, authInterceptor
-                ))
+                .addService(ServerInterceptors.intercept(accountOperationsService, authInterceptor))
                 .build()
                 .start();
 

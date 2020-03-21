@@ -24,7 +24,7 @@ exports.signUp = async (call, callback) => {
 
     let createdUser;
     try {
-        createdUser = await getRepository(User).insert(user);
+        createdUser = await getRepository(User).save(user);
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
