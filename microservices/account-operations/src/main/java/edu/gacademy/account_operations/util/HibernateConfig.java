@@ -11,11 +11,12 @@ public class HibernateConfig {
         return sessionFactory;
     }
 
-    public static void configSessionFactory() {
+    public static SessionFactory configSessionFactory() {
         Configuration configuration = new Configuration()
                 .setProperty("hibernate.connection.url", System.getenv("DB_URL"))
                 .setProperty("hibernate.connection.username", System.getenv("DB_USERNAME"))
                 .setProperty("hibernate.connection.password", System.getenv("DB_PASSWORD"));
         sessionFactory = configuration.configure().buildSessionFactory();
+        return sessionFactory;
     }
 }

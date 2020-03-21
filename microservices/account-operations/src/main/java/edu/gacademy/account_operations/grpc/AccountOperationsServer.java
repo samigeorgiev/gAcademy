@@ -1,5 +1,6 @@
 package edu.gacademy.account_operations.grpc;
 
+import edu.gacademy.account_operations.proto.AccountOperationsGrpc.AccountOperationsImplBase;
 import edu.gacademy.account_operations.service.AccountOperationsImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -11,11 +12,19 @@ public class AccountOperationsServer {
 
     private Server server;
 
+    private AccountOperationsImplBase accountOperationsService;
+
+    public AccountOperationsServer(
+            AccountOperationsImplBase accountOperationsService
+    ) {
+        this.accountOperationsService = accountOperationsService;
+    }
+
     public void start() throws IOException {
         int port = 9002;
         server = ServerBuilder
                 .forPort(port)
-                .addService(new AccountOperationsImpl())
+                .addService(accountOperationsService)
                 .build()
                 .start();
 
