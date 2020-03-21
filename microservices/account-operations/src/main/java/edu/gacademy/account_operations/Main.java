@@ -1,7 +1,7 @@
 package edu.gacademy.account_operations;
 
 import edu.gacademy.account_operations.grpc.AccountOperationsServer;
-import edu.gacademy.account_operations.proto.AccountOperationsGrpc.AccountOperationsImplBase;
+import edu.gacademy.account_operations.prototypes.AccountOperationsGrpc.AccountOperationsImplBase;
 import edu.gacademy.account_operations.service.AccountOperationsImpl;
 import edu.gacademy.account_operations.util.HibernateConfig;
 import org.hibernate.SessionFactory;

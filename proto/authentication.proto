@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-package authentication;
+option java_package = "edu.gacademy.authentication.prototypes";
+option java_multiple_files = true;
 
 service Authentication {
     rpc SignUp (SignUpRequest) returns (SignUpResponse);

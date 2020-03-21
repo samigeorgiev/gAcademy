@@ -1,7 +1,6 @@
 package edu.gacademy.account_operations.grpc;
 
-import edu.gacademy.account_operations.proto.AccountOperationsGrpc.AccountOperationsImplBase;
-import edu.gacademy.account_operations.service.AccountOperationsImpl;
+import edu.gacademy.account_operations.prototypes.AccountOperationsGrpc.AccountOperationsImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 

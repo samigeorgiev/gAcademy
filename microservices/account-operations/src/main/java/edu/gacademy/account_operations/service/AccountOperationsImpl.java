@@ -1,8 +1,8 @@
 package edu.gacademy.account_operations.service;
 
-import edu.gacademy.account_operations.proto.AccountOperationsGrpc;
-import edu.gacademy.account_operations.proto.GetNextLessonRequest;
-import edu.gacademy.account_operations.proto.GetNextLessonResponse;
+import edu.gacademy.account_operations.prototypes.GetNextLessonRequest;
+import edu.gacademy.account_operations.prototypes.AccountOperationsGrpc;
+import edu.gacademy.account_operations.prototypes.GetNextLessonResponse;
 import io.grpc.stub.StreamObserver;
 
 public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperationsImplBase {
