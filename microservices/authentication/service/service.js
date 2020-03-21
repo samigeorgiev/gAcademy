@@ -4,8 +4,8 @@ const grpc = require('grpc');
 const jwt = require('jsonwebtoken');
 const {getRepository} = require('typeorm');
 
-const errorHandler = require('../../util/errorHandler');
-const User = require('../../model/user');
+const errorHandler = require('../util/errorHandler');
+const User = require('../model/user');
 
 const SALT_ROUNDS = 10;
 

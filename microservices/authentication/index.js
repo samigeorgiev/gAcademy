@@ -4,7 +4,7 @@ const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const {createConnection} = require('typeorm');
 
-const authenticationService = require('./services/authentication');
+const service = require('./service');
 const logger = require('./util/logger');
 
 const packageDefinition =
@@ -17,8 +17,8 @@ const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
 server.addService(
-    protoDescriptor.authentication.Authentication.service,
-    authenticationService,
+    protoDescriptor.Authentication.service,
+    service,
 );
 
 const port = process.env.PORT || 8000;
