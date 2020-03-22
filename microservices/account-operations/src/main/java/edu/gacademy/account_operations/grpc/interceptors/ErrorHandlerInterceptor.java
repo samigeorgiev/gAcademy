@@ -11,7 +11,7 @@ public class ErrorHandlerInterceptor implements ServerInterceptor {
             Metadata metadata,
             ServerCallHandler<ReqT, RespT> serverCallHandler
     ) {
-        ServerCall<ReqT, RespT> errorHandledCall = new ErrorHandledCall<ReqT, RespT>(serverCall);
+        ServerCall<ReqT, RespT> errorHandledCall = new ErrorHandledCall<>(serverCall);
         return serverCallHandler.startCall(errorHandledCall, metadata);
     }
 }
