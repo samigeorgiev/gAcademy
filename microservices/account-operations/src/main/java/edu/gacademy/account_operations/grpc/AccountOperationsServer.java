@@ -17,19 +17,27 @@ public class AccountOperationsServer {
 
     private ServerInterceptor authInterceptor;
 
+    private ServerInterceptor errorHandlerInterceptor;
+
     public AccountOperationsServer(
             AccountOperationsGrpc.AccountOperationsImplBase accountOperationsService,
-            ServerInterceptor authInterceptor
+            ServerInterceptor authInterceptor,
+            ServerInterceptor errorHandlerInterceptor
     ) {
         this.accountOperationsService = accountOperationsService;
         this.authInterceptor = authInterceptor;
+        this.errorHandlerInterceptor = errorHandlerInterceptor;
     }
 
     public void start() throws IOException {
         int port = 9002;
         server = ServerBuilder
                 .forPort(port)
-                .addService(ServerInterceptors.intercept(accountOperationsService, authInterceptor))
+                .addService(ServerInterceptors.intercept(
+                        accountOperationsService,
+                        errorHandlerInterceptor,
+                        authInterceptor
+                ))
                 .build()
                 .start();
 

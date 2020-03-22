@@ -5,6 +5,8 @@ option java_multiple_files = true;
 
 service AccountOperations {
     rpc GetAccount (GetAccountRequest) returns (GetAccountResponse);
+
+    rpc BecomeTeacher (BecomeTeacherRequest) returns (BecomeTeacherResponse);
 }
 
 message GetAccountRequest {
@@ -16,4 +18,12 @@ message GetAccountResponse {
     string lastName = 2;
     string email = 3;
     bool isTeacher = 4;
+}
+
+message BecomeTeacherRequest {
+    // Only metadata
+}
+
+message BecomeTeacherResponse {
+    // Only status code
 }

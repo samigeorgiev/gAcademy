@@ -23,6 +23,7 @@ public class AuthInterceptor implements ServerInterceptor {
             Metadata.Key<String> error = Metadata.Key.of("Error", Metadata.ASCII_STRING_MARSHALLER);
             trailers.put(error, "Invalid token");
             serverCall.close(Status.UNAUTHENTICATED, trailers);
+            // TODO logging
             return new ServerCall.Listener<>() {};
         }
 
