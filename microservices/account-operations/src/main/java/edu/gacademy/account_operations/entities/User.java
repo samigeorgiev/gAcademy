@@ -1,6 +1,8 @@
 package edu.gacademy.account_operations.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +24,9 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Teacher teacher;
+
+    @OneToMany(mappedBy = "user")
+    private List<AssignedCourse> assignedCourses;
 
     public User() {
     }
@@ -70,5 +75,20 @@ public class User {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public List<AssignedCourse> getAssignedCourses() {
+        return assignedCourses;
+    }
+
+    public void setAssignedCourses(List<AssignedCourse> assignedCourses) {
+        this.assignedCourses = assignedCourses;
+    }
+
+    public void addCourse(AssignedCourse assignedCourse) {
+        if (assignedCourses == null) {
+            assignedCourses = new ArrayList<>();
+        }
+        assignedCourses.add(assignedCourse);
     }
 }
