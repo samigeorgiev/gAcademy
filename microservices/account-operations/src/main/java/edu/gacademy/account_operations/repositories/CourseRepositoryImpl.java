@@ -1,0 +1,20 @@
+package edu.gacademy.account_operations.repositories;
+
+import edu.gacademy.account_operations.entities.Course;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+public class CourseRepositoryImpl implements CourseRepository {
+
+    private SessionFactory sessionFactory;
+
+    public CourseRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Course getById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Course.class, id);
+    }
+}

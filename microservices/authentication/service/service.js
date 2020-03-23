@@ -4,8 +4,8 @@ const grpc = require('grpc');
 const jwt = require('jsonwebtoken');
 const {getRepository} = require('typeorm');
 
-const errorHandler = require('../../util/errorHandler');
-const User = require('../../model/user');
+const errorHandler = require('../util/errorHandler');
+const User = require('../model/user');
 
 const SALT_ROUNDS = 10;
 
@@ -24,7 +24,7 @@ exports.signUp = async (call, callback) => {
 
     let createdUser;
     try {
-        createdUser = await getRepository(User).insert(user);
+        createdUser = await getRepository(User).save(user);
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);

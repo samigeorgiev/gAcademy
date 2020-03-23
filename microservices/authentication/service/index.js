@@ -3,9 +3,9 @@ const grpc = require('grpc');
 const validator = require('validator');
 const {getRepository} = require('typeorm');
 
-const errorHandler = require('../../util/errorHandler');
+const errorHandler = require('../util/errorHandler');
 const service = require('./service');
-const User = require('../../model/user');
+const User = require('../model/user');
 
 const PASSWORD_LENGTH = {min: 8, max: 64};
 

@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-package authentication;
+option java_package = "edu.gacademy.authentication.grpc.prototypes";
+option java_multiple_files = true;
 
 service Authentication {
     rpc SignUp (SignUpRequest) returns (SignUpResponse);
@@ -35,5 +36,5 @@ message GetUserIdRequest {
 }
 
 message GetUserIdResponse {
-    string userId = 1;
+    uint32 userId = 1;
 }
