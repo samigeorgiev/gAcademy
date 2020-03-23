@@ -1,5 +1,7 @@
 package edu.gacademy.account_operations.util;
 
+import edu.gacademy.account_operations.entities.Course;
+import edu.gacademy.account_operations.entities.Enrollment;
 import edu.gacademy.account_operations.entities.Teacher;
 import edu.gacademy.account_operations.entities.User;
 import org.hibernate.SessionFactory;
@@ -15,6 +17,8 @@ public class HibernateConfig {
         return configuration.configure()
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Teacher.class)
+                .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Enrollment.class)
                 .buildSessionFactory();
     }
 }

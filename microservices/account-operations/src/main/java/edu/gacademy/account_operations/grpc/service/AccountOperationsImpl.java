@@ -77,6 +77,7 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
                     .withDescription("Course not found")
                     .asRuntimeException()
             );
+            return;
         }
         List<Course> enrolledCourses = user.getEnrollments()
                 .stream().map(Enrollment::getCourse)
@@ -86,6 +87,7 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
                     .withDescription("Course already enrolled")
                     .asRuntimeException()
             );
+            return;
         }
         userRepository.enrollCourse(user, course);
         session.getTransaction().commit();

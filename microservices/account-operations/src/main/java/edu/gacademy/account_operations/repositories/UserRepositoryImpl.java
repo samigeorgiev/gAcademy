@@ -32,11 +32,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void enrollCourse(User user, Course course) {
+        Session session = sessionFactory.getCurrentSession();
         Enrollment enrollment = new Enrollment();
         enrollment.setUser(user);
         enrollment.setCourse(course);
         List<Enrollment> enrollments = user.getEnrollments();
         enrollments.add(enrollment);
         user.setEnrollments(enrollments);
+        session.save(user);
     }
 }
