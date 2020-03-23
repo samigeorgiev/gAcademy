@@ -3,6 +3,7 @@ const path = require('path');
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const {createConnection} = require('typeorm');
+const {getConnection} = require('typeorm');
 
 const CourseService = require('./service/Course');
 
@@ -26,7 +27,7 @@ server.addService(
     CourseService,
 );
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5432;
 if (process.env.NODE_ENV === 'production') {
     // TODO create tls
 } else {
@@ -36,4 +37,14 @@ if (process.env.NODE_ENV === 'production') {
 createConnection()
     .then(() => {
         server.start();
+        getConnection()
+            .createQueryBuilder()
+            .insert()
+            .into(Course)
+            .values([
+                {name: 'Triangle 90 60 30', duration: 60, teacher: 'Ivan', category: 'Math'}, 
+                {name: 'Triangle 60 60 60', duration: 50, teacher: 'Ivan', category: 'Math'},
+            ])
+            .execute();
     }).catch(error => console.error(error.stack));
+

@@ -15,14 +15,6 @@ const CategorySchema = new EntitySchema({
         name: {
             type: 'varchar',
         },
-        relations: {
-            childCategories: {
-                target: 'Category',
-                type: 'many-to-one',
-                joinTable: true,
-                cascade: true,
-            },
-        },
     },
 });
 
