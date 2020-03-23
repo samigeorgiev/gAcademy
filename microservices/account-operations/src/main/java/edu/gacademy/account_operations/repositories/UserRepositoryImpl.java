@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserRepositoryImpl implements UserRepository {
 
@@ -40,5 +41,11 @@ public class UserRepositoryImpl implements UserRepository {
         enrollments.add(enrollment);
         user.setEnrollments(enrollments);
         session.save(user);
+    }
+
+    @Override
+    public List<Course> getCourses(User user) {
+        return user.getEnrollments().stream()
+            .map(Enrollment::getCourse).collect(Collectors.toList());
     }
 }

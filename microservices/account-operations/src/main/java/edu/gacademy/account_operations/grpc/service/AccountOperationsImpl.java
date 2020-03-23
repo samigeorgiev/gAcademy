@@ -16,6 +16,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,9 +80,7 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
             );
             return;
         }
-        List<Course> enrolledCourses = user.getEnrollments()
-                .stream().map(Enrollment::getCourse)
-                .collect(Collectors.toList());
+        List<Course> enrolledCourses = userRepository.getCourses(user);
         if (enrolledCourses.contains(course)) {
             responseObserver.onError(Status.ALREADY_EXISTS
                     .withDescription("Course already enrolled")
@@ -93,6 +92,35 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
         session.getTransaction().commit();
         session.close();
         responseObserver.onNext(EnrollCourseResponse.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getCourses(GetCoursesRequest request, StreamObserver<GetCoursesResponse> responseObserver) {
+        try {
+            startTransaction();
+        } catch (StatusRuntimeException e) {
+            responseObserver.onError(e);
+            return;
+        }
+        Session session = sessionFactory.getCurrentSession();
+        int userId = ContextEntries.USER_ID.get();
+        User user = userRepository.getById(userId);
+        List<Course> enrolledCourses = userRepository.getCourses(user);
+        List<GetCoursesResponse.Course> enrolledCoursesDTO = new ArrayList<>();
+        for (Course course : enrolledCourses) {
+            GetCoursesResponse.Course courseDTO = GetCoursesResponse.Course.newBuilder()
+                    .setId(course.getId())
+                    .setTitle(course.getTitle())
+                    .setDescription(course.getDescription())
+                    .build();
+            enrolledCoursesDTO.add(courseDTO);
+        }
+        session.getTransaction().commit();
+        session.close();
+        responseObserver.onNext(
+                GetCoursesResponse.newBuilder().addAllCourses(enrolledCoursesDTO).build()
+        );
         responseObserver.onCompleted();
     }
 

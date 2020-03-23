@@ -7,7 +7,7 @@ service AccountOperations {
     rpc GetAccount (GetAccountRequest) returns (GetAccountResponse);
 
     rpc EnrollCourse (EnrollCourseRequest) returns (EnrollCourseResponse);
-    // rpc GetCourses (GetCoursesRequest) returns (GetCoursesResponse);
+    rpc GetCourses (GetCoursesRequest) returns (GetCoursesResponse);
     // rpc AssignLesson (AssignLessonRequest) returns (AssignLessonResponse);
     // rpc GetLessons (GetLessonsRequest) returns (GetLessonsResponse);
     
@@ -42,4 +42,17 @@ message EnrollCourseRequest {
 
 message EnrollCourseResponse {
     // Only status code
+}
+
+message GetCoursesRequest {
+    // Only metadata
+}
+
+message GetCoursesResponse {
+    message Course {
+        uint32 id = 1;
+        string title = 2;
+        string description = 3;
+    }
+    repeated Course courses = 1;
 }
