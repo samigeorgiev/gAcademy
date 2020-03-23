@@ -3,8 +3,8 @@ package edu.gacademy.account_operations.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "assigned_courses")
-public class AssignedCourse {
+@Table(name = "enrollments")
+public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class AssignedCourse {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    public AssignedCourse() {
+    public Enrollment() {
     }
 
     public int getId() {

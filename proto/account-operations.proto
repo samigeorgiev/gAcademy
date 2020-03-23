@@ -6,7 +6,7 @@ option java_multiple_files = true;
 service AccountOperations {
     rpc GetAccount (GetAccountRequest) returns (GetAccountResponse);
 
-    rpc AssignCourse (AssignCourseRequest) returns (AssignCourseResponse);
+    rpc EnrollCourse (EnrollCourseRequest) returns (EnrollCourseResponse);
     // rpc GetCourses (GetCoursesRequest) returns (GetCoursesResponse);
     // rpc AssignLesson (AssignLessonRequest) returns (AssignLessonResponse);
     // rpc GetLessons (GetLessonsRequest) returns (GetLessonsResponse);
@@ -36,10 +36,10 @@ message BecomeTeacherResponse {
     // Only status code
 }
 
-message AssignCourseRequest {
+message EnrollCourseRequest {
     uint32 courseId = 1;
 }
 
-message AssignCourseResponse {
+message EnrollCourseResponse {
     // Only status code
 }

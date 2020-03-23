@@ -26,7 +26,7 @@ public class User {
     private Teacher teacher;
 
     @OneToMany(mappedBy = "user")
-    private List<AssignedCourse> assignedCourses;
+    private List<Enrollment> enrollments;
 
     public User() {
     }
@@ -77,18 +77,11 @@ public class User {
         this.teacher = teacher;
     }
 
-    public List<AssignedCourse> getAssignedCourses() {
-        return assignedCourses;
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
     }
 
-    public void setAssignedCourses(List<AssignedCourse> assignedCourses) {
-        this.assignedCourses = assignedCourses;
-    }
-
-    public void addCourse(AssignedCourse assignedCourse) {
-        if (assignedCourses == null) {
-            assignedCourses = new ArrayList<>();
-        }
-        assignedCourses.add(assignedCourse);
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 }
