@@ -3,25 +3,45 @@
     justify-content: space-between;
     align-items: center;
     height: 5rem;
-    max-width: 80rem;
-    margin: 0 auto;
-    padding: 1rem .5rem;
     box-sizing: border-box;
 }
 
-.Toolbar > div {
+.MobileOnly { 
+    padding: .25rem;
+}
+
+.DesktopOnly {
+    display: none;
+}
+
+.Container {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    height: 100%;
 }
 
 .LogoContainer {
     height: 1.5rem;
 }
 
-.ExploreContainer {
-    margin-left: 2rem;
-}
+@media (min-width: 53rem) {
+    .MobileOnly {
+        display: none;
+    }
 
-.SignUpButtonContainer {
-    margin-right: .5rem;
+    .DesktopOnly {
+        display: flex;
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 1rem .5rem;
+    }
+
+    .ExploreContainer {
+        margin-left: 2rem;
+    }
+    
+    .SignUpButtonContainer {
+        margin-right: .5rem;
+    }
 }

@@ -1,0 +1,17 @@
+.DrawerToggle {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 5rem;
+    height: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.DrawerToggle div {
+    width: 90%;
+    height: 3px;
+    background-color: black;
+}

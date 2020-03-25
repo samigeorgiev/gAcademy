@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './index.module.css';
 
-import searchIcon from '../../../../assets/images/search.svg';
+import searchIcon from '../../../../images/search.svg';
 
 const Search = props => {
     return (

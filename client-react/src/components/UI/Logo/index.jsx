@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './index.module.css';
 
-import logo from '../../../assets/images/logo.png';
+import logo from '../../../images/logo.png';
 
 const Logo = () => (
     <div className={styles.Logo}>
