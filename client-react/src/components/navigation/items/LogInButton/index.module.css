@@ -1,0 +1,12 @@
+.LogInButton {
+    padding: .5rem 1rem;
+    font-size: 1.1rem;
+    color: #247291;
+    background: transparent;
+    border: 1px solid #247291;
+    cursor: pointer;
+}
+
+.LogInButton:focus {
+    outline: none;
+}

@@ -1,0 +1,45 @@
+.Search {
+    display: flex;
+    justify-content: space-between;
+    height: 2.5rem;
+    box-sizing: border-box;
+    background: #ddd;
+    border: 1px solid transparent;
+}
+
+.Search:focus-within {
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.Search input {
+    display: inline-block;
+    width: 30rem;
+    height: 100%;
+    padding: .75rem;
+    box-sizing: border-box;
+    font-size: 1.25rem;
+    background: transparent;
+    border: none;
+}
+
+.Search input:focus {
+    outline: none;
+}
+
+.SearchButton {
+    height: 100%;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.SearchButton:focus {
+    outline: none;
+}
+
+.SearchButton img {
+    display: block;
+    height: 100%;
+}

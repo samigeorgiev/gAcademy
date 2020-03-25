@@ -1,0 +1,27 @@
+.Toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1rem .5rem;
+    box-sizing: border-box;
+}
+
+.Toolbar > div {
+    display: flex;
+    align-items: center;
+}
+
+.LogoContainer {
+    height: 1.5rem;
+}
+
+.ExploreContainer {
+    margin-left: 2rem;
+}
+
+.SignUpButtonContainer {
+    margin-right: .5rem;
+}

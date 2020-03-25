@@ -1,0 +1,12 @@
+.SignUpButton {
+    padding: .5rem 1rem;
+    font-size: 1.1rem;
+    color: white;
+    background: #247291;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.SignUpButton:focus {
+    outline: none;
+}
