@@ -6,11 +6,7 @@ const {createConnection} = require('typeorm');
 const {getConnection} = require('typeorm');
 
 const CourseService = require('./service/Course');
-
-require('./model/user');
-require('./model/course');
-require('./model/category');
-require('./model/teacher');
+const Course = require('./model/Course');
 
 const protoDefinition =
     protoLoader.loadSync(path.join(__dirname, process.env.PROTO_PATH), {
@@ -37,14 +33,14 @@ if (process.env.NODE_ENV === 'production') {
 createConnection()
     .then(() => {
         server.start();
-        getConnection()
-            .createQueryBuilder()
-            .insert()
-            .into(Course)
-            .values([
-                {name: 'Triangle 90 60 30', duration: 60, teacher: 'Ivan', category: 'Math'}, 
-                {name: 'Triangle 60 60 60', duration: 50, teacher: 'Ivan', category: 'Math'},
-            ])
-            .execute();
+        // getConnection()
+        //     .createQueryBuilder()
+        //     .insert()
+        //     .into(Course)
+        //     .values([
+        //         {title: 'Triangle 90 60 30', description: 'math', creator: 5},
+        //         {title: 'Triangle 60 60 60', description: 'math', creator: 5},
+        //     ])
+        //     .execute();
     }).catch(error => console.error(error.stack));
 

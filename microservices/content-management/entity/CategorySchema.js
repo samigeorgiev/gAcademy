@@ -1,11 +1,10 @@
-const {EntitySchema} = require('typeorm');
+const EntitySchema = require('typeorm').EntitySchema;
+const Category = ('../model/Category').Category;
 
-const Category = require('../model/category');
-
-const CategorySchema = new EntitySchema({
+module.exports = new EntitySchema({
     name: 'Category',
-    tableName: 'Categories',
     target: Category,
+    tableName: 'categories',
     columns: {
         id: {
             primary: true,
@@ -17,5 +16,3 @@ const CategorySchema = new EntitySchema({
         },
     },
 });
-
-module.exports = CategorySchema;

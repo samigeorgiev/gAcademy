@@ -1,11 +1,10 @@
-const {EntitySchema} = require('typeorm');
+const EntitySchema = require('typeorm').EntitySchema;
+const Teacher = ('../model/Teacher').Teacher;
 
-const Teacher = require('../model/teacher');
-
-const TeacherSchema = new EntitySchema({
+module.exports = new EntitySchema({
     name: 'Teacher',
-    tableName: 'Teachers',
     target: Teacher,
+    tableName: 'teachers',
     columns: {
         id: {
             primary: true,
@@ -20,5 +19,3 @@ const TeacherSchema = new EntitySchema({
         },
     },
 });
-
-module.exports = TeacherSchema;

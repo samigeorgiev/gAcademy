@@ -7,12 +7,10 @@ service Course {
 }
 
 message NewCourseRequest {
-    string name = 1;
-    string category = 2;
-    int32 duration = 3;
-    string teacher = 4;
+    string title = 1;
+    string description = 2;
 }
 
 message NewCourseResponse {
-	
+
 }

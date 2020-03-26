@@ -1,30 +1,27 @@
 const grpc = require('grpc');
 const {getRepository} = require('typeorm');
 
+const errorHandler = require('../../util/errorHandler');
+
 const service = require('./service');
-const Course = require('../../model/course');
-const Category = require('../../model/category');
+const Course = require('../../model/Course');
 
 exports.newCourse = async (call, callback) => {
-    const {name, category, teacher} = call.request;
+    const {title, description} = call.request;
 
-    let categoryAuth;
+    let duplicateCourse;
+
     try {
-        categoryAuth = await Category.findOne({
-            where: {name: category},
-        });
+        duplicateCourse =
+        await getRepository(Course).findOne({where: {title, description}});
     } catch (error) {
-        console.error(`No such category: ${category}`);
-        return callback(grpc.status.INTERNAL, null);
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+    if (duplicateCourse) {
+        const status = grpc.status.ALREADY_EXISTS;
+        return errorHandler(callback, status, 'Course already created');
     }
 
-    let teacherAuth;
-    try {
-        teacherAuth = await User.findOne({
-            where: {name: teacher},
-        });
-    } catch (error) {
-        console.error(`Teacher does not exist: ${teacher}`);
-        return callback(grpc.status.INTERNAL, null);
-    }
+    service.newCourse(call, callback);
 };

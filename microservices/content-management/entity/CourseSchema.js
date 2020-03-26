@@ -1,38 +1,24 @@
-const {EntitySchema} = require('typeorm');
+const EntitySchema = require('typeorm').EntitySchema;
+const Course = ('../model/Course').Course;
 
-const Course = require('../model/course');
-
-const CourseSchema = new EntitySchema({
+module.exports = new EntitySchema({
     name: 'Course',
-    tableName: 'Courses',
     target: Course,
+    tableName: 'courses',
     columns: {
         id: {
             primary: true,
             type: 'int',
             generated: true,
         },
-        name: {
+        title: {
             type: 'varchar',
         },
-        duration: {
+        description: {
+            type: 'varchar',
+        },
+        creator: {
             type: 'int',
         },
     },
-    relations: {
-        teachers: {
-            target: 'Teacher',
-            type: 'many-to-one',
-            joinTable: true,
-            cascade: true,
-        },
-        categories: {
-            target: 'Category',
-            type: 'one-to-many',
-            joinTable: true,
-            cascade: true,
-        },
-    },
 });
-
-module.exports = CourseSchema;
