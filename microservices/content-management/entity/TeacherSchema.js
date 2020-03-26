@@ -11,10 +11,7 @@ module.exports = new EntitySchema({
             type: 'int',
             generated: true,
         },
-        name: {
-            type: 'varchar',
-        },
-        maxStudents: {
+        user_id: {
             type: 'int',
         },
     },

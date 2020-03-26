@@ -4,7 +4,7 @@ const User = require('../model/User');
 
 const UserSchema = new EntitySchema({
     name: 'User',
-    tableName: 'Users',
+    tableName: 'users',
     target: User,
     columns: {
         id: {
