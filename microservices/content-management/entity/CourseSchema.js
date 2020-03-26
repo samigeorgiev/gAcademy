@@ -19,6 +19,7 @@ module.exports = new EntitySchema({
         },
         creator: {
             type: 'int',
+            nullable: true,
         },
     },
 });

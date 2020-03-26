@@ -1,20 +1,26 @@
 const grpc = require('grpc');
 
-const Course = require('../../model/Course');
+const {getConnection} = require('typeorm');
+const Course = require('../../entity/CourseSchema');
 
 exports.newCourse = async (call, callback) => {
-    const {name, category, duration, teacher} = call.request;
+    const {title, description} = call.request;
+    // const course = new Course(null, title, description, null);
 
-    // let course;
-    try {
-        course = await Course.create({
-            name,
-            category,
-            duration,
-            teacher,
-        });
-    } catch (error) {
-        console.log(error);
-        return callback(grpc.status.INTERNAL, null);
-    }
+    // getConnection().getRepository(Course).insert(course);
+    // try {
+        // await getConnection().getRepository(Course).insert(course);
+        await getConnection()
+            .createQueryBuilder()
+            .insert()
+            .into(Course)
+            .values([
+                { title, description }, 
+                { title, description },
+            ])
+        .execute();
+    // } catch (error) {
+        // const status = grpc.status.INTERNAL;
+        // return errorHandler(callback, status, 'Database error', error);
+    // }
 };

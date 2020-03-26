@@ -6,7 +6,7 @@ const {createConnection} = require('typeorm');
 const {getConnection} = require('typeorm');
 
 const CourseService = require('./service/Course');
-const Course = require('./model/Course');
+// const CourseSchema = require('./entity/CourseSchema')
 
 const protoDefinition =
     protoLoader.loadSync(path.join(__dirname, process.env.PROTO_PATH), {
@@ -23,7 +23,7 @@ server.addService(
     CourseService,
 );
 
-const port = process.env.PORT || 5432;
+const port = process.env.PORT || 9001;
 if (process.env.NODE_ENV === 'production') {
     // TODO create tls
 } else {
@@ -36,10 +36,10 @@ createConnection()
         // getConnection()
         //     .createQueryBuilder()
         //     .insert()
-        //     .into(Course)
+        //     .into(CourseSchema)
         //     .values([
-        //         {title: 'Triangle 90 60 30', description: 'math', creator: 5},
-        //         {title: 'Triangle 60 60 60', description: 'math', creator: 5},
+        //         {title: 'Triangle90 60 30', description: 'math', creator: 5},
+        //         {title: 'Triangle60 60 60', description: 'math', creator: 5},
         //     ])
         //     .execute();
     }).catch(error => console.error(error.stack));
