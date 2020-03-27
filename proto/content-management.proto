@@ -4,6 +4,7 @@ package content_management;
 
 service Course {
     rpc NewCourse(NewCourseRequest) returns (NewCourseResponse);
+    rpc GetCourse(GetCourseRequest) returns (GetCourseResponse);
 }
 
 message NewCourseRequest {
@@ -14,3 +15,15 @@ message NewCourseRequest {
 message NewCourseResponse {
 
 }
+
+message GetCourseRequest {
+    int32 id = 1;
+}
+
+message GetCourseResponse {
+	string title = 1;
+	string description = 2;
+	int32 creator = 3;
+	int32 category = 4;
+}
+
