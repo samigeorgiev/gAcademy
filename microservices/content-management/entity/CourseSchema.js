@@ -1,5 +1,7 @@
 const EntitySchema = require('typeorm').EntitySchema;
 const Course = ('../model/Course').Course;
+const Category = ('../model/Category').Category;
+const Teacher = ('../model/Teacher').Teacher;
 
 module.exports = new EntitySchema({
     name: 'Course',
@@ -17,9 +19,19 @@ module.exports = new EntitySchema({
         description: {
             type: 'varchar',
         },
-        creator: {
-            type: 'int',
-            nullable: true,
+    },
+    relations: {
+        Category: {
+            target: 'Category',
+            type: 'many-to-one',
+            joinTable: false,
+            cascade: true,
+        },
+        Teacher: {
+            target: 'Teacher',
+            type: 'many-to-one',
+            joinTable:  false,
+            cascade: true,
         },
     },
 });

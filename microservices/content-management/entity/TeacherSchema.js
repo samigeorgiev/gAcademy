@@ -1,5 +1,6 @@
 const EntitySchema = require('typeorm').EntitySchema;
 const Teacher = ('../model/Teacher').Teacher;
+const User = ('../model/User').User;
 
 module.exports = new EntitySchema({
     name: 'Teacher',
@@ -11,8 +12,9 @@ module.exports = new EntitySchema({
             type: 'int',
             generated: true,
         },
-        user_id: {
+        creator_id: {
             type: 'int',
         },
     },
+    // TODO relation to 'users'
 });

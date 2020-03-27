@@ -33,14 +33,5 @@ if (process.env.NODE_ENV === 'production') {
 createConnection()
     .then(() => {
         server.start();
-        // getConnection()
-        //     .createQueryBuilder()
-        //     .insert()
-        //     .into(CourseSchema)
-        //     .values([
-        //         {title: 'Triangle90 60 30', description: 'math', creator: 5},
-        //         {title: 'Triangle60 60 60', description: 'math', creator: 5},
-        //     ])
-        //     .execute();
     }).catch(error => console.error(error.stack));
 
