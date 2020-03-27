@@ -27,9 +27,14 @@ exports.newCourse = async (call, callback) => {
 
 exports.getCourse = async (call, callback) => {
     const {id} = call.request;
+    let course
 
     const courseRepository = getConnection().getRepository(Course);
-
-    const course = await courseRepository.findOne(id);
-    console.log(course);
+    try {
+        course = await courseRepository.findOne(id);
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+    callback(null, course);
 };
