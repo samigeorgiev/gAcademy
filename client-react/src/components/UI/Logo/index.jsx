@@ -4,7 +4,7 @@ import styles from './index.module.css';
 
 import logo from '../../../images/logo.png';
 
-const Logo = () => (
+const Logo = props => (
     <div className={styles.Logo}>
         <img src={logo} alt="logo" />
     </div>

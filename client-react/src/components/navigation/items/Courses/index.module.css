@@ -1,0 +1,11 @@
+.Courses {
+    font: inherit;
+    font-size: 1rem;
+    margin-left: 1rem;
+    background: none;
+    border: none;
+}
+
+.Courses:focus {
+    outline: none;
+}

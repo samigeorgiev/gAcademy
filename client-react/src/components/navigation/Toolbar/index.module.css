@@ -25,7 +25,14 @@
     height: 1.5rem;
 }
 
-@media (min-width: 53rem) {
+.AuthContainer {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+@media (min-width: 59rem) {
     .MobileOnly {
         display: none;
     }
