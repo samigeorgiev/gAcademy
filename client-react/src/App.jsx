@@ -1,17 +1,31 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
+
+import { Switch, Route } from 'react-router-dom';
 
 import { AuthContext } from './context/auth';
+
+import { Tmp } from './pages';
 
 import Layout from './components/Layout';
 
 const App = props => {
     const { tryLogIn } = useContext(AuthContext);
 
-    useEffect(() => tryLogIn(), [tryLogIn]);
+    tryLogIn();
 
     return (
         <Layout>
-            <h1>App</h1>
+            <Switch>
+                <Route path="/" exact>
+                    <h1>Home Route</h1>
+                </Route>
+                <Route path="/tmp" exact>
+                    <Tmp />
+                </Route>
+                <Route path="/">
+                    <h1>Error 404</h1>
+                </Route>
+            </Switch>
         </Layout>
     );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import BecomeTeacher from '../BecomeTeacher';
 import LogIn from '../auth/LogIn';
 import Modal from '../UI/Modal';
 import SignUp from '../auth/SignUp';
@@ -18,7 +19,7 @@ const Layout = props => {
     const forms = {
         'Sign Up': <SignUp onClose={closeForm} />,
         'Log In': <LogIn onClose={closeForm} />,
-        'Become teacher': <h1>Become teacher</h1>
+        'Become teacher': <BecomeTeacher onClose={closeForm} />
     };
 
     return (

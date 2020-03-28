@@ -1,0 +1,30 @@
+.Button {
+    padding: .5rem 1rem;
+    font-size: 1.1rem;
+    color: #247291;
+    background: white;
+    border: 1px solid #247291;
+    cursor: pointer;
+}
+
+.Button:focus {
+    outline: none;
+}
+
+.Button:hover {
+    color: white;
+    background: #247291;
+    border: 1px solid transparent;
+}
+
+.Filled {
+    color: white;
+    background: #247291;
+    border: 1px solid transparent;
+}
+
+.Filled:hover {
+    color: #247291;
+    background: white;
+    border: 1px solid #247291;
+}

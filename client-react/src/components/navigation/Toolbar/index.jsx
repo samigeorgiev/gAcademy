@@ -3,15 +3,14 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../context/auth';
 
 import Account from '../items/Account';
+import Button from '../../UI/Button';
 import Calendar from '../items/Calendar';
 import Courses from '../items/Courses';
 import DrawerToggle from '../SideDrawer/DrawerToggle';
 import Explore from '../items/Explore';
-import LogInButton from '../items/LogInButton';
 import Logo from '../../UI/Logo';
 import Search from '../items/Search';
 import SideDrawer from '../SideDrawer';
-import SignUpButton from '../items/SignUpButton';
 
 import styles from './index.module.css';
 
@@ -40,14 +39,18 @@ const Toolbar = props => {
                         <>
                             <Calendar />
                             <Courses />
-                            <Account />
+                            <Account
+                                showBecomeTeacher={props.showBecomeTeacher}
+                            />
                         </>
                     ) : (
                         <>
                             <div className={styles.SignUpButtonContainer}>
-                                <SignUpButton onClick={props.showSignUp} />
+                                <Button onClick={props.showSignUp} filled>
+                                    Sign up
+                                </Button>
                             </div>
-                            <LogInButton onClick={props.showLogIn} />
+                            <Button onClick={props.showLogIn}>Log in</Button>
                         </>
                     )}
                 </div>
@@ -77,8 +80,12 @@ const Toolbar = props => {
                     ) : (
                         <>
                             <div className={styles.AuthContainer}>
-                                <SignUpButton onClick={props.showSignUp} />
-                                <LogInButton onClick={props.showLogIn} />
+                                <Button onClick={props.showSignUp} filled>
+                                    Sign up
+                                </Button>
+                                <Button onClick={props.showLogIn}>
+                                    Log in
+                                </Button>
                             </div>
                             <Explore />
                         </>
