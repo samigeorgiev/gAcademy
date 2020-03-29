@@ -2,7 +2,7 @@
 const bcrypt = require('bcrypt');
 const grpc = require('grpc');
 const jwt = require('jsonwebtoken');
-const {getRepository} = require('typeorm');
+const { getRepository } = require('typeorm');
 
 const errorHandler = require('../util/errorHandler');
 const User = require('../model/user');
@@ -10,7 +10,7 @@ const User = require('../model/user');
 const SALT_ROUNDS = 10;
 
 exports.signUp = async (call, callback) => {
-    const {email, password, firstName, lastName} = call.request;
+    const { email, password, firstName, lastName } = call.request;
 
     let hashedPassword;
     try {
@@ -30,23 +30,21 @@ exports.signUp = async (call, callback) => {
         return errorHandler(callback, status, 'Database error', error);
     }
 
-    const token = jwt.sign(
-        {userId: createdUser.id},
-        process.env.JWT_SECRET,
-        {expiresIn: process.env.JWT_VALID_TIME},
-    );
+    const token = jwt.sign({ userId: createdUser.id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_VALID_TIME
+    });
 
-    callback(null, {token, expiresIn: process.env.JWT_VALID_TIME});
+    callback(null, { token, expiresIn: process.env.JWT_VALID_TIME });
 };
 
 exports.logIn = async (call, callback) => {
-    const {email, password} = call.request;
+    const { email, password } = call.request;
 
     let user;
     try {
         user = await getRepository(User).findOne({
             select: ['id', 'password'],
-            where: {email},
+            where: { email }
         });
     } catch (error) {
         const status = grpc.status.INTERNAL;
@@ -67,17 +65,15 @@ exports.logIn = async (call, callback) => {
         return errorHandler(callback, status, 'Server error', error);
     }
 
-    const token = jwt.sign(
-        {userId: user.id},
-        process.env.JWT_SECRET,
-        {expiresIn: process.env.JWT_VALID_TIME},
-    );
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_VALID_TIME
+    });
 
-    callback(null, {token, expiresIn: process.env.JWT_VALID_TIME});
+    callback(null, { token, expiresIn: process.env.JWT_VALID_TIME });
 };
 
 exports.getUserId = async (call, callback) => {
-    const {token} = call.request;
+    const { token } = call.request;
 
     let userId;
     try {
@@ -91,7 +87,7 @@ exports.getUserId = async (call, callback) => {
     try {
         user = await getRepository(User).findOne({
             select: ['id'],
-            where: {id: userId},
+            where: { id: userId }
         });
     } catch (error) {
         const status = grpc.status.INTERNAL;
@@ -102,5 +98,5 @@ exports.getUserId = async (call, callback) => {
         return errorHandler(callback, status, 'User id in token is invalid');
     }
 
-    callback(null, {userId: user.id});
+    callback(null, { userId: user.id });
 };

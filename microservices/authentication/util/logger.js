@@ -3,7 +3,7 @@ const path = require('path');
 
 const winston = require('winston');
 
-const {combine, timestamp, label, printf} = winston.format;
+const { combine, timestamp, label, printf } = winston.format;
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -14,11 +14,11 @@ const combinedLog = path.join(dirname, 'logs', env, 'combined.log');
 const transports = [
     new winston.transports.File({
         filename: errorLog,
-        level: 'error',
+        level: 'error'
     }),
     new winston.transports.File({
-        filename: combinedLog,
-    }),
+        filename: combinedLog
+    })
 ];
 
 if (env !== 'production') {
@@ -28,13 +28,11 @@ if (env !== 'production') {
 const logger = winston.createLogger({
     level: process.env.LOG_LEVEL || 'info',
     format: combine(
-        label({label: path.basename(process.mainModule.filename)}),
-        timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
-        printf(
-            info => `${info.level} [${info.label}]: ${info.message}`,
-        ),
+        label({ label: path.basename(process.mainModule.filename) }),
+        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        printf(info => `${info.level} [${info.label}]: ${info.message}`)
     ),
-    transports,
+    transports
 });
 
 module.exports = logger;

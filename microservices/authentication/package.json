@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r dotenv/config index.js dotenv_config_path=.env.production",
-    "dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development --exec 'yarn lint && node'",
-    "dev-force": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development",
-    "lint": "eslint './**'"
+    "dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development",
+    "lint": "eslint './**/*.js'"
   },
   "author": "Samuil Georgiev",
   "license": "MIT",

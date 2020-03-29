@@ -1,16 +1,16 @@
 // TODO oauth 2
 const grpc = require('grpc');
 const validator = require('validator');
-const {getRepository} = require('typeorm');
+const { getRepository } = require('typeorm');
 
 const errorHandler = require('../util/errorHandler');
 const service = require('./service');
 const User = require('../model/user');
 
-const PASSWORD_LENGTH = {min: 8, max: 64};
+const PASSWORD_LENGTH = { min: 8, max: 64 };
 
 exports.signUp = async (call, callback) => {
-    const {email, password, firstName, lastName} = call.request;
+    const { email, password, firstName, lastName } = call.request;
 
     if (!validator.isEmail(email)) {
         const status = grpc.status.INVALID_ARGUMENT;
@@ -29,7 +29,7 @@ exports.signUp = async (call, callback) => {
 
     let existingUser;
     try {
-        existingUser = await getRepository(User).findOne({where: {email}});
+        existingUser = await getRepository(User).findOne({ where: { email } });
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
@@ -43,7 +43,7 @@ exports.signUp = async (call, callback) => {
 };
 
 exports.logIn = (call, callback) => {
-    const {email} = call.request;
+    const { email } = call.request;
     if (!validator.isEmail(email)) {
         const status = grpc.status.INVALID_ARGUMENT;
         return errorHandler(callback, status, 'Invalid email');
@@ -52,7 +52,7 @@ exports.logIn = (call, callback) => {
 };
 
 exports.getUserId = (call, callback) => {
-    const {token} = call.request;
+    const { token } = call.request;
     if (!token) {
         const status = grpc.status.INVALID_ARGUMENT;
         return errorHandler(callback, status, 'Invalid token');

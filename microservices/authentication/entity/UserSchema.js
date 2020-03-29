@@ -1,4 +1,4 @@
-const {EntitySchema} = require('typeorm');
+const { EntitySchema } = require('typeorm');
 
 const User = require('../model/user');
 
@@ -10,23 +10,23 @@ const UserSchema = new EntitySchema({
         id: {
             primary: true,
             type: 'int',
-            generated: true,
+            generated: true
         },
         email: {
-            type: 'varchar',
+            type: 'varchar'
         },
         password: {
-            type: 'varchar',
+            type: 'varchar'
         },
         firstName: {
             name: 'first_name',
-            type: 'varchar',
+            type: 'varchar'
         },
         lastName: {
             name: 'last_name',
-            type: 'varchar',
-        },
-    },
+            type: 'varchar'
+        }
+    }
 });
 
 module.exports = UserSchema;
