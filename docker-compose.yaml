@@ -1,19 +1,25 @@
 version: "3"
 
 services:
-    # authentication:
-    #     build: ./microservices/authentication
-    #     environment: 
-    #         - NODE_ENV=${NODE_ENV}
-    #         - DB_TYPE=${DB_TYPE}
-    #         - DB_HOST=${DB_HOST}
-    #         - DB_PORT=${DB_PORT}
-    #     env_file: 
-    #         - ./env/authentication.env
-    #     volumes: 
-    #         - ./microservices/authentication/logs:/app/logs
-    #     networks:
-    #         - microservices
+    authentication:
+        build: ./microservices/authentication
+        environment: 
+            - NODE_ENV=${NODE_ENV}
+            - DB_TYPE=${DB_TYPE}
+            - DB_HOST=${DB_HOST}
+            - DB_PORT=${DB_PORT}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_LOGGING=${DB_LOGGING}
+            - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
+            - JWT_SECRET=${JWT_SECRET}
+            - JWT_VALID_TIME=${JWT_VALID_TIME}
+            - LOG_LEVEL=${LOG_LEVEL}
+        volumes: 
+            - ./microservices/authentication/logs:/app/logs
+        networks:
+            - microservices
 
     proxy:
         build: ./proxy
