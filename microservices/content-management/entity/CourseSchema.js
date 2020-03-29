@@ -1,7 +1,7 @@
 const EntitySchema = require('typeorm').EntitySchema;
 const Course = ('../model/Course').Course;
-const Category = ('../model/Category').Category;
-const Teacher = ('../model/Teacher').Teacher;
+// const Category = ('../model/Category').Category;
+// const Teacher = ('../model/Teacher').Teacher;
 
 module.exports = new EntitySchema({
     name: 'Course',
@@ -30,7 +30,7 @@ module.exports = new EntitySchema({
         Teacher: {
             target: 'Teacher',
             type: 'many-to-one',
-            joinTable:  false,
+            joinTable: false,
             cascade: true,
         },
     },

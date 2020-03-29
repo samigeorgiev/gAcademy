@@ -1,6 +1,6 @@
 const EntitySchema = require('typeorm').EntitySchema;
 const Teacher = ('../model/Teacher').Teacher;
-const User = ('../model/User').User;
+// const User = ('../model/User').User;
 
 module.exports = new EntitySchema({
     name: 'Teacher',
