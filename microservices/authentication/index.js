@@ -18,6 +18,7 @@ server.addService(protoDescriptor.Authentication.service, service);
 const port = process.env.PORT;
 if (process.env.NODE_ENV === 'production') {
     // TODO create tls
+    server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 } else {
     server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 }

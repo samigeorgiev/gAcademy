@@ -45,6 +45,7 @@ const LogIn = props => {
             setIsLoading(false);
             if (error) {
                 setError(error.message);
+                console.log(error);
                 // TODO proper error handling
                 return;
             }
