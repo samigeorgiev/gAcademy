@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const AuthContext = React.createContext({
     token: null,
+    isTeacher: false,
     tryLogIn: () => {},
     logIn: (token, expiresIn) => {},
     logOut: () => {}
@@ -9,6 +10,7 @@ const AuthContext = React.createContext({
 
 const AuthContextProvider = props => {
     const [token, setToken] = useState(null);
+    const [isTeacher, setIsTeacher] = useState(false);
     const [logOutTimeout, setLogOutTimeout] = useState(null);
 
     const tryLogIn = () => {
@@ -40,7 +42,9 @@ const AuthContextProvider = props => {
     };
 
     return (
-        <AuthContext.Provider value={{ token, tryLogIn, logIn, logOut }}>
+        <AuthContext.Provider
+            value={{ token, isTeacher, tryLogIn, logIn, logOut }}
+        >
             {props.children}
         </AuthContext.Provider>
     );
