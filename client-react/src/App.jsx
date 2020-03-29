@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { Switch, Route } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ import Layout from './components/Layout';
 const App = props => {
     const { tryLogIn } = useContext(AuthContext);
 
-    tryLogIn();
+    useEffect(() => tryLogIn(), [tryLogIn]);
 
     return (
         <Layout>

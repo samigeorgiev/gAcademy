@@ -3,6 +3,8 @@
     text-align: center;
 }
 
-.BecomeTeacher p {
-    color: blue;
+.ButtonsContainer {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem;
 }
