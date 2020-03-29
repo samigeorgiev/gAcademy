@@ -1,7 +1,7 @@
 /node_modules
-/proto
 /.vscode
 /logs
 .env*
-ormconfig.json
+.eslintrc.json
+.prettierrc.json
 yarn-error.log

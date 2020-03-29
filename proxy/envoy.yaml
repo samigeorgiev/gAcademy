@@ -71,10 +71,10 @@ static_resources:
     type: logical_dns
     http2_protocol_options: {}
     lb_policy: round_robin
-    hosts: [{ socket_address: { address: localhost, port_value: 9000 }}]
+    hosts: [{ socket_address: { address: authentication, port_value: 9000 }}]
   - name: account_operations_service
     connect_timeout: 0.25s
     type: logical_dns
     http2_protocol_options: {}
     lb_policy: round_robin
-    hosts: [{ socket_address: { address: localhost, port_value: 9002 }}]
+    hosts: [{ socket_address: { address: account-operations, port_value: 9002 }}]

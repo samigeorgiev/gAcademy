@@ -1,5 +1,3 @@
-const path = require('path');
-
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const { createConnection } = require('typeorm');
@@ -7,20 +5,17 @@ const { createConnection } = require('typeorm');
 const service = require('./service');
 const logger = require('./util/logger');
 
-const packageDefinition = protoLoader.loadSync(
-    path.join(__dirname, process.env.PROTO_PATH),
-    {
-        keepCase: true,
-        enums: String,
-        defaults: true
-    }
-);
+const packageDefinition = protoLoader.loadSync('./proto/authentication.proto', {
+    keepCase: true,
+    enums: String,
+    defaults: true
+});
 const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
 server.addService(protoDescriptor.Authentication.service, service);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
 if (process.env.NODE_ENV === 'production') {
     // TODO create tls
 } else {

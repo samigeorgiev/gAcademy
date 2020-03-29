@@ -30,7 +30,11 @@ const logger = winston.createLogger({
     format: combine(
         label({ label: path.basename(process.mainModule.filename) }),
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-        printf(info => `${info.level} [${info.label}]: ${info.message}`)
+        printf(
+            info =>
+                // eslint-disable-next-line
+                `${info.level} [${info.label}] at ${info.timestamp}: ${info.message}`
+        )
     ),
     transports
 });
