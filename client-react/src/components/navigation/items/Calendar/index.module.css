@@ -1,0 +1,27 @@
+.CalendarContainer {
+    padding-right: 1rem;
+    border-right: 1px solid #555;
+    color: #555;
+}
+
+.Calendar {
+    padding: .5rem .5rem;
+    font: inherit;
+    font-size: 1rem;
+    color: #333;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.Calendar:focus {
+    outline: none;
+}
+
+.Calendar:hover {
+    background: #eee;
+}
+
+.ArrowContainer {
+    font-size: .8rem;
+}
