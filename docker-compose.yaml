@@ -21,6 +21,16 @@ services:
         networks:
             - microservices
 
+    account-operations:
+        build: ./microservices/account-operations
+        environment: 
+            - DB_URL=${DB_JDBC_URL}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - AUTH_URL=authentication:9000
+        networks: 
+            - microservices
+
     proxy:
         build: ./proxy
         volumes:

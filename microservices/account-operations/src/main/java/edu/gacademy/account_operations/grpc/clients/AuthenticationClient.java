@@ -9,13 +9,13 @@ import io.grpc.StatusRuntimeException;
 
 import java.util.concurrent.TimeUnit;
 
-public class AuthClient {
+public class AuthenticationClient {
 
     private static ManagedChannel channel;
 
     private static AuthenticationGrpc.AuthenticationBlockingStub blockingStub;
 
-    private AuthClient() {
+    private AuthenticationClient() {
     }
 
     public static void init(String url) {

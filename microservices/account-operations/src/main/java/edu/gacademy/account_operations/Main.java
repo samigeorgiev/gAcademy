@@ -1,8 +1,8 @@
 package edu.gacademy.account_operations;
 
 import edu.gacademy.account_operations.grpc.AccountOperationsServer;
-import edu.gacademy.account_operations.grpc.clients.AuthClient;
-import edu.gacademy.account_operations.grpc.interceptors.AuthInterceptor;
+import edu.gacademy.account_operations.grpc.clients.AuthenticationClient;
+import edu.gacademy.account_operations.grpc.interceptors.AuthenticationInterceptor;
 import edu.gacademy.account_operations.grpc.interceptors.ErrorHandlerInterceptor;
 import edu.gacademy.account_operations.grpc.interceptors.SessionInterceptor;
 import edu.gacademy.account_operations.grpc.prototypes.AccountOperationsGrpc.AccountOperationsImplBase;
@@ -22,15 +22,15 @@ public class Main {
         CourseRepository courseRepository = new CourseRepositoryImpl(sessionFactory);
         AccountOperationsImplBase accountOperationsService =
                 new AccountOperationsImpl(userRepository, courseRepository);
-        ServerInterceptor authInterceptor = new AuthInterceptor();
+        ServerInterceptor authenticationInterceptor = new AuthenticationInterceptor();
         ServerInterceptor errorHandlerInterceptor = new ErrorHandlerInterceptor();
         ServerInterceptor sessionInterceptor = new SessionInterceptor(sessionFactory);
 
-        AuthClient.init(System.getenv("AUTH_URL"));
+        AuthenticationClient.init(System.getenv("AUTH_URL"));
 
         AccountOperationsServer server = new AccountOperationsServer(
                 accountOperationsService,
-                authInterceptor, errorHandlerInterceptor, sessionInterceptor
+                authenticationInterceptor, errorHandlerInterceptor, sessionInterceptor
         );
 
         try {

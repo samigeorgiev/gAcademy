@@ -15,7 +15,7 @@ public class AccountOperationsServer {
 
     private AccountOperationsGrpc.AccountOperationsImplBase accountOperationsService;
 
-    private ServerInterceptor authInterceptor;
+    private ServerInterceptor authenticationInterceptor;
 
     private ServerInterceptor errorHandlerInterceptor;
 
@@ -23,12 +23,12 @@ public class AccountOperationsServer {
 
     public AccountOperationsServer(
             AccountOperationsGrpc.AccountOperationsImplBase accountOperationsService,
-            ServerInterceptor authInterceptor,
+            ServerInterceptor authenticationInterceptor,
             ServerInterceptor errorHandlerInterceptor,
             ServerInterceptor sessionInterceptor
     ) {
         this.accountOperationsService = accountOperationsService;
-        this.authInterceptor = authInterceptor;
+        this.authenticationInterceptor = authenticationInterceptor;
         this.errorHandlerInterceptor = errorHandlerInterceptor;
         this.sessionInterceptor = sessionInterceptor;
     }
@@ -40,7 +40,7 @@ public class AccountOperationsServer {
                 .addService(ServerInterceptors.intercept(
                         accountOperationsService,
                         errorHandlerInterceptor,
-                        authInterceptor,
+                        authenticationInterceptor,
                         sessionInterceptor
                 ))
                 .build()

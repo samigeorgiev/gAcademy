@@ -1,10 +1,10 @@
 package edu.gacademy.account_operations.grpc.interceptors;
 
 import edu.gacademy.account_operations.grpc.ContextEntries;
-import edu.gacademy.account_operations.grpc.clients.AuthClient;
+import edu.gacademy.account_operations.grpc.clients.AuthenticationClient;
 import io.grpc.*;
 
-public class AuthInterceptor implements ServerInterceptor {
+public class AuthenticationInterceptor implements ServerInterceptor {
 
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(
@@ -20,7 +20,7 @@ public class AuthInterceptor implements ServerInterceptor {
             if (token == null) {
                 throw new StatusRuntimeException(Status.UNAUTHENTICATED);
             }
-            userId = AuthClient.getUserId(token);
+            userId = AuthenticationClient.getUserId(token);
         } catch (StatusRuntimeException e) {
             Metadata trailers = new Metadata();
             serverCall.close(Status.UNAUTHENTICATED.withDescription("Invalid token"), trailers);
