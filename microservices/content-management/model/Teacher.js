@@ -1,10 +1,8 @@
 // eslint-disable-next-line require-jsdoc
 class Teacher {
     // eslint-disable-next-line require-jsdoc
-    constructor(id, name, maxStudents) {
+    constructor(id) {
         this.id = id;
-        this.name = name;
-        this.maxStudents = maxStudents;
     }
 }
 

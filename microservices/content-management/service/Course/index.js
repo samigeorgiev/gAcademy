@@ -21,6 +21,5 @@ exports.getCourse = async (call, callback) => {
 };
 
 exports.getCoursesByCategory = async (call, callback) => {
-    
     service.getCoursesByCategory(call, callback);
 };

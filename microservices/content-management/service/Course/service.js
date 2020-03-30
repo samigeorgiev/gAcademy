@@ -4,7 +4,8 @@ const {getConnection} = require('typeorm');
 const {getRepository} = require('typeorm');
 const errorHandler = require('../../util/errorHandler');
 const Course = require('../../entity/CourseSchema');
-Category = require('../../entity/CategorySchema');
+Category = require('../../model/Category');
+Teacher = require('../../entity/TeacherSchema');
 
 exports.newCourse = async (call, callback) => {
     const {title, description} = call.request;
@@ -29,27 +30,30 @@ exports.getCourse = async (call, callback) => {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
     }
+    if (!courses) {
+        const status = grpc.status.NOT_FOUND;
+        return errorHandler(callback, status, 'Course id not found');
+    }
     callback(null, course);
 };
 
 exports.getCoursesByCategory = async (call, callback) => {
     const {requestedId} = call.request;
-
     const coursesRepository = getRepository(Course);
 
-    try{
+    try {
         courses = await coursesRepository
             .find({
-                select: ['id', 'title', 'description'],
-                relations: ['Category'],
+                // select: ['id', 'title', 'description'],
+                relations: ['Category', 'Teacher'],
                 where: {Category: call.request},
                 order: {id: 'ASC', title: 'ASC'},
-                cache: true,
+                // cache: true,
             });
     } catch (error) {
         const status = grpc.status.INTERNAL;
-        return errorHandler(callback, status, 'Server error', error);
+        return errorHandler(callback, status, 'Category does not exist', error);
     }
-
-    callback(null, courses);
+    console.log(courses);
+    callback(null, {courses});
 };

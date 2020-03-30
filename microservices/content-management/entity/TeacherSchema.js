@@ -12,9 +12,14 @@ module.exports = new EntitySchema({
             type: 'int',
             generated: true,
         },
-        creator_id: {
-            type: 'int',
-        },
     },
+    // relations: {
+    //     User: {
+    //         target: 'User',
+    //         inverseSide: 'user.teacher',
+    //         type: 'one-to-one',
+    //         joinColumn: true,
+    //     },
+    // },
     // TODO relation to 'users'
 });
