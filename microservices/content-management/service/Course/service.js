@@ -2,10 +2,8 @@ const grpc = require('grpc');
 
 const {getConnection} = require('typeorm');
 const {getRepository} = require('typeorm');
-const errorHandler = require('../../util/errorHandler');
-const Course = require('../../entity/CourseSchema');
-Category = require('../../model/Category');
-Teacher = require('../../entity/TeacherSchema');
+const {errorHandler} = require('../../util/errorHandler');
+const {Course} = require('../../entity/CourseSchema');
 
 exports.newCourse = async (call, callback) => {
     const {title, description} = call.request;
