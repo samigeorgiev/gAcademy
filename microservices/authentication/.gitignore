@@ -1,7 +1,16 @@
-/node_modules
-/proto
+# IDE folders
 /.vscode
-/logs
+
+# compiled proto
+/proto
+
+# dependencies
+/node_modules
+
+# env
 .env*
 ormconfig.json
+
+# logs
+/logs
 yarn-error.log
