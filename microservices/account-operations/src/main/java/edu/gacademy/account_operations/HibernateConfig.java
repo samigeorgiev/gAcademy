@@ -1,4 +1,4 @@
-package edu.gacademy.account_operations.util;
+package edu.gacademy.account_operations;
 
 import edu.gacademy.account_operations.entities.Course;
 import edu.gacademy.account_operations.entities.Enrollment;

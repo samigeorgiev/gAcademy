@@ -1,6 +1,6 @@
 package edu.gacademy.account_operations.grpc.interceptors;
 
-import edu.gacademy.account_operations.util.ErrorHandledCall;
+import edu.gacademy.account_operations.grpc.calls.ErrorHandledCall;
 import io.grpc.*;
 
 public class ErrorHandlerInterceptor implements ServerInterceptor {

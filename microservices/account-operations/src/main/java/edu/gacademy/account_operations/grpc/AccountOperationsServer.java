@@ -19,14 +19,18 @@ public class AccountOperationsServer {
 
     private ServerInterceptor errorHandlerInterceptor;
 
+    private ServerInterceptor sessionInterceptor;
+
     public AccountOperationsServer(
             AccountOperationsGrpc.AccountOperationsImplBase accountOperationsService,
             ServerInterceptor authInterceptor,
-            ServerInterceptor errorHandlerInterceptor
+            ServerInterceptor errorHandlerInterceptor,
+            ServerInterceptor sessionInterceptor
     ) {
         this.accountOperationsService = accountOperationsService;
         this.authInterceptor = authInterceptor;
         this.errorHandlerInterceptor = errorHandlerInterceptor;
+        this.sessionInterceptor = sessionInterceptor;
     }
 
     public void start() throws IOException {
@@ -36,7 +40,8 @@ public class AccountOperationsServer {
                 .addService(ServerInterceptors.intercept(
                         accountOperationsService,
                         errorHandlerInterceptor,
-                        authInterceptor
+                        authInterceptor,
+                        sessionInterceptor
                 ))
                 .build()
                 .start();

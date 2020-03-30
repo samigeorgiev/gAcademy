@@ -17,12 +17,13 @@ public class AuthInterceptor implements ServerInterceptor {
 
         int userId;
         try {
+            if (token == null) {
+                throw new StatusRuntimeException(Status.UNAUTHENTICATED);
+            }
             userId = AuthClient.getUserId(token);
         } catch (StatusRuntimeException e) {
             Metadata trailers = new Metadata();
-            Metadata.Key<String> error = Metadata.Key.of("Error", Metadata.ASCII_STRING_MARSHALLER);
-            trailers.put(error, "Invalid token");
-            serverCall.close(Status.UNAUTHENTICATED, trailers);
+            serverCall.close(Status.UNAUTHENTICATED.withDescription("Invalid token"), trailers);
             // TODO logging
             return new ServerCall.Listener<>() {};
         }

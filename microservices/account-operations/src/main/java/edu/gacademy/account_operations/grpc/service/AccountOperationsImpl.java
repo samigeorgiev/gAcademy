@@ -26,27 +26,16 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
 
     private CourseRepository courseRepository;
 
-    private SessionFactory sessionFactory;
-
     public AccountOperationsImpl(
             UserRepository userRepository,
-            CourseRepository courseRepository,
-            SessionFactory sessionFactory
+            CourseRepository courseRepository
     ) {
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
-        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public void getAccount(GetAccountRequest request, StreamObserver<GetAccountResponse> responseObserver) {
-        try {
-            startTransaction();
-        } catch (StatusRuntimeException e) {
-            responseObserver.onError(e);
-            return;
-        }
-        Session session = sessionFactory.getCurrentSession();
         int userId = ContextEntries.USER_ID.get();
         User user = userRepository.getById(userId);
         GetAccountResponse response = GetAccountResponse.newBuilder()
@@ -55,21 +44,12 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
                 .setEmail(user.getEmail())
                 .setIsTeacher(user.getTeacher() != null)
                 .build();
-        session.getTransaction().commit();
-        session.close();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
     @Override
     public void enrollCourse(EnrollCourseRequest request, StreamObserver<EnrollCourseResponse> responseObserver) {
-        try {
-            startTransaction();
-        } catch (StatusRuntimeException e) {
-            responseObserver.onError(e);
-            return;
-        }
-        Session session = sessionFactory.getCurrentSession();
         int userId = ContextEntries.USER_ID.get();
         User user = userRepository.getById(userId);
         Course course = courseRepository.getById(request.getCourseId());
@@ -80,7 +60,8 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
             );
             return;
         }
-        List<Course> enrolledCourses = userRepository.getCourses(user);
+        List<Course> enrolledCourses = user.getEnrollments().stream()
+                .map(Enrollment::getCourse).collect(Collectors.toList());
         if (enrolledCourses.contains(course)) {
             responseObserver.onError(Status.ALREADY_EXISTS
                     .withDescription("Course already enrolled")
@@ -89,24 +70,16 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
             return;
         }
         userRepository.enrollCourse(user, course);
-        session.getTransaction().commit();
-        session.close();
         responseObserver.onNext(EnrollCourseResponse.newBuilder().build());
         responseObserver.onCompleted();
     }
 
     @Override
     public void getCourses(GetCoursesRequest request, StreamObserver<GetCoursesResponse> responseObserver) {
-        try {
-            startTransaction();
-        } catch (StatusRuntimeException e) {
-            responseObserver.onError(e);
-            return;
-        }
-        Session session = sessionFactory.getCurrentSession();
         int userId = ContextEntries.USER_ID.get();
         User user = userRepository.getById(userId);
-        List<Course> enrolledCourses = userRepository.getCourses(user);
+        List<Course> enrolledCourses = user.getEnrollments().stream()
+                .map(Enrollment::getCourse).collect(Collectors.toList());
         List<GetCoursesResponse.Course> enrolledCoursesDTO = new ArrayList<>();
         for (Course course : enrolledCourses) {
             GetCoursesResponse.Course courseDTO = GetCoursesResponse.Course.newBuilder()
@@ -116,8 +89,6 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
                     .build();
             enrolledCoursesDTO.add(courseDTO);
         }
-        session.getTransaction().commit();
-        session.close();
         responseObserver.onNext(
                 GetCoursesResponse.newBuilder().addAllCourses(enrolledCoursesDTO).build()
         );
@@ -126,13 +97,6 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
 
     @Override
     public void becomeTeacher(BecomeTeacherRequest request, StreamObserver<BecomeTeacherResponse> responseObserver) {
-        try {
-            startTransaction();
-        } catch (StatusRuntimeException e) {
-            responseObserver.onError(e);
-            return;
-        }
-        Session session = sessionFactory.getCurrentSession();
         int userId = ContextEntries.USER_ID.get();
         User user = userRepository.getById(userId);
         if (user.getTeacher() != null) {
@@ -143,22 +107,7 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
             return;
         }
         userRepository.becomeTeacher(user);
-        session.getTransaction().commit();
-        session.close();
         responseObserver.onNext(BecomeTeacherResponse.newBuilder().build());
         responseObserver.onCompleted();
-    }
-
-    private void startTransaction() throws StatusRuntimeException {
-        Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException e) {
-            throw Status.INTERNAL
-                    .withDescription("Hibernate error")
-                    .withCause(e)
-                    .asRuntimeException();
-        }
-        session.beginTransaction();
     }
 }

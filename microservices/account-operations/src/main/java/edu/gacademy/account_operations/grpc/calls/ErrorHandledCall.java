@@ -1,4 +1,4 @@
-package edu.gacademy.account_operations.util;
+package edu.gacademy.account_operations.grpc.calls;
 
 import io.grpc.ForwardingServerCall;
 import io.grpc.Metadata;

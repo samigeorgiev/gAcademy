@@ -12,6 +12,4 @@ public interface UserRepository {
     void becomeTeacher(User user);
 
     void enrollCourse(User user, Course course);
-
-    List<Course> getCourses(User user);
 }

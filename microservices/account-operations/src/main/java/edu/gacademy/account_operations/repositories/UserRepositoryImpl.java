@@ -42,10 +42,4 @@ public class UserRepositoryImpl implements UserRepository {
         user.setEnrollments(enrollments);
         session.save(user);
     }
-
-    @Override
-    public List<Course> getCourses(User user) {
-        return user.getEnrollments().stream()
-            .map(Enrollment::getCourse).collect(Collectors.toList());
-    }
 }
