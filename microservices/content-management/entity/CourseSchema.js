@@ -1,7 +1,5 @@
 const EntitySchema = require('typeorm').EntitySchema;
 const Course = ('../model/Course').Course;
-// const Category = ('../model/Category').Category;
-// const Teacher = ('../model/Teacher').Teacher;
 
 module.exports = new EntitySchema({
     name: 'Course',

@@ -1,6 +1,5 @@
 const EntitySchema = require('typeorm').EntitySchema;
 const User = ('../model/User').User;
-// const Teacher = require('../model/Teacher');
 
 module.exports = new EntitySchema({
     name: 'User',
@@ -25,15 +24,5 @@ module.exports = new EntitySchema({
             type: 'varchar',
         },
     },
-    // relations: {
-    //     Teacher: {
-    //         target: 'Teacher',
-    //         inverseSide: 'user',
-    //         type: 'one-to-one',
-    //         joinColumn: true,
-    //         cascade: true,
-    //         eager: true,
-    //     },
-    // },
 });
 
