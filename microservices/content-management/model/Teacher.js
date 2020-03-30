@@ -6,6 +6,4 @@ class Teacher {
     }
 }
 
-module.exports = {
-    Teacher: Teacher,
-};
+module.exports = {Teacher};

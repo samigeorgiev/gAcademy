@@ -10,6 +10,4 @@ class Course {
     }
 }
 
-module.exports = {
-    Course: Course,
-};
+module.exports = {Course};

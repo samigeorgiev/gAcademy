@@ -3,10 +3,8 @@ const path = require('path');
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const {createConnection} = require('typeorm');
-// const {getConnection} = require('typeorm');
 
 const CourseService = require('./service/Course');
-// const CourseSchema = require('./entity/CourseSchema')
 
 const protoDefinition =
     protoLoader.loadSync(path.join(__dirname, process.env.PROTO_PATH), {

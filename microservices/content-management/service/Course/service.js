@@ -38,17 +38,14 @@ exports.getCourse = async (call, callback) => {
 };
 
 exports.getCoursesByCategory = async (call, callback) => {
-    const {requestedId} = call.request;
     const coursesRepository = getRepository(Course);
 
     try {
         courses = await coursesRepository
             .find({
-                // select: ['id', 'title', 'description'],
                 relations: ['Category', 'Teacher'],
                 where: {Category: call.request},
                 order: {id: 'ASC', title: 'ASC'},
-                // cache: true,
             });
     } catch (error) {
         const status = grpc.status.INTERNAL;

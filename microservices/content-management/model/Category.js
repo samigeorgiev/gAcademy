@@ -7,6 +7,4 @@ class Category {
     }
 }
 
-module.exports = {
-    Category: Category,
-};
+module.exports = {Category};
