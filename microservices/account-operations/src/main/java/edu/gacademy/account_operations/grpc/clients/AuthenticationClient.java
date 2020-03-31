@@ -5,6 +5,7 @@ import edu.gacademy.authentication.grpc.prototypes.GetUserIdRequest;
 import edu.gacademy.authentication.grpc.prototypes.GetUserIdResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 
 import java.util.concurrent.TimeUnit;
@@ -25,11 +26,33 @@ public class AuthenticationClient {
 
     public static int getUserId(String token) throws StatusRuntimeException {
         GetUserIdRequest request = GetUserIdRequest.newBuilder().setToken(token).build();
-        GetUserIdResponse response = blockingStub.getUserId(request);
+        GetUserIdResponse response;
+        try {
+            response = blockingStub.getUserId(request);
+        } catch (StatusRuntimeException e) {
+            throw wrapException(e);
+        }
         return response.getUserId();
     }
 
     public static void destroy() throws InterruptedException {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+    }
+
+    private static StatusRuntimeException wrapException(StatusRuntimeException e) {
+        String[] splitMessage = e.getMessage().split(" ", 3);
+        int statusCode;
+        if (splitMessage.length >= 2) {
+            statusCode = Integer.parseInt(splitMessage[1]);
+        } else {
+            statusCode = Status.UNKNOWN.getCode().value();
+        }
+        String message;
+        if (splitMessage.length >= 3) {
+            message = splitMessage[2];
+        } else {
+            message = "Unknown error";
+        }
+        return Status.fromCodeValue(statusCode).withDescription(message).asRuntimeException();
     }
 }

@@ -23,7 +23,7 @@ public class AuthenticationInterceptor implements ServerInterceptor {
             userId = AuthenticationClient.getUserId(token);
         } catch (StatusRuntimeException e) {
             Metadata trailers = new Metadata();
-            serverCall.close(Status.UNAUTHENTICATED.withDescription("Invalid token"), trailers);
+            serverCall.close(e.getStatus(), trailers);
             // TODO logging
             return new ServerCall.Listener<>() {};
         }

@@ -9,7 +9,7 @@ const errorHandler = (callback, status, message, error) => {
         metadata = new grpc.Metadata();
         metadata.set('message', message);
     }
-    callback(grpcStatus, null);
+    callback(new Error(`${grpcStatus} ${message}`));
 
     if (status === grpc.status.INTERNAL) {
         logger.warn(message);
