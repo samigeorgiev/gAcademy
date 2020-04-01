@@ -11,6 +11,8 @@ service Course {
 message NewCourseRequest {
     string title = 1;
     string description = 2;
+    int32 categoryId = 3;
+    int32 teacherId = 4;
 }
 
 message NewCourseResponse {
@@ -22,10 +24,9 @@ message GetCourseRequest {
 }
 
 message GetCourseResponse {
-	string title = 1;
-	string description = 2;
-	int32 creator = 3;
-	int32 category = 4;
+	int32 id = 1;
+	string title = 2;
+	string description = 3;
 }
 
 message GetCoursesByCategoryRequest {

@@ -1,37 +1,44 @@
 const grpc = require('grpc');
 
-const {getConnection} = require('typeorm');
 const {getRepository} = require('typeorm');
-const {errorHandler} = require('../../util/errorHandler');
-const {Course} = require('../../entity/CourseSchema');
+
+const errorHandler = require('../../util/errorHandler');
+const Course = require('../../entity/CourseSchema');
 
 exports.newCourse = async (call, callback) => {
-    const {title, description} = call.request;
-    await getConnection()
+    const {title, description, categoryId, teacherId} = call.request;
+
+    const courseRepository = getRepository(Course);
+    const course = await courseRepository.insert({
+        title: title,
+        description: description,
+    });
+    const courseId = course.raw[0].id;
+
+    await courseRepository
         .createQueryBuilder()
-        .insert()
-        .into(Course)
-        .values([
-            {title, description},
-        ])
+        .update(Course)
+        .set({categories: categoryId, teachers: teacherId})
+        .where('id = :id', {id: courseId})
         .execute();
 };
 
 exports.getCourse = async (call, callback) => {
     const {id} = call.request;
-    let course;
+    const courseRepository = getRepository(Course);
 
-    const courseRepository = getConnection().getRepository(Course);
     try {
-        course = await courseRepository.findOne(id);
+        course = await courseRepository
+            .find({
+                relations: ['categories', 'teachers'],
+                where: {id: id},
+                order: {id: 'ASC', title: 'ASC'},
+            });
     } catch (error) {
         const status = grpc.status.INTERNAL;
-        return errorHandler(callback, status, 'Database error', error);
+        return errorHandler(callback, status, 'Category does not exist', error);
     }
-    if (!courses) {
-        const status = grpc.status.NOT_FOUND;
-        return errorHandler(callback, status, 'Course id not found');
-    }
+    course = course[0];
     callback(null, course);
 };
 
@@ -41,14 +48,13 @@ exports.getCoursesByCategory = async (call, callback) => {
     try {
         courses = await coursesRepository
             .find({
-                relations: ['Category', 'Teacher'],
-                where: {Category: call.request},
+                relations: ['categories', 'teachers'],
+                where: {categories: call.request},
                 order: {id: 'ASC', title: 'ASC'},
             });
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Category does not exist', error);
     }
-    console.log(courses);
     callback(null, {courses});
 };
