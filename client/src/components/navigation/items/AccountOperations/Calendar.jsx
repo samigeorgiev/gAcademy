@@ -6,7 +6,11 @@ const Calendar = props => {
     return (
         <Button
             icon="calendar alternate"
-            style={{ background: 'transparent', fontSize: '1.75rem' }}
+            style={{
+                color: '#247291',
+                background: 'transparent',
+                fontSize: '1.75rem'
+            }}
         />
     );
 };

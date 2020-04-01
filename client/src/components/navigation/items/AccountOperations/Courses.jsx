@@ -7,7 +7,7 @@ const Courses = props => {
         <Button
             size="medium"
             content="Courses"
-            style={{ background: 'none' }}
+            style={{ color: '#247291', background: 'none' }}
         />
     );
 };

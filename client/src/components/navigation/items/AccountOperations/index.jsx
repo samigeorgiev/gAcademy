@@ -10,8 +10,20 @@ import Courses from './Courses';
 
 const AccountOperations = props => {
     const { token } = useContext(AuthContext);
-    const isLoggedIn = token != null;
+    const isLoggedIn = token !== null;
     return isLoggedIn ? (
+        <>
+            <Menu.Item>
+                <Calendar />
+            </Menu.Item>
+            <Menu.Item>
+                <Courses />
+            </Menu.Item>
+            <Menu.Item>
+                <Account />
+            </Menu.Item>
+        </>
+    ) : (
         <>
             <Menu.Item>
                 <Button
@@ -22,18 +34,6 @@ const AccountOperations = props => {
             </Menu.Item>
             <Menu.Item>
                 <Button secondary content="Log in" />
-            </Menu.Item>
-        </>
-    ) : (
-        <>
-            <Menu.Item>
-                <Calendar />
-            </Menu.Item>
-            <Menu.Item>
-                <Courses />
-            </Menu.Item>
-            <Menu.Item>
-                <Account />
             </Menu.Item>
         </>
     );

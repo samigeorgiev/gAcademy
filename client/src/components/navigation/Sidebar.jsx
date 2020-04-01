@@ -13,7 +13,6 @@ const Sidebar_ = props => {
             onHide={props.onClose}
             animation="overlay"
             vertical
-            style={{ position: 'fixed', height: '100vh' }}
         >
             <Menu.Item>
                 <Explore />
