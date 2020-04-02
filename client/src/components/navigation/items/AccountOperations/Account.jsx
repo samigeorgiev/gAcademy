@@ -8,7 +8,6 @@ const Account = props => {
     return (
         <Dropdown
             item
-            simple
             icon={<Image avatar size="mini" src={profile} />}
             style={{ background: 'none' }}
         >

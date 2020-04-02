@@ -10,7 +10,7 @@ import { AccountOperationsClient } from '../../proto/account-operations_grpc_web
 import styles from './index.module.css';
 
 const BecomeTeacher = props => {
-    const { token } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const becomeTeacherHandler = () => {
         const accountOperationsClient = new AccountOperationsClient(
@@ -19,7 +19,7 @@ const BecomeTeacher = props => {
         const request = new BecomeTeacherRequest();
         accountOperationsClient.becomeTeacher(
             request,
-            { Authorization: token },
+            { Authorization: user.token },
             (err, res) => {
                 console.log(err, res);
             }

@@ -9,8 +9,8 @@ import Calendar from './Calendar';
 import Courses from './Courses';
 
 const AccountOperations = props => {
-    const { token } = useContext(AuthContext);
-    const isLoggedIn = token !== null;
+    const { user } = useContext(AuthContext);
+    const isLoggedIn = user !== null;
     return isLoggedIn ? (
         <>
             <Menu.Item>
