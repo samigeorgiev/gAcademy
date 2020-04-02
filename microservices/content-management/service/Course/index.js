@@ -1,9 +1,7 @@
-const {service} = require('./service');
+const service = require('./service');
 
 exports.newCourse = async (call, callback) => {
     service.newCourse(call, callback);
-
-    console.log(call);
 };
 
 exports.getCourse = async (call, callback) => {

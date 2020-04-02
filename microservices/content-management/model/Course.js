@@ -5,8 +5,8 @@ class Course {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.creator = creator;
-        this.category = category;
+        this.categories = categories;
+        this.teachers = teachers;
     }
 }
 
