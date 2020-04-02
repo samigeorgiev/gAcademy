@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-import { Sidebar } from 'semantic-ui-react';
+import { Modal, Sidebar } from 'semantic-ui-react';
 
 import BecomeTeacher from './BecomeTeacher';
-import LogIn from './auth/LogIn';
-import Modal from './UI/Modal';
-import SignUp from './auth/SignUp';
+import LogIn from './authentication/LogIn';
+import SignUp from './authentication/SignUp';
 import NavigationSidebar from './navigation/Sidebar';
 import Toolbar from './navigation/Toolbar';
 
@@ -29,6 +28,9 @@ const Layout = props => {
             <NavigationSidebar
                 isShown={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}
+                showSignUp={showSignUp}
+                showLogIn={showLogIn}
+                showBecomeTeacher={showBecomeTeacher}
             />
             <Sidebar.Pusher
                 dimmed={isSidebarOpen}
@@ -42,7 +44,12 @@ const Layout = props => {
                 />
                 <main>
                     <>
-                        <Modal isShown={shownForm} onClose={closeForm}>
+                        <Modal
+                            open={shownForm !== null}
+                            onClose={closeForm}
+                            centered={false}
+                            size="mini"
+                        >
                             {shownForm && forms[shownForm]}
                         </Modal>
                         {props.children}

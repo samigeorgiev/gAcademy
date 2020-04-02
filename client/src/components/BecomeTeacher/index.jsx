@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { AuthContext } from '../../context/auth';
 
-import Button from '../UI/Button';
+import { Button } from 'semantic-ui-react';
 
 import { BecomeTeacherRequest } from '../../proto/account-operations_pb';
 import { AccountOperationsClient } from '../../proto/account-operations_grpc_web_pb';

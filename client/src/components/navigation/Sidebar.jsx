@@ -17,7 +17,11 @@ const Sidebar_ = props => {
             <Menu.Item>
                 <Explore />
             </Menu.Item>
-            <AccountOperations />
+            <AccountOperations
+                showSignUp={props.showSignUp}
+                showLogIn={props.showLogIn}
+                showBecomeTeacher={props.showBecomeTeacher}
+            />
         </Sidebar>
     );
 };
