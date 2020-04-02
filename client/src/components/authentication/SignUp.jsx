@@ -1,38 +1,52 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import validator from 'validator';
+import { Modal } from 'semantic-ui-react';
 
-import { AuthContext } from '../../../context/auth';
+import useAuthentication from '../../hooks/authentication';
 
-import AuthForm from '../AuthForm';
+import { AuthContext } from '../../context/auth';
 
-import { SignUpRequest } from '../../../proto/authentication_pb';
-import { AuthenticationClient } from '../../../proto/authentication_grpc_web_pb';
+import Form from './Form';
+
+import { SignUpRequest } from '../../proto/authentication_pb';
 
 const PASSWORD_LENGTH = { min: 8, max: 64 };
 
 const SignUp = props => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const { methods, state } = useAuthentication();
+    const { signUp: grpcSignUp } = methods;
+    const { isLoading, error, response } = state;
 
     const { logIn } = useContext(AuthContext);
+
+    const { onClose } = props;
+    useEffect(() => {
+        if (response) {
+            logIn(response.getToken(), response.getExpiresin());
+            onClose();
+        }
+    }, [response, logIn, onClose]);
 
     const inputs = {
         firstName: {
             type: 'text',
             placeholder: 'First name',
+            icon: 'user',
             validate: value => validator.isAlpha(value),
             validationError: 'Invalid first name'
         },
         lastName: {
             type: 'text',
             placeholder: 'Last name',
+            icon: 'user',
             validate: value => validator.isAlpha(value),
             validationError: 'Invalid last name'
         },
         email: {
             type: 'email',
             placeholder: 'Email',
+            icon: 'mail',
             validate: value =>
                 validator.isEmail(validator.normalizeEmail(value)),
             validationError: 'Invalid email'
@@ -40,6 +54,7 @@ const SignUp = props => {
         password: {
             type: 'password',
             placeholder: 'Password',
+            icon: 'lock',
             validate: value => validator.isLength(value, PASSWORD_LENGTH),
             validationError: `Password should be between \
                 ${PASSWORD_LENGTH.min} and ${PASSWORD_LENGTH.max}`
@@ -48,37 +63,27 @@ const SignUp = props => {
 
     const submitHandler = (inputsValues, event) => {
         event.preventDefault();
-        const authClient = new AuthenticationClient(
-            process.env.REACT_APP_AUTHENTICATION
-        );
         const request = new SignUpRequest();
         request.setFirstname(inputsValues.firstName);
         request.setLastname(inputsValues.lastName);
         request.setEmail(inputsValues.email);
         request.setPassword(inputsValues.password);
-        setIsLoading(true);
-        setError(null);
-        authClient.signUp(request, {}, (error, response) => {
-            setIsLoading(false);
-            if (error) {
-                setError(error.message);
-                // TODO proper error handling
-                return;
-            }
-            logIn(response.getToken(), response.getExpiresin());
-            props.onClose();
-        });
+        grpcSignUp(request);
     };
 
     return (
-        <AuthForm
-            inputs={inputs}
-            onSubmit={submitHandler}
-            heading="Sign up"
-            error={error}
-            isLoading={isLoading}
-            onClose={props.onClose}
-        />
+        <>
+            <Modal.Header>SignUp</Modal.Header>
+            <Modal.Content>
+                <Form
+                    inputs={inputs}
+                    onSubmit={submitHandler}
+                    error={error && error.message}
+                    isLoading={isLoading}
+                    onClose={props.onClose}
+                />
+            </Modal.Content>
+        </>
     );
 };
 

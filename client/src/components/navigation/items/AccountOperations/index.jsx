@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 
-import { AuthContext } from '../../../../context/auth';
-
 import { Button, Menu } from 'semantic-ui-react';
+
+import { AuthContext } from '../../../../context/auth';
 
 import Account from './Account';
 import Calendar from './Calendar';
@@ -20,20 +20,21 @@ const AccountOperations = props => {
                 <Courses />
             </Menu.Item>
             <Menu.Item>
-                <Account />
+                <Account showBecomeTeacher={props.showBecomeTeacher} />
             </Menu.Item>
         </>
     ) : (
         <>
             <Menu.Item>
                 <Button
+                    onClick={props.showSignUp}
                     primary
                     content="Sign up"
                     style={{ background: '#247291' }}
                 />
             </Menu.Item>
             <Menu.Item>
-                <Button secondary content="Log in" />
+                <Button onClick={props.showLogIn} secondary content="Log in" />
             </Menu.Item>
         </>
     );

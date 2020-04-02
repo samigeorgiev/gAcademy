@@ -47,7 +47,11 @@ const Toolbar = props => {
                     <Menu.Item style={{ margin: 'auto' }}>
                         <Search />
                     </Menu.Item>
-                    <AccountOperations />
+                    <AccountOperations
+                        showSignUp={props.showSignUp}
+                        showLogIn={props.showLogIn}
+                        showBecomeTeacher={props.showBecomeTeacher}
+                    />
                 </Menu>
             </Responsive>
         </>
