@@ -10,6 +10,7 @@ import Layout from './components/Layout';
 
 const App = props => {
     const { tryLogIn } = useContext(AuthenticationContext);
+
     useEffect(() => tryLogIn(), [tryLogIn]);
 
     return (

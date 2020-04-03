@@ -45,7 +45,6 @@ const BecomeTeacher = props => {
                 content="Become a teacher"
                 style={{ color: '#2185d0' }}
             />
-            {console.log(modalContent)}
             <Modal.Content>{modalContent}</Modal.Content>
             <Modal.Actions>
                 <Button
