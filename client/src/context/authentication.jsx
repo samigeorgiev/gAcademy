@@ -4,23 +4,23 @@ import useAccountOperations from '../hooks/accountOperations';
 
 import { GetAccountRequest } from '../proto/account-operations_pb';
 
-const AuthContext = React.createContext({
+const AuthenticationContext = React.createContext({
     user: null,
     tryLogIn: () => {},
     logIn: (token, expiresIn) => {},
     logOut: () => {}
 });
 
-const AuthContextProvider = props => {
+const AuthenticationContextProvider = props => {
     const [user, setUser] = useState(null);
     const [logOutTimeout, setLogOutTimeout] = useState(null);
 
     const { methods, state } = useAccountOperations();
-    const { response, error } = state;
+    const { response } = state;
     const { getAccount } = methods;
 
     useEffect(() => {
-        if (response && !error) {
+        if (response) {
             setUser(user => ({
                 token: user.token,
                 email: response.getEmail(),
@@ -29,7 +29,7 @@ const AuthContextProvider = props => {
                 isTeacher: response.getIsteacher()
             }));
         }
-    }, [response, error]);
+    }, [response]);
 
     const logOut = useCallback(() => {
         clearTimeout(logOutTimeout);
@@ -41,8 +41,7 @@ const AuthContextProvider = props => {
 
     const getUserAccount = useCallback(
         token => {
-            const request = new GetAccountRequest();
-            getAccount(request, { Authorization: token });
+            getAccount(new GetAccountRequest(), token);
         },
         [getAccount]
     );
@@ -57,8 +56,13 @@ const AuthContextProvider = props => {
         }
 
         setUser({ token });
+        if (!logOutTimeout) {
+            setLogOutTimeout(
+                setTimeout(logOut, expDate.getTime() - new Date().getTime())
+            );
+        }
         getUserAccount(token);
-    }, [setUser]);
+    }, [setUser, getUserAccount, logOut]);
 
     const logIn = useCallback(
         (token, expiresIn) => {
@@ -73,10 +77,12 @@ const AuthContextProvider = props => {
     );
 
     return (
-        <AuthContext.Provider value={{ user, tryLogIn, logIn, logOut }}>
+        <AuthenticationContext.Provider
+            value={{ user, tryLogIn, logIn, logOut }}
+        >
             {props.children}
-        </AuthContext.Provider>
+        </AuthenticationContext.Provider>
     );
 };
 
-export { AuthContext, AuthContextProvider as default };
+export { AuthenticationContext, AuthenticationContextProvider as default };

@@ -1,25 +1,33 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import useGrpc from './grpc';
 
 import { AccountOperationsClient } from '../proto/account-operations_grpc_web_pb';
 
-const accountOperationsClient = new AccountOperationsClient(
-    process.env.REACT_APP_ACCOUNT_OPERATIONS
-);
-
 const useAccountOperations = () => {
+    const url = process.env.REACT_APP_ACCOUNT_OPERATIONS;
+    const accountOperationsClient = useMemo(
+        () => new AccountOperationsClient(url),
+        [url]
+    );
+
     const [state, sendRequest] = useGrpc(accountOperationsClient);
 
     const getAccount = useCallback(
-        (request, metadata) => {
-            sendRequest('getAccount', request, metadata);
+        (request, token) => {
+            sendRequest('getAccount', request, { Authorization: token });
+        },
+        [sendRequest]
+    );
+    const becomeTeacher = useCallback(
+        (request, token) => {
+            sendRequest('becomeTeacher', request, { Authorization: token });
         },
         [sendRequest]
     );
 
     return {
-        methods: { getAccount },
+        methods: { becomeTeacher, getAccount },
         state
     };
 };
