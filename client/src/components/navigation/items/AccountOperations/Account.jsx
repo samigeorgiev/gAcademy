@@ -12,6 +12,7 @@ const Account = props => {
     return (
         <Dropdown
             item
+            direction="left"
             icon={<Image avatar size="mini" src={profile} />}
             style={{ background: 'none' }}
         >

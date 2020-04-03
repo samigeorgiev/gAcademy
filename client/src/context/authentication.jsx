@@ -47,6 +47,9 @@ const AuthenticationContextProvider = props => {
     );
 
     const tryLogIn = useCallback(() => {
+        if (user) {
+            return;
+        }
         const token = localStorage.getItem('token');
         const expiryDate = localStorage.getItem('expiryDate');
         const expDate = new Date(expiryDate);
@@ -56,13 +59,11 @@ const AuthenticationContextProvider = props => {
         }
 
         setUser({ token });
-        if (!logOutTimeout) {
-            setLogOutTimeout(
-                setTimeout(logOut, expDate.getTime() - new Date().getTime())
-            );
-        }
+        setLogOutTimeout(
+            setTimeout(logOut, expDate.getTime() - new Date().getTime())
+        );
         getUserAccount(token);
-    }, [setUser, getUserAccount, logOut]);
+    }, [user, setUser, logOut, getUserAccount]);
 
     const logIn = useCallback(
         (token, expiresIn) => {
