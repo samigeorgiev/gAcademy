@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import AuthContextProvider from './context/auth';
+import AuthenticationContextProvider from './context/authentication';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -14,9 +14,9 @@ import './index.css';
 const app = (
     <React.StrictMode>
         <BrowserRouter>
-            <AuthContextProvider>
+            <AuthenticationContextProvider>
                 <App />
-            </AuthContextProvider>
+            </AuthenticationContextProvider>
         </BrowserRouter>
     </React.StrictMode>
 );

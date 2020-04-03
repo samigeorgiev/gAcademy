@@ -5,7 +5,7 @@ import { Modal } from 'semantic-ui-react';
 
 import useAuthentication from '../../hooks/authentication';
 
-import { AuthContext } from '../../context/auth';
+import { AuthenticationContext } from '../../context/authentication';
 
 import Form from './Form';
 
@@ -16,7 +16,7 @@ const LogIn = props => {
     const { logIn: grpcLogin } = methods;
     const { isLoading, error, response } = state;
 
-    const { logIn } = useContext(AuthContext);
+    const { logIn } = useContext(AuthenticationContext);
 
     const { onClose } = props;
     useEffect(() => {
