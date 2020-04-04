@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Dropdown, Image } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
 
 import { AuthenticationContext } from '../../../../context/authentication';
 
@@ -8,6 +9,8 @@ import profile from '../../../../images/tmp/profile.png';
 
 const Account = props => {
     const { user, logOut } = useContext(AuthenticationContext);
+
+    const history = useHistory();
 
     return (
         <Dropdown
@@ -18,7 +21,11 @@ const Account = props => {
         >
             <Dropdown.Menu>
                 {user.isTeacher ? (
-                    <Dropdown.Item>Teacher panel</Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => history.push('/teacher-panel')}
+                    >
+                        Teacher panel
+                    </Dropdown.Item>
                 ) : (
                     <Dropdown.Item onClick={props.showBecomeTeacher}>
                         Become teacher
