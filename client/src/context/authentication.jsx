@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { useHistory } from 'react-router-dom';
+
 import useAccountOperations from '../hooks/accountOperations';
 
 import { GetAccountRequest } from '../proto/account-operations_pb';
@@ -19,6 +21,8 @@ const AuthenticationContextProvider = props => {
     const { response } = state;
     const { getAccount } = methods;
 
+    const history = useHistory();
+
     useEffect(() => {
         if (response) {
             setUser(user => ({
@@ -37,7 +41,8 @@ const AuthenticationContextProvider = props => {
         setLogOutTimeout(null);
         localStorage.removeItem('token');
         localStorage.removeItem('expiryDate');
-    }, [setUser, logOutTimeout, setLogOutTimeout]);
+        history.push('/');
+    }, [setUser, logOutTimeout, setLogOutTimeout, history]);
 
     const getUserAccount = useCallback(
         token => {

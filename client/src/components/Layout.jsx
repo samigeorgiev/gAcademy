@@ -50,6 +50,7 @@ const Layout = props => {
                             onClose={closeForm}
                             centered={false}
                             size="mini"
+                            closeIcon
                         >
                             {shownForm && forms[shownForm]}
                         </Modal>

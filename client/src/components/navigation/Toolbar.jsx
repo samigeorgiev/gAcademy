@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { NavLink } from 'react-router-dom';
 import { Image, Menu, Responsive } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 import AccountOperations from './items/AccountOperations';
 import Explore from './items/Explore';

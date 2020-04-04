@@ -8,6 +8,7 @@ import { AuthenticationContext } from './context/authentication';
 import Layout from './components/Layout';
 
 const Courses = React.lazy(() => import('./pages/Courses'));
+const TeacherPanel = React.lazy(() => import('./pages/TeacherPanel'));
 
 const App = props => {
     const { user, tryLogIn } = useContext(AuthenticationContext);
@@ -24,6 +25,13 @@ const App = props => {
                     <Route path="/courses" exact>
                         <Suspense fallback={<Loader active />}>
                             <Courses />
+                        </Suspense>
+                    </Route>
+                ) : null}
+                {user && user.isTeacher ? (
+                    <Route path="/teacher-panel" exact>
+                        <Suspense fallback={<Loader active />}>
+                            <TeacherPanel />
                         </Suspense>
                     </Route>
                 ) : null}
