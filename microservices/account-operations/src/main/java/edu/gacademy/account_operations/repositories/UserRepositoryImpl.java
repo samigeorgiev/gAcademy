@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserRepositoryImpl implements UserRepository {
 

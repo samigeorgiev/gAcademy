@@ -20,7 +20,7 @@ public class SessionInterceptor implements ServerInterceptor {
             ServerCallHandler<ReqT, RespT> serverCallHandler
     ) {
         try {
-        sessionFactory.getCurrentSession().beginTransaction();
+            sessionFactory.getCurrentSession().beginTransaction();
         } catch (HibernateException e) {
             Metadata trailers = new Metadata();
             Metadata.Key<String> error = Metadata.Key.of("Error", Metadata.ASCII_STRING_MARSHALLER);

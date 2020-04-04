@@ -6,15 +6,11 @@ import edu.gacademy.account_operations.entities.Course;
 import edu.gacademy.account_operations.entities.Enrollment;
 import edu.gacademy.account_operations.entities.User;
 import edu.gacademy.account_operations.grpc.ContextEntries;
-import edu.gacademy.account_operations.grpc.prototypes.*;
+import edu.gacademy.account_operations.grpc.protocols.*;
 import edu.gacademy.account_operations.repositories.CourseRepository;
 import edu.gacademy.account_operations.repositories.UserRepository;
 import io.grpc.Status;
-import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,10 +78,13 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
                 .map(Enrollment::getCourse).collect(Collectors.toList());
         List<GetCoursesResponse.Course> enrolledCoursesDTO = new ArrayList<>();
         for (Course course : enrolledCourses) {
+            String creatorFirstName = course.getCreator().getUser().getFirstName();
+            String creatorLastName = course.getCreator().getUser().getFirstName();
             GetCoursesResponse.Course courseDTO = GetCoursesResponse.Course.newBuilder()
                     .setId(course.getId())
                     .setTitle(course.getTitle())
                     .setDescription(course.getDescription())
+                    .setCreator(creatorFirstName + creatorLastName)
                     .build();
             enrolledCoursesDTO.add(courseDTO);
         }

@@ -5,7 +5,7 @@ import edu.gacademy.account_operations.grpc.clients.AuthenticationClient;
 import edu.gacademy.account_operations.grpc.interceptors.AuthenticationInterceptor;
 import edu.gacademy.account_operations.grpc.interceptors.ErrorHandlerInterceptor;
 import edu.gacademy.account_operations.grpc.interceptors.SessionInterceptor;
-import edu.gacademy.account_operations.grpc.prototypes.AccountOperationsGrpc.AccountOperationsImplBase;
+import edu.gacademy.account_operations.grpc.protocols.AccountOperationsGrpc.AccountOperationsImplBase;
 import edu.gacademy.account_operations.repositories.CourseRepository;
 import edu.gacademy.account_operations.repositories.CourseRepositoryImpl;
 import edu.gacademy.account_operations.repositories.UserRepository;
