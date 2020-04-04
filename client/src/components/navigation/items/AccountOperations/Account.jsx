@@ -7,7 +7,7 @@ import { AuthenticationContext } from '../../../../context/authentication';
 import profile from '../../../../images/tmp/profile.png';
 
 const Account = props => {
-    const { logOut } = useContext(AuthenticationContext);
+    const { user, logOut } = useContext(AuthenticationContext);
 
     return (
         <Dropdown
@@ -17,9 +17,13 @@ const Account = props => {
             style={{ background: 'none' }}
         >
             <Dropdown.Menu>
-                <Dropdown.Item onClick={props.showBecomeTeacher}>
-                    Become teacher
-                </Dropdown.Item>
+                {user.isTeacher ? (
+                    <Dropdown.Item>Teacher panel</Dropdown.Item>
+                ) : (
+                    <Dropdown.Item onClick={props.showBecomeTeacher}>
+                        Become teacher
+                    </Dropdown.Item>
+                )}
                 <Dropdown.Item onClick={logOut}>Log out</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>

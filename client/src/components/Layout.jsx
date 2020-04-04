@@ -28,6 +28,7 @@ const Layout = props => {
             <NavigationSidebar
                 isShown={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}
+                as="nav"
                 showSignUp={showSignUp}
                 showLogIn={showLogIn}
                 showBecomeTeacher={showBecomeTeacher}
@@ -60,4 +61,4 @@ const Layout = props => {
     );
 };
 
-export default React.memo(Layout);
+export default Layout;

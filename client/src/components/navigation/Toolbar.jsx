@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { NavLink } from 'react-router-dom';
-import { Menu, Responsive } from 'semantic-ui-react';
+import { Image, Menu, Responsive } from 'semantic-ui-react';
 
 import AccountOperations from './items/AccountOperations';
 import Explore from './items/Explore';
-import Logo from '../UI/Logo';
 import Search from './items/Search';
+
+import logo from '../../images/logo.png';
 
 const Toolbar = props => {
     return (
@@ -16,7 +17,7 @@ const Toolbar = props => {
                 as="header"
                 style={{ borderBottom: '1px solid #ccc' }}
             >
-                <Menu secondary>
+                <Menu secondary as="nav">
                     <Menu.Item onClick={props.openSidebar} icon="sidebar" />
                     <Menu.Item position="right">
                         <Search />
@@ -30,6 +31,7 @@ const Toolbar = props => {
             >
                 <Menu
                     secondary
+                    as="nav"
                     style={{
                         maxWidth: '100rem',
                         margin: 'auto',
@@ -38,7 +40,7 @@ const Toolbar = props => {
                 >
                     <Menu.Item>
                         <NavLink to="/">
-                            <Logo />
+                            <Image src={logo} size="small" />
                         </NavLink>
                     </Menu.Item>
                     <Menu.Item>
