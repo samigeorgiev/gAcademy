@@ -1,8 +1,8 @@
 package edu.gacademy.account_operations.grpc.clients;
 
-import edu.gacademy.authentication.grpc.prototypes.AuthenticationGrpc;
-import edu.gacademy.authentication.grpc.prototypes.GetUserIdRequest;
-import edu.gacademy.authentication.grpc.prototypes.GetUserIdResponse;
+import edu.gacademy.authentication.grpc.protocols.AuthenticationGrpc;
+import edu.gacademy.authentication.grpc.protocols.GetUserIdRequest;
+import edu.gacademy.authentication.grpc.protocols.GetUserIdResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Status;
