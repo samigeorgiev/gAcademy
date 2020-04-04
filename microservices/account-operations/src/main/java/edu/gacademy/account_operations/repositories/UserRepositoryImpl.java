@@ -6,6 +6,7 @@ import edu.gacademy.account_operations.entities.Teacher;
 import edu.gacademy.account_operations.entities.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getById(int id) {
         Session session = sessionFactory.getCurrentSession();
+        if (session.getTransaction().getStatus() != TransactionStatus.ACTIVE) {
+            session.beginTransaction();
+        }
         return session.get(User.class, id);
     }
 
@@ -33,6 +37,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void enrollCourse(User user, Course course) {
         Session session = sessionFactory.getCurrentSession();
+        if (session.getTransaction().getStatus() != TransactionStatus.ACTIVE) {
+            session.beginTransaction();
+        }
         Enrollment enrollment = new Enrollment();
         enrollment.setUser(user);
         enrollment.setCourse(course);
