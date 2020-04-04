@@ -2,12 +2,12 @@
   "name": "authentication",
   "version": "1.0.0",
   "description": "Authentication microservice",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "start-local": "node -r dotenv/config index.js dotenv_config_path=.env.production",
-    "dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development",
-    "lint": "eslint './**/*.js'"
+    "start": "node src/index.js",
+    "start-local": "node -r dotenv/config src/index.js dotenv_config_path=.env.production",
+    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.development",
+    "lint": "eslint 'src/**/*.js'"
   },
   "author": "Samuil Georgiev",
   "license": "MIT",

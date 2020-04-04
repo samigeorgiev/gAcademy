@@ -2,14 +2,13 @@
 /.vscode
 
 # compiled proto
-/proto
+/src/proto
 
 # dependencies
 /node_modules
 
 # env
 .env*
-ormconfig.json
 
 # logs
 /logs

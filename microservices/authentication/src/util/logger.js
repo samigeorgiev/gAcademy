@@ -7,9 +7,8 @@ const { combine, timestamp, label, printf } = winston.format;
 
 const env = process.env.NODE_ENV || 'development';
 
-const dirname = path.dirname(process.mainModule.filename);
-const errorLog = path.join(dirname, 'logs', env, 'error.log');
-const combinedLog = path.join(dirname, 'logs', env, 'combined.log');
+const errorLog = `logs/${env}/error.log`;
+const combinedLog = `logs/${env}/combined.log`;
 
 const transports = [
     new winston.transports.File({

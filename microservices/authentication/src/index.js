@@ -5,11 +5,14 @@ const { createConnection } = require('typeorm');
 const service = require('./service');
 const logger = require('./util/logger');
 
-const packageDefinition = protoLoader.loadSync('./proto/authentication.proto', {
-    keepCase: true,
-    enums: String,
-    defaults: true
-});
+const packageDefinition = protoLoader.loadSync(
+    './src/proto/authentication.proto',
+    {
+        keepCase: true,
+        enums: String,
+        defaults: true
+    }
+);
 const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
