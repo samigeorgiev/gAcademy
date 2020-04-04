@@ -9,18 +9,19 @@ import { Button, Dimmer, Loader, Message, Modal } from 'semantic-ui-react';
 import { BecomeTeacherRequest } from '../proto/account-operations_pb';
 
 const BecomeTeacher = props => {
-    const { user } = useContext(AuthenticationContext);
+    const { user, becomeTeacher } = useContext(AuthenticationContext);
 
     const { methods, state } = useAccountOperations();
-    const { becomeTeacher } = methods;
+    const { becomeTeacher: gprcBecomeTeacher } = methods;
     const { isLoading, response, error } = state;
 
     const { onClose } = props;
     useEffect(() => {
         if (response) {
+            becomeTeacher();
             onClose();
         }
-    }, [response, onClose]);
+    }, [response, becomeTeacher, onClose]);
 
     let modalContent = 'Are you sure you want to become a teacher?';
     if (isLoading) {
@@ -56,7 +57,10 @@ const BecomeTeacher = props => {
                 />
                 <Button
                     onClick={() =>
-                        becomeTeacher(new BecomeTeacherRequest(), user.token)
+                        gprcBecomeTeacher(
+                            new BecomeTeacherRequest(),
+                            user.token
+                        )
                     }
                     icon="checkmark"
                     content="Confirm"

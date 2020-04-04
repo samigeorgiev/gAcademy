@@ -10,7 +10,8 @@ const AuthenticationContext = React.createContext({
     user: null,
     tryLogIn: () => {},
     logIn: (token, expiresIn) => {},
-    logOut: () => {}
+    logOut: () => {},
+    becomeTeacher: () => {}
 });
 
 const AuthenticationContextProvider = props => {
@@ -82,9 +83,14 @@ const AuthenticationContextProvider = props => {
         [setUser, setLogOutTimeout, logOut, getUserAccount]
     );
 
+    const becomeTeacher = useCallback(
+        () => setUser(user => ({ ...user, isTeacher: true })),
+        [setUser]
+    );
+
     return (
         <AuthenticationContext.Provider
-            value={{ user, tryLogIn, logIn, logOut }}
+            value={{ user, tryLogIn, logIn, logOut, becomeTeacher }}
         >
             {props.children}
         </AuthenticationContext.Provider>
