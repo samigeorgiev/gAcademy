@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 
 const AuthenticationForm = props => {
     const initialInputsState = {};
@@ -77,7 +77,7 @@ const AuthenticationForm = props => {
                     placeholder={input.placeholder}
                 />
             ))}
-            <Button
+            <Form.Button
                 primary
                 fluid
                 content="Submit"
