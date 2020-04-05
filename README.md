@@ -46,7 +46,7 @@ Run all containers as well as the proxy server:
 $ docker-compose up
 `
 
-#### Client app
+#### SPA client
 In the `client/` folder run:
 
 `
@@ -60,4 +60,28 @@ $ yarn start
 `
 
 ## Contributing
-If you wish to contribute see [CONTRIBUTING](/CONTRIBUTING.md).
+
+### Microservices
+
+Every microservices should have its own README with information about contribution. New microservices should be using gRPC framework and should be containerized.
+
+### Testing gRPC
+
+Recommended way to test your gRPC services is with [grpcui](https://github.com/fullstorydev/grpcui)
+
+### SPA client
+
+See [client](client/README.md).
+
+### Git
+
+#### Commit messages
+- [Update] *description* - For adding and updating
+- [Fix] *description* - For fixing bug
+- [Remove] *description* - For removing
+
+#### Branching strategy
+Project uses [**GitFlow**](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) as a branching strategy
+
+### Process management system
+Project uses Kanban and [*Kanbanize*](https://tues.kanbanize.com/ctrl_board/7/)
