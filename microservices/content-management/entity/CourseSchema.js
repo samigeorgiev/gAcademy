@@ -21,8 +21,8 @@ module.exports = new EntitySchema({
     relations: {
         categories: {
             target: 'Category',
-            type: 'many-to-one',
-            joinColumn: true,
+            type: 'many-to-many',
+            joinTable: true,
             cascade: true,
         },
         teachers: {
