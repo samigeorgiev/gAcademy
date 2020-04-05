@@ -15,4 +15,11 @@ module.exports = new EntitySchema({
             type: 'varchar',
         },
     },
+    relations: {
+        coursescategories: {
+            target: 'CourseCategory',
+            type: 'one-to-many',
+            cascade: true,
+        },
+    },
 });

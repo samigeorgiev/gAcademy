@@ -19,10 +19,9 @@ module.exports = new EntitySchema({
         },
     },
     relations: {
-        categories: {
-            target: 'Category',
-            type: 'many-to-many',
-            joinTable: true,
+        coursescategories: {
+            target: 'CourseCategory',
+            type: 'one-to-many',
             cascade: true,
         },
         teachers: {

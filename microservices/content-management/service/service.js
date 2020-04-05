@@ -49,20 +49,25 @@ exports.getCourse = async (call, callback) => {
 };
 
 exports.getCoursesByCategory = async (call, callback) => {
-    const coursesRepository = getRepository(Course);
-
+    const categoryRepository = getRepository(Category);
+    // const coursesRepository = getRepository(Course);
     try {
-        courses = await coursesRepository
+        category = await categoryRepository
             .find({
-                relations: ['categories', 'teachers'],
-                where: {categories: call.request},
-                order: {id: 'ASC', title: 'ASC'},
+                relations: ['courses'],
+                where: {id: call.request.id},
             });
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Category does not exist', error);
     }
-
+    // courses = await coursesRepository
+    //     .find({
+    //         relations: ['categories', 'teachers'],
+    //         where: {categoriesId: 3},
+    //     });
+    console.log(category);
+    // console.log(courses);
     callback(null, {courses});
 };
 
