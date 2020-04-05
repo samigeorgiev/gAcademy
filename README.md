@@ -1,6 +1,6 @@
 # gAcademy
-An innovative system for online courses and private lessons  
-More info: 
+An innovative system for online courses and private lessons.  
+More info [here](https://drive.google.com/file/d/1CLuLhElY9Lvn_G-qVlMkA_7X-UUZwe8h/view?usp=sharing)
 
 ## Running
 
