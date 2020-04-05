@@ -24,5 +24,12 @@ module.exports = new EntitySchema({
             type: 'varchar',
         },
     },
+    relations: {
+        teachers: {
+            target: 'User',
+            inverseSide: 'user',
+            type: 'one-to-one',
+        },
+    },
 });
 

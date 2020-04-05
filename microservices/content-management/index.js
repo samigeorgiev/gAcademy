@@ -1,17 +1,17 @@
-const path = require('path');
-
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const {createConnection} = require('typeorm');
+// const auth = require('./client/client.js');
 
-const CourseService = require('./service/Course');
-
-const protoDefinition =
-    protoLoader.loadSync(path.join(__dirname, process.env.PROTO_PATH), {
+const CourseService = require('./service');
+const protoDefinition = protoLoader.loadSync(
+    './proto/content-management.proto',
+    {
         keepCase: true,
         enums: String,
         defaults: true,
-    });
+    },
+);
 const protoDescriptor = grpc.loadPackageDefinition(protoDefinition);
 
 const server = new grpc.Server();

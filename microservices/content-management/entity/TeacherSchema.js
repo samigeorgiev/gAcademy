@@ -12,5 +12,14 @@ module.exports = new EntitySchema({
             generated: true,
         },
     },
-    // TODO relation to 'users'
+    relations: {
+        users: {
+            target: 'User',
+            inverseSide: 'teachers',
+            type: 'one-to-one',
+            joinColumn: true,
+            cascade: true,
+            eager: true,
+        },
+    },
 });

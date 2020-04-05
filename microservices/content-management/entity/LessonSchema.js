@@ -1,10 +1,10 @@
 const EntitySchema = require('typeorm').EntitySchema;
-const Course = ('../model/Course').Course;
+const Lesson = ('../model/Lesson').Lesson;
 
 module.exports = new EntitySchema({
-    name: 'Course',
-    target: Course,
-    tableName: 'courses',
+    name: 'Lesson',
+    target: Lesson,
+    tableName: 'lessons',
     columns: {
         id: {
             primary: true,
@@ -14,15 +14,15 @@ module.exports = new EntitySchema({
         title: {
             type: 'varchar',
         },
-        description: {
+        content: {
             type: 'varchar',
         },
     },
     relations: {
         categories: {
             target: 'Category',
-            type: 'many-to-many',
-            joinTable: true,
+            type: 'many-to-one',
+            joinColumn: true,
             cascade: true,
         },
         teachers: {
