@@ -47,6 +47,10 @@ $ docker-compose up
 `
 
 #### SPA client
+
+Before run it create `.env` with proper extension for node environment and add variables for services url in following format: `REACT_APP_${microservice_name}`
+If you run all of the microservices and the client on the same host use `.env.example`.
+
 In the `client/` folder run:
 
 `
@@ -73,6 +77,13 @@ Recommended way to test your gRPC services is with [grpcui](https://github.com/f
 
 See [client](client/README.md).
 
+### Recommended IDE
+
+Recommended IDE is [*Visual Studio Code*](https://code.visualstudio.com).  
+Example configuration could be found [here](https://gist.github.com/samigeorgiev/9ae961943212bc7872f46840519e308b).
+
+**Note:** Some microservices could have their own recommendations.
+
 ### Git
 
 #### Commit messages
@@ -81,7 +92,7 @@ See [client](client/README.md).
 - [Remove] *description* - For removing
 
 #### Branching strategy
-Project uses [**GitFlow**](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) as a branching strategy
+Project uses [*GitFlow*](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) as a branching strategy
 
 ### Process management system
 Project uses Kanban and [*Kanbanize*](https://tues.kanbanize.com/ctrl_board/7/)
