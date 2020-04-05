@@ -8,6 +8,7 @@ import { AuthenticationContext } from './context/authentication';
 import Layout from './components/Layout';
 
 const Courses = React.lazy(() => import('./pages/Courses'));
+const ExploreCourses = React.lazy(() => import('./pages/ExploreCourses'));
 const TeacherPanel = React.lazy(() => import('./pages/TeacherPanel'));
 
 const App = props => {
@@ -20,6 +21,11 @@ const App = props => {
             <Switch>
                 <Route path="/" exact>
                     <h1>Home Route</h1>
+                </Route>
+                <Route path="/explore" exact>
+                    <Suspense fallback={<Loader active />}>
+                        <ExploreCourses />
+                    </Suspense>
                 </Route>
                 {user ? (
                     <Route path="/courses" exact>
