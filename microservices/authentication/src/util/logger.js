@@ -25,7 +25,7 @@ if (env !== 'production') {
 }
 
 const logger = winston.createLogger({
-    level: process.env.LOG_LEVEL || 'info',
+    level: env === 'production' ? 'warn' : 'info',
     format: combine(
         label({ label: path.basename(process.mainModule.filename) }),
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
