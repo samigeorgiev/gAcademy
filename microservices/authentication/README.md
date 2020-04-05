@@ -43,10 +43,10 @@ Start in production-local mode:
 $ yarn start-local
 `
 
-**Note:** Start with `yarn start` only in container environment 
+**Note:** Use `yarn start` only in container environment 
 
 ## Linting
-All `.js` files should be lint with `eslint`. Config file is `.eslintrc.json`.
+All `.js` files should be linted with `eslint`. Config file is `.eslintrc.json`.
 To lint all files run `yarn lint`
 
 For avoiding linting errors you could use [*prettier*](http://prettier.io) with `.prettierrc.json` as configuration. 
