@@ -9,7 +9,7 @@ import courseImage from '../images/tmp/course.png';
 
 const Courses = props => {
     const location = useLocation();
-    console.log(new URLSearchParams(location.search).get('category'));
+    // console.log(new URLSearchParams(location.search).get('category'));
 
     const courses = [
         {
