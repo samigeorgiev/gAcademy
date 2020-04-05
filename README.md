@@ -10,7 +10,7 @@ More info [here](https://drive.google.com/file/d/1CLuLhElY9Lvn_G-qVlMkA_7X-UUZwe
 - [node:13](https://nodejs.org/en/download)
 - [yarn:latest](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
 
-### Running
+### Starting
 
 #### Microservices
 To run all microservices you should provide these environment variables:
