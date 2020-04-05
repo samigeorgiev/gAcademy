@@ -1,20 +1,19 @@
 # gAcademy
 An innovative system for online courses and private lessons.  
-More info [here](https://drive.google.com/file/d/1CLuLhElY9Lvn_G-qVlMkA_7X-UUZwe8h/view?usp=sharing)
+More info [here](https://drive.google.com/file/d/1CLuLhElY9Lvn_G-qVlMkA_7X-UUZwe8h/view?usp=sharing).
 
 ## Running
 
 ### Requirements
 - [docker:latest](https://docs.docker.com/install)
 - [docker-compose:latest](https://docs.docker.com/compose/install)
-- [node v13](https://nodejs.org/en/download)
+- [node:13](https://nodejs.org/en/download)
 - [yarn:latest](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
 
 ### Running
 
 #### Microservices
-To run all microservices you should provide environment variables.  
-Expected variables are:
+To run all microservices you should provide these environment variables:
 - DB_TYPE
 - DB_HOST
 - DB_PORT
@@ -27,7 +26,7 @@ Expected variables are:
 - JWT_SECRET
 - JWT_VALID_TIME
 - NODE_ENV
-- LOG_LEVEL  
+- LOG_LEVEL
 
 The recommended way for linux is export them with script. You could also use `set-env.sh.example` with preset values. Then run:
 
@@ -35,13 +34,13 @@ The recommended way for linux is export them with script. You could also use `se
 $ source set-env.sh
 `
 
-Before running you should compile all protocols files with:
+After that you should compile all protocols files:
 
 `
 $ ./genproto.sh
 `
 
-To run all containers as well as the proxy server:
+Run all containers as well as the proxy server:
 
 `
 $ docker-compose up
@@ -61,4 +60,4 @@ $ yarn start
 `
 
 ## Contributing
-If you wish to contribute see [CONTRIBUTING](/CONTRIBUTING.md)
+If you wish to contribute see [CONTRIBUTING](/CONTRIBUTING.md).
