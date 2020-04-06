@@ -6,8 +6,8 @@ class Course {
         this.title = title;
         this.description = description;
         this.categories = categories;
-        this.teachers = teachers;
+        this.teacher = teacher;
     }
 }
 
-module.exports = {Course};
+module.exports = { Course };

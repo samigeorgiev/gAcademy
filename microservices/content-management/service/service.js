@@ -1,44 +1,41 @@
 const grpc = require('grpc');
 
-const {getRepository} = require('typeorm');
+const { getRepository } = require('typeorm');
 
 const errorHandler = require('../util/errorHandler');
 const Course = require('../entity/CourseSchema');
 const Lesson = require('../entity/LessonSchema');
 const Category = require('../entity/CategorySchema');
+const CourseCategories = require('../entity/CourseCategorySchema');
+const Teacher = require('../entity/TeacherSchema');
 
 exports.newCourse = async (call, callback) => {
-    const {title, description, categoryId} = call.request;
-    const courseRepository = getRepository(Course);
-    const course = await courseRepository.insert({
-        title: title,
-        description: description,
-    });
-    const courseId = course.raw[0].id;
+    const { title, description, categoriesIds } = call.request;
 
-    for (i = 0; i < categoryId.length; i++) {
-        await courseRepository
-            .createQueryBuilder()
-            .insert()
-            .into('courses_categories_categories')
-            .values({coursesId: courseId, categoriesId: categoryId[i]})
-            .execute();
-    }
+    const categories = await getRepository(Category).findByIds(categoriesIds);
+    const teacher = await getRepository(Teacher).findOne(3);
+    const course = {
+        title,
+        description,
+        course_categories: categories.map((category) => ({ category })),
+        creator: teacher,
+    };
+
+    await getRepository(Course).save(course);
 
     callback(null);
 };
 
 exports.getCourse = async (call, callback) => {
-    const {id} = call.request;
+    const { id } = call.request;
     const courseRepository = getRepository(Course);
 
     try {
-        course = await courseRepository
-            .find({
-                relations: ['categories', 'teachers'],
-                where: {id: id},
-                order: {id: 'ASC', title: 'ASC'},
-            });
+        course = await courseRepository.find({
+            relations: ['categories', 'teachers'],
+            where: { id: id },
+            order: { id: 'ASC', title: 'ASC' },
+        });
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Category does not exist', error);
@@ -49,25 +46,26 @@ exports.getCourse = async (call, callback) => {
 };
 
 exports.getCoursesByCategory = async (call, callback) => {
-    const coursesRepository = getRepository(Course);
-
-    try {
-        courses = await coursesRepository
-            .find({
-                relations: ['categories', 'teachers'],
-                where: {categories: call.request},
-                order: {id: 'ASC', title: 'ASC'},
-            });
-    } catch (error) {
-        const status = grpc.status.INTERNAL;
-        return errorHandler(callback, status, 'Category does not exist', error);
-    }
-
-    callback(null, {courses});
+    const course_categories = await getRepository(CourseCategories).find({
+        where: { categoryId: call.request.id },
+    });
+    const courses = course_categories.map((cc) => ({
+        id: cc.course.id,
+        title: cc.course.title,
+        description: cc.course.description,
+        teacher: {
+            id: cc.course.creator.id,
+            name:
+                cc.course.creator.user.firstName +
+                ' ' +
+                cc.course.creator.user.lastName,
+        },
+    }));
+    callback(null, { courses });
 };
 
 exports.newLesson = async (call, callback) => {
-    const {title, content, categoryId, teacherId} = call.request;
+    const { title, content, categoryId, teacherId } = call.request;
 
     const lessonRepository = getRepository(Lesson);
     const lesson = await lessonRepository.insert({
@@ -79,24 +77,23 @@ exports.newLesson = async (call, callback) => {
     await lessonRepository
         .createQueryBuilder()
         .update(Lesson)
-        .set({categories: categoryId, teachers: teacherId})
-        .where('id = :id', {id: lessonId})
+        .set({ categories: categoryId, teachers: teacherId })
+        .where('id = :id', { id: lessonId })
         .execute();
 
     callback(null);
 };
 
 exports.getLesson = async (call, callback) => {
-    const {id} = call.request;
+    const { id } = call.request;
     const lessonRepository = getRepository(Lesson);
 
     try {
-        lesson = await lessonRepository
-            .find({
-                relations: ['categories', 'teachers'],
-                where: {id: id},
-                order: {id: 'ASC', title: 'ASC'},
-            });
+        lesson = await lessonRepository.find({
+            relations: ['categories', 'teachers'],
+            where: { id: id },
+            order: { id: 'ASC', title: 'ASC' },
+        });
     } catch (error) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Lesson does not exist', error);
@@ -110,14 +107,14 @@ exports.getCategories = async (call, callback) => {
     const categoriesRepository = getRepository(Category);
 
     try {
-        categories = await categoriesRepository
-            .find({
-                order: {name: 'ASC'},
-            });
+        categories = await categoriesRepository.find({
+            order: { name: 'ASC' },
+        });
     } catch (error) {
+        console.log(error);
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'No categories.');
     }
 
-    callback(null, {categories});
+    callback(null, { categories });
 };

@@ -1,5 +1,5 @@
 const EntitySchema = require('typeorm').EntitySchema;
-const Teacher = ('../model/Teacher').Teacher;
+const Teacher = '../model/Teacher'.Teacher;
 
 module.exports = new EntitySchema({
     name: 'Teacher',
@@ -13,13 +13,16 @@ module.exports = new EntitySchema({
         },
     },
     relations: {
-        users: {
+        user: {
             target: 'User',
-            inverseSide: 'teachers',
             type: 'one-to-one',
-            joinColumn: true,
-            cascade: true,
+            joinColumn: { name: 'user_id' },
             eager: true,
+        },
+        courses: {
+            target: 'Course',
+            type: 'one-to-many',
+            inverseSide: 'creator',
         },
     },
 });

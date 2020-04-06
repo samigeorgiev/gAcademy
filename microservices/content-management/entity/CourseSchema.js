@@ -1,5 +1,5 @@
 const EntitySchema = require('typeorm').EntitySchema;
-const Course = ('../model/Course').Course;
+const Course = '../model/Course'.Course;
 
 module.exports = new EntitySchema({
     name: 'Course',
@@ -19,17 +19,18 @@ module.exports = new EntitySchema({
         },
     },
     relations: {
-        categories: {
-            target: 'Category',
-            type: 'many-to-many',
-            joinTable: true,
+        course_categories: {
+            target: 'CourseCategory',
+            type: 'one-to-many',
+            inverseSide: 'course',
             cascade: true,
         },
-        teachers: {
+        creator: {
             target: 'Teacher',
             type: 'many-to-one',
-            joinColumn: true,
+            joinColumn: { name: 'creator_id' },
             cascade: true,
+            eager: true,
         },
     },
 });
