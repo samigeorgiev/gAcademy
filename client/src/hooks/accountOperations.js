@@ -31,9 +31,15 @@ const useAccountOperations = () => {
         },
         [sendRequest]
     );
+    const enrollCourse = useCallback(
+        (request, token) => {
+            sendRequest('enrollCourse', request, { Authorization: token });
+        },
+        [sendRequest]
+    );
 
     return {
-        methods: { becomeTeacher, getAccount, getCourses },
+        methods: { becomeTeacher, getAccount, getCourses, enrollCourse },
         state
     };
 };

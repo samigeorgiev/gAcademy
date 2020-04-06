@@ -1,14 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Loader } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
+
+import useContentManagement from '../../../hooks/contentManagement';
+
+import { GetCategoriesRequest } from '../../../proto/content-management_pb';
 
 const Explore = props => {
+    const [categories, setCategories] = useState([]);
+
+    const history = useHistory();
+
+    const { methods, state } = useContentManagement();
+    const { getCategories } = methods;
+    const { isLoading, response } = state;
+
+    useEffect(() => {
+        getCategories(new GetCategoriesRequest());
+    }, [getCategories]);
+
+    useEffect(() => {
+        if (response) {
+            setCategories(response.getCategoriesList());
+        }
+    }, [response]);
+
     return (
         <Dropdown item text="Explore">
             <Dropdown.Menu>
-                <Dropdown.Item>Category 1</Dropdown.Item>
-                <Dropdown.Item>Category 2</Dropdown.Item>
-                <Dropdown.Item>Category 3</Dropdown.Item>
+                {categories.length ? (
+                    categories.map(category => (
+                        <Dropdown.Item
+                            key={category.getId()}
+                            onClick={() =>
+                                history.push(
+                                    '/explore?category=' + category.getId()
+                                )
+                            }
+                        >
+                            {category.getName()}
+                        </Dropdown.Item>
+                    ))
+                ) : (
+                    <Dropdown.Item>
+                        <Loader active={isLoading} />
+                    </Dropdown.Item>
+                )}
             </Dropdown.Menu>
         </Dropdown>
     );

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 
+import { Button, Dimmer, Loader, Message, Modal } from 'semantic-ui-react';
+
 import { AuthenticationContext } from '../context/authentication';
 
 import useAccountOperations from '../hooks/accountOperations';
-
-import { Button, Dimmer, Loader, Message, Modal } from 'semantic-ui-react';
 
 import { BecomeTeacherRequest } from '../proto/account-operations_pb';
 

@@ -46,8 +46,8 @@ exports.getCourse = async (call, callback) => {
 };
 
 exports.getCoursesByCategory = async (call, callback) => {
-    const courseCategories = await getRepository(CourseCategories).find({
-        where: { categoryId: call.request.id },
+    const course_categories = await getRepository(CourseCategories).find({
+        where: { category: { id: call.request.id } },
     });
     const courses = courseCategories.map((cc) => ({
         id: cc.course.id,
@@ -61,6 +61,13 @@ exports.getCoursesByCategory = async (call, callback) => {
                 cc.course.creator.user.lastName,
         },
     }));
+    for (let i = 0; i < courses.length; i++) {
+        for (let j = i + 1; j < courses.length; j++) {
+            if (courses[i].id === courses[j].id) {
+                courses.splice(j, 1);
+            }
+        }
+    }
     callback(null, { courses });
 };
 

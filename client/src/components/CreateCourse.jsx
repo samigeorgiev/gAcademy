@@ -1,23 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Dropdown, Form, Modal } from 'semantic-ui-react';
 
-const CreateCourse = props => {
-    const categories = [
-        { key: 1, text: 'CSS', value: 'CSS' },
-        { key: 2, text: 'JS', value: 'JS' },
-        { key: 3, text: 'JAVA', value: 'JAVA' }
-    ];
+import useContentManagement from '../hooks/contentManagement';
 
+import {
+    GetCategoriesRequest,
+    NewCourseRequest
+} from '../proto/content-management_pb';
+
+const CreateCourse = props => {
+    const [categories, setCategories] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const {
+        methods: { getCategories, newCourse },
+        state: { isLoading, response }
+    } = useContentManagement();
+
+    useEffect(() => {
+        getCategories(new GetCategoriesRequest());
+    }, [getCategories]);
+
+    useEffect(() => {
+        if (response && response.getCategoriesList) {
+            setCategories(
+                response.getCategoriesList().map(category => ({
+                    key: category.getId(),
+                    value: category.getId(),
+                    text: category.getName()
+                }))
+            );
+        }
+    }, [response]);
+
+    const submitHandler = event => {
+        event.preventDefault();
+        const request = new NewCourseRequest();
+        request.setTitle(title);
+        request.setDescription(description);
+        request.setCategoriesidsList(selectedCategories);
+        newCourse(request);
+    };
 
     return (
         <>
             <Modal.Header content="Create new course" />
             <Modal.Content>
-                <Form>
+                <Form onSubmit={submitHandler}>
                     <Form.Input
                         value={title}
                         onChange={event => setTitle(event.target.value)}
