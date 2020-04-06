@@ -46,10 +46,10 @@ exports.getCourse = async (call, callback) => {
 };
 
 exports.getCoursesByCategory = async (call, callback) => {
-    const course_categories = await getRepository(CourseCategories).find({
+    const courseCategories = await getRepository(CourseCategories).find({
         where: { categoryId: call.request.id },
     });
-    const courses = course_categories.map((cc) => ({
+    const courses = courseCategories.map((cc) => ({
         id: cc.course.id,
         title: cc.course.title,
         description: cc.course.description,
