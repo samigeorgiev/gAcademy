@@ -18,9 +18,22 @@ services:
         networks:
             - microservices
 
+    content-management:
+        build: ./microservices/content-management
+        environment: 
+            - NODE_ENV=${NODE_ENV}
+            - DB_HOST=${DB_HOST}
+            - DB_PORT=${DB_PORT}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
+        networks: 
+            - microservices
+
     account-operations:
         build: ./microservices/account-operations
-        environment: 
+        environment:
             - DB_URL=${DB_JDBC_URL}
             - DB_USERNAME=${DB_USERNAME}
             - DB_PASSWORD=${DB_PASSWORD}
@@ -35,6 +48,7 @@ services:
         ports: 
             - "9901:9901"
             - "8000:8000"
+            - "8001:8001"
             - "8002:8002"
         networks:
             - microservices
