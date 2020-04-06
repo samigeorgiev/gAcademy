@@ -1,5 +1,5 @@
 const EntitySchema = require('typeorm').EntitySchema;
-const Category = ('../model/Category').Category;
+const Category = '../model/Category'.Category;
 
 module.exports = new EntitySchema({
     name: 'Category',
@@ -16,9 +16,10 @@ module.exports = new EntitySchema({
         },
     },
     relations: {
-        coursescategories: {
+        course_categories: {
             target: 'CourseCategory',
             type: 'one-to-many',
+            inverseSide: 'Category',
             cascade: true,
         },
     },

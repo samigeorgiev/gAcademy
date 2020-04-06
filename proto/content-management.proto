@@ -14,7 +14,7 @@ service Course {
 message NewCourseRequest {
     string title = 1;
     string description = 2;
-    repeated uint32 categoryId = 3;
+    repeated uint32 categoriesIds = 3;
 }
 
 message NewCourseResponse {
@@ -46,18 +46,14 @@ message GetCoursesByCategoryRequest {
 
 message GetCoursesByCategoryResponse {
 	message Course {
-		message Category {
-			uint32 id = 1;
-			string name = 2;
-		}
 		message Teacher {
 			uint32 id = 1;
+			string name = 2;
 		}	
 		uint32 id = 1;
 		string title = 2;
 		string description = 3;
-		Category categories = 4;
-		Teacher teachers = 5;
+		Teacher teacher = 5;
 	}
 	repeated Course courses = 1;
 }
