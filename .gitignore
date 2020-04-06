@@ -1,0 +1,5 @@
+# IDE folders
+/.vscode
+
+# set env vars
+set-env.sh
