@@ -13,7 +13,7 @@ exports.newCourse = async (call, callback) => {
     const { title, description, categoriesIds } = call.request;
 
     const categories = await getRepository(Category).findByIds(categoriesIds);
-    const teacher = await getRepository(Teacher).findOne(3);
+    const teacher = await getRepository(Teacher).findOne();
     const course = {
         title,
         description,
@@ -49,7 +49,7 @@ exports.getCoursesByCategory = async (call, callback) => {
     const course_categories = await getRepository(CourseCategories).find({
         where: { category: { id: call.request.id } },
     });
-    const courses = courseCategories.map((cc) => ({
+    const courses = course_categories.map((cc) => ({
         id: cc.course.id,
         title: cc.course.title,
         description: cc.course.description,

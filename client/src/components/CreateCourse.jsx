@@ -17,7 +17,7 @@ const CreateCourse = props => {
 
     const {
         methods: { getCategories, newCourse },
-        state: { isLoading, response }
+        state: { response }
     } = useContentManagement();
 
     useEffect(() => {
@@ -43,6 +43,7 @@ const CreateCourse = props => {
         request.setDescription(description);
         request.setCategoriesidsList(selectedCategories);
         newCourse(request);
+        props.onClose();
     };
 
     return (
