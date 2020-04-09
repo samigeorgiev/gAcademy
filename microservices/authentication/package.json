@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
+    "test": "env NODE_ENV=test mocha src/test",
     "start-local": "node -r dotenv/config src/index.js dotenv_config_path=.env.production",
     "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.development",
     "lint": "eslint 'src/**/*.js'"
@@ -23,8 +24,11 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
-    "nodemon": "^2.0.2"
+    "mocha": "^7.1.1",
+    "nodemon": "^2.0.2",
+    "sinon": "^9.0.2"
   }
 }

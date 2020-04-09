@@ -24,8 +24,21 @@ if (env !== 'production') {
     transports.push(new winston.transports.Console());
 }
 
+let logLevel;
+switch (env) {
+    case 'production':
+        logLevel = 'warn';
+        break;
+    case 'development':
+        logLevel = 'info';
+        break;
+    case 'test':
+        logLevel = 'error';
+        break;
+}
+
 const logger = winston.createLogger({
-    level: env === 'production' ? 'warn' : 'info',
+    level: logLevel,
     format: combine(
         label({ label: path.basename(process.mainModule.filename) }),
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
