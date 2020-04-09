@@ -28,7 +28,7 @@ const TeacherPanel = props => {
                 closeIcon
                 closeOnEscape={false}
             >
-                <CreateCourse />
+                <CreateCourse onClose={() => setIsModalShown(false)} />
             </Modal>
             <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
                 <CourseList

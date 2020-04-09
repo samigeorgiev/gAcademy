@@ -14,19 +14,16 @@ More info [here](https://drive.google.com/file/d/1CLuLhElY9Lvn_G-qVlMkA_7X-UUZwe
 
 #### Microservices
 To run all microservices you should provide these environment variables:
-- DB_TYPE
 - DB_HOST
 - DB_PORT
 - DB_USERNAME
 - DB_PASSWORD
 - DB_JDBC_URL
 - DB_DATABASE
-- DB_LOGGING
 - DB_SYNCHRONIZE
 - JWT_SECRET
 - JWT_VALID_TIME
 - NODE_ENV
-- LOG_LEVEL
 
 The recommended way for linux is export them with script. You could also use `set-env.sh.example` with preset values. Then run:
 

@@ -1,4 +1,6 @@
 # Compiling proto
+mkdir -p proto
+
 cd ../../
 ROOT_DIR=$(pwd)
 

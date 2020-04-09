@@ -20,13 +20,14 @@ const Courses = props => {
 
     const { user } = useContext(AuthenticationContext);
 
-    const { methods: cmMethods, state: cmState } = useContentManagement();
-    const { getCoursesByCategory } = cmMethods;
-    const { response: responseCM } = cmState;
+    const {
+        methods: { getCoursesByCategory },
+        state
+    } = useContentManagement();
+    const { response } = state;
 
-    const { methods, state } = useAccountOperations();
+    const { methods } = useAccountOperations();
     const { enrollCourse } = methods;
-    const { isLoading, response } = state;
 
     const location = useLocation();
 
@@ -38,10 +39,10 @@ const Courses = props => {
     }, [getCoursesByCategory, location]);
 
     useEffect(() => {
-        if (responseCM) {
-            setCourses(responseCM.getCoursesList());
+        if (response) {
+            setCourses(response.getCoursesList());
         }
-    }, [responseCM]);
+    }, [response]);
 
     const enrollHandler = courseId => {
         const request = new EnrollCourseRequest();
