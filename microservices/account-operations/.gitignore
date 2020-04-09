@@ -1,3 +1,7 @@
-/.idea/
-/src/main/proto
-/target/
+.idea/
+.settings/
+.classpath
+.project
+
+src/main/proto
+target/
