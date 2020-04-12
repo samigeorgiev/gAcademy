@@ -26,12 +26,12 @@ class Api {
     async signUp(call, callback) {
         const { email, password, firstName, lastName } = call.request;
 
-        if (!validator.isEmail(email)) {
+        if (!email || !validator.isEmail(email)) {
             const status = grpc.status.INVALID_ARGUMENT;
             return errorHandler(callback, status, 'Invalid email');
         }
 
-        if (!validator.isLength(password, PASSWORD_LENGTH)) {
+        if (!password || !validator.isLength(password, PASSWORD_LENGTH)) {
             const status = grpc.status.INVALID_ARGUMENT;
             return errorHandler(callback, status, 'Invalid password');
         }
@@ -55,16 +55,16 @@ class Api {
             return errorHandler(callback, status, 'User already exists');
         }
 
-        logic.signUp(call, callback);
+        this.logic.signUp(call, callback);
     }
 
     logIn(call, callback) {
         const { email } = call.request;
-        if (!validator.isEmail(email)) {
+        if (!email || !validator.isEmail(email)) {
             const status = grpc.status.INVALID_ARGUMENT;
             return errorHandler(callback, status, 'Invalid email');
         }
-        logic.logIn(call, callback);
+        this.logic.logIn(call, callback);
     }
 
     getUserId(call, callback) {
@@ -73,7 +73,7 @@ class Api {
             const status = grpc.status.INVALID_ARGUMENT;
             return errorHandler(callback, status, 'Invalid token');
         }
-        logic.getUserId(call, callback);
+        this.logic.getUserId(call, callback);
     }
 }
 

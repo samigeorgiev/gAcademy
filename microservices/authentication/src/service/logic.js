@@ -36,7 +36,7 @@ class Logic {
 
         let createdUser;
         try {
-            createdUser = await getRepository(User).save(user);
+            createdUser = await this.userRepository.save(user);
         } catch (error) {
             const status = grpc.status.INTERNAL;
             return errorHandler(callback, status, 'Database error', error);
@@ -58,7 +58,7 @@ class Logic {
 
         let user;
         try {
-            user = await getRepository(User).findOne({
+            user = await this.userRepository.findOne({
                 select: ['id', 'password'],
                 where: { email }
             });
@@ -101,7 +101,7 @@ class Logic {
 
         let user;
         try {
-            user = await getRepository(User).findOne({
+            user = await this.userRepository.findOne({
                 select: ['id'],
                 where: { id: userId }
             });
