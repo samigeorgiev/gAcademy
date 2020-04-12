@@ -7,7 +7,7 @@ const User = require('../model/user');
 
 require('../service/api');
 
-describe('service/index.js', () => {
+describe('service/api.js', () => {
     const repository = {
         findOne: stub(),
         save: stub()
@@ -53,14 +53,7 @@ describe('service/index.js', () => {
             api.signUp(invalidCall, callback);
             assert(
                 callback.calledWith(
-                    match
-                        .instanceOf(Error)
-                        .and(
-                            match.has(
-                                'message',
-                                grpc.status.INVALID_ARGUMENT + ' Invalid email'
-                            )
-                        )
+                    matchErrorArg(grpc.status.INVALID_ARGUMENT, 'Invalid email')
                 )
             );
         });
@@ -76,15 +69,10 @@ describe('service/index.js', () => {
             api.signUp(invalidCall, callback);
             assert(
                 callback.calledWith(
-                    match
-                        .instanceOf(Error)
-                        .and(
-                            match.has(
-                                'message',
-                                grpc.status.INVALID_ARGUMENT +
-                                    ' Invalid password'
-                            )
-                        )
+                    matchErrorArg(
+                        grpc.status.INVALID_ARGUMENT,
+                        'Invalid password'
+                    )
                 )
             );
         });
@@ -96,15 +84,10 @@ describe('service/index.js', () => {
             await api.signUp(call, callback);
             assert(
                 callback.calledWith(
-                    match
-                        .instanceOf(Error)
-                        .and(
-                            match.has(
-                                'message',
-                                grpc.status.ALREADY_EXISTS +
-                                    ' User already exists'
-                            )
-                        )
+                    matchErrorArg(
+                        grpc.status.ALREADY_EXISTS,
+                        'User already exists'
+                    )
                 )
             );
         });
@@ -138,14 +121,7 @@ describe('service/index.js', () => {
             api.logIn(invalidCall, callback);
             assert(
                 callback.calledWith(
-                    match
-                        .instanceOf(Error)
-                        .and(
-                            match.has(
-                                'message',
-                                grpc.status.INVALID_ARGUMENT + ' Invalid email'
-                            )
-                        )
+                    matchErrorArg(grpc.status.INVALID_ARGUMENT, 'Invalid email')
                 )
             );
         });
@@ -175,14 +151,7 @@ describe('service/index.js', () => {
             api.getUserId(invalidCall, callback);
             assert(
                 callback.calledWith(
-                    match
-                        .instanceOf(Error)
-                        .and(
-                            match.has(
-                                'message',
-                                grpc.status.INVALID_ARGUMENT + ' Invalid token'
-                            )
-                        )
+                    matchErrorArg(grpc.status.INVALID_ARGUMENT, 'Invalid token')
                 )
             );
         });
@@ -194,3 +163,6 @@ describe('service/index.js', () => {
         });
     });
 });
+
+const matchErrorArg = (code, message) =>
+    match.instanceOf(Error).and(match.has('message', `${code} ${message}`));
