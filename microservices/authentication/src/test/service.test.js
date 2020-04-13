@@ -1,50 +1,37 @@
-// const { assert } = require('chai');
-// const grpc = require('grpc');
-// const { createSandbox, fake, match, stub } = require('sinon');
-// const typeorm = require('typeorm');
+/* eslint-disable */
+const { assert } = require('chai');
+const { match, spy, stub } = require('sinon');
 
-// const service = require('../service');
-// const User = require('../model/user');
+const bottle = require('../util/bottle');
 
-// describe('Service', () => {
-//     const sandbox = createSandbox();
+require('../service/logic');
 
-//     afterEach(() => {
-//         sandbox.restore();
-//     });
+describe('service/logic.js', () => {
+    let repository;
+    let logic;
+    let callback;
 
-//     describe('signUp', () => {
-//         it('should return an INVALID_ARGUMENT error', () => {
-//             const call = {
-//                 request: {
-//                     email: 'invalid email',
-//                     password: 'password',
-//                     firstName: 'firstName',
-//                     lastName: 'lastName'
-//                 }
-//             };
-//             const callback = fake();
-//             service.signUp(call, callback);
-//             assert(
-//                 callback.calledWith(
-//                     match
-//                         .instanceOf(Error)
-//                         .and(
-//                             match.has(
-//                                 'message',
-//                                 grpc.status.INVALID_ARGUMENT + ' Invalid email'
-//                             )
-//                         )
-//                 )
-//             );
-//         });
+    before(() => {
+        repository = {
+            findOne: stub(),
+            save: stub()
+        };
+        bottle.factory('UserRepository', () => repository);
 
-//         it('repo', () => {
-//             const getRepository = stub(typeorm, 'getRepository');
-//             const repository = getRepository.returns({
-//                 save: () => {}
-//             });
-//             repository.withArgs(User);
-//         });
-//     });
-// });
+        logic = bottle.container.Service.Logic;
+
+        callback = spy();
+    });
+
+    after(() => {
+        bottle.resetProviders();
+    });
+
+    afterEach(() => {
+        callback.resetHistory();
+    });
+
+    describe('signUp', () => {
+        it('tmp', () => {});
+    });
+});

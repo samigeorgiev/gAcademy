@@ -8,22 +8,34 @@ const User = require('../model/user');
 require('../service/api');
 
 describe('service/api.js', () => {
-    const repository = {
-        findOne: stub(),
-        save: stub()
-    };
-    bottle.factory('UserRepository', () => repository);
+    let repository;
+    let logic;
+    let api;
+    let callback;
 
-    const logic = {
-        signUp: spy(),
-        logIn: spy(),
-        getUserId: spy()
-    };
-    bottle.factory('Service.Logic', () => logic);
+    before(() => {
+        repository = {
+            findOne: stub(),
+            save: stub()
+        };
+        bottle.factory('UserRepository', () => repository);
 
-    const api = bottle.container.Service.Api;
+        logic = {
+            signUp: spy(),
+            logIn: spy(),
+            getUserId: spy()
+        };
+        bottle.factory('Service.Logic', () => logic);
 
-    const callback = spy();
+        api = bottle.container.Service.Api;
+
+        callback = spy();
+    });
+
+    after(() => {
+        bottle.resetProviders();
+        console.log('fdsfds');
+    });
 
     afterEach(() => {
         callback.resetHistory();
@@ -54,7 +66,8 @@ describe('service/api.js', () => {
             assert(
                 callback.calledWith(
                     matchErrorArg(grpc.status.INVALID_ARGUMENT, 'Invalid email')
-                )
+                ),
+                'should call callback with error for invalid email'
             );
         });
 
@@ -73,7 +86,8 @@ describe('service/api.js', () => {
                         grpc.status.INVALID_ARGUMENT,
                         'Invalid password'
                     )
-                )
+                ),
+                'should call callback with error for invalid password'
             );
         });
 
@@ -88,7 +102,8 @@ describe('service/api.js', () => {
                         grpc.status.ALREADY_EXISTS,
                         'User already exists'
                     )
-                )
+                ),
+                'should call callback with error for existing user'
             );
         });
 
@@ -97,8 +112,11 @@ describe('service/api.js', () => {
                 .withArgs({ where: { email: 'valid@email.com' } })
                 .resolves(null);
             await api.signUp(call, callback);
-            assert(logic.signUp.calledWithExactly(call, callback));
-            assert(callback.notCalled);
+            assert(
+                logic.signUp.calledWithExactly(call, callback),
+                'should call signUp method on logic'
+            );
+            assert(callback.notCalled, 'should not call callback');
         });
     });
 
@@ -122,14 +140,18 @@ describe('service/api.js', () => {
             assert(
                 callback.calledWith(
                     matchErrorArg(grpc.status.INVALID_ARGUMENT, 'Invalid email')
-                )
+                ),
+                'should call callback with error for invalid email'
             );
         });
 
         it('should call logIn method on logic', () => {
             api.logIn(call, callback);
-            assert(logic.logIn.calledWithExactly(call, callback));
-            assert(callback.notCalled);
+            assert(
+                logic.logIn.calledWithExactly(call, callback),
+                'should call logIn method on logic'
+            );
+            assert(callback.notCalled, 'should not call callback');
         });
     });
 
@@ -152,14 +174,18 @@ describe('service/api.js', () => {
             assert(
                 callback.calledWith(
                     matchErrorArg(grpc.status.INVALID_ARGUMENT, 'Invalid token')
-                )
+                ),
+                'should call callback with error for invalid token'
             );
         });
 
         it('should call getUserId method on logic', () => {
             api.getUserId(call, callback);
-            assert(logic.getUserId.calledWithExactly(call, callback));
-            assert(callback.notCalled);
+            assert(
+                logic.getUserId.calledWithExactly(call, callback),
+                'should call getUserId method on logic'
+            );
+            assert(callback.notCalled, 'should not call callback');
         });
     });
 });
