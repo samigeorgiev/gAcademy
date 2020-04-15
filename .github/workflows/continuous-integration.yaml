@@ -20,6 +20,11 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                 node-version: 13.x
+            - uses: actions/cache@v1
+              working-directory: ${{env.working-directory}}
+              with:
+                path: ~/.npm
+                key: ${{runner.OS}}-node-${{hashFiles('yarn.lock')}}
             - run: yarn install
               working-directory: ${{env.working-directory}}
             - run: yarn test
@@ -36,5 +41,10 @@ jobs:
             - uses: actions/setup-java@v1
               with:
                 java-version: 13
-            - run: mvn package
+            - uses: actions/cache@v1
+              working-directory: ${{env.working-directory}}
+              with:
+                path: ~/.m2
+                key: ${{runner.OS}}-java-${{hashFiles('pom.xml')}}
+            - run: mvn -B package
               working-directory: ${{env.working-directory}}
