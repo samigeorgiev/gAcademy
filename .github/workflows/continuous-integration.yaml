@@ -23,7 +23,7 @@ jobs:
             - uses: actions/cache@v1
               with:
                 path: ~/.cache/yarn
-                key: ${{runner.OS}}-yarn-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
+                key: ${{runner.OS}}-yarn-${{hashFiles('yarn.lock')}}
             - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
             - run: yarn test
