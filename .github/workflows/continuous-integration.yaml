@@ -32,7 +32,7 @@ jobs:
             - run: yarn test
               working-directory: ${{env.working-directory}}
     
-# Content management 
+# Content management
 
     account-operations_test:
         runs-on: ubuntu-latest
