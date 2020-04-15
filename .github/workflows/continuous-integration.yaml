@@ -20,10 +20,6 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                 node-version: 13.x
-            - uses: actions/cache@v1
-              with:
-                path: ~/.cache/yarn
-                key: ${{runner.OS}}-yarn-${{hashFiles('yarn.lock')}}
             - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
             - run: yarn test
@@ -42,10 +38,6 @@ jobs:
             - uses: actions/setup-java@v1
               with:
                 java-version: 13
-            - uses: actions/cache@v1
-              with:
-                path: ~/.m2
-                key: ${{runner.OS}}-java-${{hashFiles('${{env.working-directory}}/pom.xml')}}
             - run: mvn -B package
               working-directory: ${{env.working-directory}}
 
@@ -58,10 +50,6 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                 node-version: 13.x
-            - uses: actions/cache@v1
-              with:
-                path: ~/.cache/yarn
-                key: ${{runner.OS}}-yarn-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
             - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
             - run: yarn test --watch-all=false --passWithNoTests
