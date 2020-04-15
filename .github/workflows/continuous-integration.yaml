@@ -22,7 +22,7 @@ jobs:
                 node-version: 13.x
             - uses: actions/cache@v1
               with:
-                path: ~/.cache/yarn
+                path: ~/.cache/yarn/v6
                 key: ${{runner.OS}}-node-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
             - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
