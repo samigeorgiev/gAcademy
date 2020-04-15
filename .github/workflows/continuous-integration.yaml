@@ -21,10 +21,9 @@ jobs:
               with:
                 node-version: 13.x
             - uses: actions/cache@v1
-              working-directory: ${{env.working-directory}}
               with:
                 path: ~/.npm
-                key: ${{runner.OS}}-node-${{hashFiles('yarn.lock')}}
+                key: ${{runner.OS}}-node-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
             - run: yarn install
               working-directory: ${{env.working-directory}}
             - run: yarn test
@@ -45,6 +44,6 @@ jobs:
               working-directory: ${{env.working-directory}}
               with:
                 path: ~/.m2
-                key: ${{runner.OS}}-java-${{hashFiles('pom.xml')}}
+                key: ${{runner.OS}}-java-${{hashFiles('${{env.working-directory}}/pom.xml')}}
             - run: mvn -B package
               working-directory: ${{env.working-directory}}
