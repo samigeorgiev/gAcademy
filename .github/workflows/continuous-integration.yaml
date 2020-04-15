@@ -41,7 +41,6 @@ jobs:
               with:
                 java-version: 13
             - uses: actions/cache@v1
-              working-directory: ${{env.working-directory}}
               with:
                 path: ~/.m2
                 key: ${{runner.OS}}-java-${{hashFiles('${{env.working-directory}}/pom.xml')}}
