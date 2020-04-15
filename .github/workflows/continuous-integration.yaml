@@ -26,13 +26,13 @@ jobs:
             - uses: actions/cache@v1
               with:
                 path: ${{steps.yarn-cache-dir-path.outputs.dir}}
-                key: ${{runner.OS}}-node-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
+                key: ${{runner.OS}}-yarn-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
             - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
             - run: yarn test
               working-directory: ${{env.working-directory}}
     
-# Content management
+# Content management 
 
     account-operations_test:
         runs-on: ubuntu-latest
@@ -64,7 +64,7 @@ jobs:
             - uses: actions/cache@v1
               with:
                 path: ~/.cache/yarn
-                key: ${{runner.OS}}-node-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
+                key: ${{runner.OS}}-yarn-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
             - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
             - run: yarn test --watch-all=false --passWithNoTests
