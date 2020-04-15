@@ -1,7 +1,8 @@
-.idea/
-.settings/
-.classpath
-.project
+/.idea
+/.settings
+/.classpath
+/.project
+/account-operations.iml
 
-src/main/proto
-target/
+/src/main/proto
+/target
