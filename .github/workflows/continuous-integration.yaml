@@ -20,9 +20,12 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                 node-version: 13.x
+            - name: get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
             - uses: actions/cache@v1
               with:
-                path: ~/.cache/yarn/v6
+                path: ${{steps.yarn-cache-dir-path.outputs.dir}
                 key: ${{runner.OS}}-node-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
             - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
@@ -30,7 +33,6 @@ jobs:
               working-directory: ${{env.working-directory}}
     
 # Content management
-
 
     account-operations_test:
         runs-on: ubuntu-latest
