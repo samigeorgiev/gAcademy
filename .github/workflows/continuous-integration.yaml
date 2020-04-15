@@ -18,9 +18,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
-                with:
-                    node-version: 13.x
+              with:
+                node-version: 13.x
             - run: yarn install
-                working-directory: ${{env.working-directory}}
+              working-directory: ${{env.working-directory}}
             - run: yarn test
-                working-directory: ${{env.working-directory}}
+              working-directory: ${{env.working-directory}}
