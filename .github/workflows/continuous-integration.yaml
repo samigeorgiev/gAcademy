@@ -7,8 +7,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-        working-directory: ./microservices/authentication
+    working-directory: ./microservices/authentication
 
     strategy:
       matrix:
