@@ -25,7 +25,7 @@ jobs:
               run: echo "::set-output name=dir::$(yarn cache dir)"
             - uses: actions/cache@v1
               with:
-                path: ${{steps.yarn-cache-dir-path.outputs.dir}
+                path: ${{steps.yarn-cache-dir-path.outputs.dir}}
                 key: ${{runner.OS}}-node-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
             - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
