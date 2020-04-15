@@ -29,6 +29,8 @@ jobs:
             - run: yarn test
               working-directory: ${{env.working-directory}}
     
+# Content management
+
     account-operations_test:
         runs-on: ubuntu-latest
         env:
@@ -45,4 +47,22 @@ jobs:
                 path: ~/.m2
                 key: ${{runner.OS}}-java-${{hashFiles('${{env.working-directory}}/pom.xml')}}
             - run: mvn -B package
+              working-directory: ${{env.working-directory}}
+
+    client_test:
+        runs-on: ubuntu-latest
+        env:
+            working-directory: ./client
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                node-version: 13.x
+            - uses: actions/cache@v1
+              with:
+                path: ~/.npm
+                key: ${{runner.OS}}-node-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
+            - run: yarn install --frozen-lockfile
+              working-directory: ${{env.working-directory}}
+            - run: yarn test --watch-all=false --passWithNoTests
               working-directory: ${{env.working-directory}}
