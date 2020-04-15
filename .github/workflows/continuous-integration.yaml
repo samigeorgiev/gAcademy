@@ -31,6 +31,8 @@ jobs:
             working-directory: ./microservices/account-operations
         steps:
             - uses: actions/checkout@v2
+            - run: ./genproto.sh
+              working-directory: ${{env.working-directory}}/src/main
             - uses: actions/setup-java@v1
               with:
                 java-version: 13
