@@ -24,7 +24,7 @@ jobs:
               with:
                 path: ~/.npm
                 key: ${{runner.OS}}-node-${{hashFiles('${{env.working-directory}}/yarn.lock')}}
-            - run: yarn install
+            - run: yarn install --frozen-lockfile
               working-directory: ${{env.working-directory}}
             - run: yarn test
               working-directory: ${{env.working-directory}}
