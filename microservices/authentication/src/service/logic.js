@@ -1,24 +1,30 @@
 // TODO logging
-const bcrypt = require('bcrypt');
 const grpc = require('grpc');
-const jwt = require('jsonwebtoken');
 
 const bottle = require('../util/bottle');
 const errorHandler = require('../util/errorHandler');
-const User = require('../model/user');
+const User = require('../models/user');
 
 // Dependencies types
 /* eslint-disable-next-line no-unused-vars */
 const { Repository } = require('typeorm');
+/* eslint-disable-next-line no-unused-vars */
+const JWT = require('jsonwebtoken');
+/* eslint-disable-next-line no-unused-vars */
+const Bcrypt = require('bcrypt');
 
 const SALT_ROUNDS = 10;
 
 class Logic {
     /**
      * @param {Repository} userRepository
+     * @param {Bcrypt} bcrypt
+     * @param {JWT} jwt
      */
-    constructor(userRepository) {
+    constructor(userRepository, bcrypt, jwt) {
         this.userRepository = userRepository;
+        this.bcrypt = bcrypt;
+        this.jwt = jwt;
     }
 
     async signUp(call, callback) {
@@ -26,7 +32,7 @@ class Logic {
 
         let hashedPassword;
         try {
-            hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+            hashedPassword = await this.bcrypt.hash(password, SALT_ROUNDS);
         } catch (error) {
             const status = grpc.status.INTERNAL;
             return errorHandler(callback, status, 'Server error', error);
@@ -42,7 +48,7 @@ class Logic {
             return errorHandler(callback, status, 'Database error', error);
         }
 
-        const token = jwt.sign(
+        const token = this.jwt.sign(
             { userId: createdUser.id },
             process.env.JWT_SECRET,
             {
@@ -72,7 +78,7 @@ class Logic {
         }
 
         try {
-            if (!(await bcrypt.compare(password, user.password))) {
+            if (!(await this.bcrypt.compare(password, user.password))) {
                 const status = grpc.status.UNAUTHENTICATED;
                 return errorHandler(callback, status, 'Incorrect password');
             }
@@ -81,9 +87,13 @@ class Logic {
             return errorHandler(callback, status, 'Server error', error);
         }
 
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_VALID_TIME
-        });
+        const token = this.jwt.sign(
+            { userId: user.id },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: process.env.JWT_VALID_TIME
+            }
+        );
 
         callback(null, { token, expiresIn: process.env.JWT_VALID_TIME });
     }
@@ -93,7 +103,7 @@ class Logic {
 
         let userId;
         try {
-            userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+            userId = this.jwt.verify(token, process.env.JWT_SECRET).userId;
         } catch (error) {
             const status = grpc.status.UNAUTHENTICATED;
             return errorHandler(callback, status, 'Invalid token', error);
@@ -122,6 +132,6 @@ class Logic {
     }
 }
 
-bottle.service('Service.Logic', Logic, 'UserRepository');
+bottle.service('Service.Logic', Logic, 'UserRepository', 'Bcrypt', 'JWT');
 
 module.exports = Logic;

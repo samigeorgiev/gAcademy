@@ -11,7 +11,7 @@ on:
             - develop
 
 jobs:
-    authentication_test:
+    authentication:
         runs-on: ubuntu-latest
         env:
             working-directory: ./microservices/authentication
@@ -24,10 +24,12 @@ jobs:
               working-directory: ${{env.working-directory}}
             - run: yarn test
               working-directory: ${{env.working-directory}}
+            - run: yarn lint
+              working-directory: ${{env.working-directory}}
     
 # Content management
 
-    account-operations_test:
+    account-operations:
         runs-on: ubuntu-latest
         env:
             working-directory: ./microservices/account-operations
@@ -41,7 +43,7 @@ jobs:
             - run: mvn -B package
               working-directory: ${{env.working-directory}}
 
-    client_test:
+    client:
         runs-on: ubuntu-latest
         env:
             working-directory: ./client
@@ -54,3 +56,5 @@ jobs:
               working-directory: ${{env.working-directory}}
             - run: yarn test --watch-all=false --passWithNoTests
               working-directory: ${{env.working-directory}}
+            # - run: yarn lint
+            #   working-directory: ${{env.working-directory}}

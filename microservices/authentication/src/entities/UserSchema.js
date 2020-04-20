@@ -1,6 +1,6 @@
 const { EntitySchema } = require('typeorm');
 
-const User = require('../model/user');
+const User = require('../models/user');
 
 const UserSchema = new EntitySchema({
     name: 'User',

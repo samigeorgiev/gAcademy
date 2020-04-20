@@ -8,7 +8,7 @@ const logger = require('./util/logger');
 // Loading all services
 require('./service/api');
 require('./service/logic');
-require('./repository/userRepository');
+require('./repositories/userRepository');
 
 const main = async () => {
     try {
