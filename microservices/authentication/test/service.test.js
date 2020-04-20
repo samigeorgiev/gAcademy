@@ -2,9 +2,9 @@
 const { assert } = require('chai');
 const { match, spy, stub } = require('sinon');
 
-const bottle = require('../util/bottle');
+const bottle = require('../src/util/bottle');
 
-require('../service/logic');
+require('../src/service/logic');
 
 describe('service/logic.js', () => {
     let repository;
@@ -31,7 +31,7 @@ describe('service/logic.js', () => {
         callback.resetHistory();
     });
 
-    describe('signUp', () => {
-        it('tmp', () => {});
+    describe('#signUp', () => {
+        it('test', () => {});
     });
 });

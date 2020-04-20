@@ -2,10 +2,10 @@ const { assert } = require('chai');
 const grpc = require('grpc');
 const { match, spy, stub } = require('sinon');
 
-const bottle = require('../util/bottle');
-const User = require('../model/user');
+const bottle = require('../src/util/bottle');
+const User = require('../src/models/user');
 
-require('../service/api');
+require('../src/service/api');
 
 describe('service/api.js', () => {
     let repository;
@@ -34,7 +34,6 @@ describe('service/api.js', () => {
 
     after(() => {
         bottle.resetProviders();
-        console.log('fdsfds');
     });
 
     afterEach(() => {
@@ -44,7 +43,7 @@ describe('service/api.js', () => {
         logic.getUserId.resetHistory();
     });
 
-    describe('signUp', () => {
+    describe('#signUp', () => {
         const call = {
             request: {
                 email: 'valid@email.com',
@@ -120,7 +119,7 @@ describe('service/api.js', () => {
         });
     });
 
-    describe('logIn', () => {
+    describe('#logIn', () => {
         const call = {
             request: {
                 email: 'valid@email.com',
@@ -155,7 +154,7 @@ describe('service/api.js', () => {
         });
     });
 
-    describe('getUserId', () => {
+    describe('#getUserId', () => {
         const call = {
             request: {
                 token: 'abcd'

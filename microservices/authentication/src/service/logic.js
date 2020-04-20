@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const bottle = require('../util/bottle');
 const errorHandler = require('../util/errorHandler');
-const User = require('../model/user');
+const User = require('../models/user');
 
 // Dependencies types
 /* eslint-disable-next-line no-unused-vars */
