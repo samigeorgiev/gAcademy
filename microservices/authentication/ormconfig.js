@@ -7,5 +7,5 @@ module.exports = {
     database: process.env.DB_DATABASE,
     synchronize: process.env.DB_SYNCHRONIZE === 'true',
     entities: ['src/entities/*.js'],
-    logging: process.env.NODE_ENV !== 'production'
+    logging: process.env.NODE_ENV === 'development'
 };

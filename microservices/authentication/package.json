@@ -8,6 +8,8 @@
     "test": "env NODE_ENV=test mocha",
     "start-local": "node -r dotenv/config src/index.js dotenv_config_path=.env.production",
     "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.development",
+    "start-test": "node -r dotenv/config src/index.js dotenv_config_path=.env.test",
+    "it": "mocha it",
     "lint": "eslint 'src/**/*.js'"
   },
   "author": "Samuil Georgiev",
