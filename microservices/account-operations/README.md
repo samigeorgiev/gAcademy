@@ -1,5 +1,4 @@
 # Account operations microservice
-
 ## Requirements
 - maven:3.6
 - jdk:13
@@ -32,7 +31,7 @@ $ mvn install
 Start:
 
 `
-$ java -jar target/account-operations-1.0-SNAPSHOT-jar-with-dependencies.jar
+$ mvn spring-boot:run
 `
 
 Recommended way for doing all of that is through IntelliJ

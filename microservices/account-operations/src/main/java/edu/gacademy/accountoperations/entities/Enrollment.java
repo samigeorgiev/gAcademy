@@ -1,4 +1,4 @@
-package edu.gacademy.account_operations.entities;
+package edu.gacademy.accountoperations.entities;
 
 import javax.persistence.*;
 

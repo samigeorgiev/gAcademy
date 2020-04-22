@@ -1,14 +1,19 @@
 # gAcademy
+![Continuos Integration](https://github.com/samigeorgiev/gAcademy/workflows/Continuos%20Integration/badge.svg)
+
 An innovative system for online courses and private lessons.  
 More info [here](https://drive.google.com/file/d/1CLuLhElY9Lvn_G-qVlMkA_7X-UUZwe8h/view?usp=sharing).
 
 ## Running
 
 ### Requirements
+- Linux OS
 - [docker:latest](https://docs.docker.com/install)
 - [docker-compose:latest](https://docs.docker.com/compose/install)
 - [node:13](https://nodejs.org/en/download)
 - [yarn:latest](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
+- [protobuf:latest](https://github.com/protocolbuffers/protobuf/releases)
+- [protoc-gen-grpc-web:latest](https://github.com/grpc/grpc-web/releases)
 
 ### Starting
 
@@ -44,7 +49,6 @@ $ docker-compose up
 `
 
 #### SPA client
-
 Before run it create `.env` with proper extension for node environment and add variables for services url in following format: `REACT_APP_${microservice_name}`
 If you run all of the microservices and the client on the same host use `.env.example`.
 
@@ -60,22 +64,12 @@ $ yarn install
 $ yarn start
 `
 
-## Contributing
-
-### Microservices
-
-Every microservices should have its own README with information about contribution. New microservices should be using gRPC framework and should be containerized.
+## Development
 
 ### Testing gRPC
-
 Recommended way to test your gRPC services is with [grpcui](https://github.com/fullstorydev/grpcui)
 
-### SPA client
-
-See [client](client/README.md).
-
 ### Recommended IDE
-
 Recommended IDE is [*Visual Studio Code*](https://code.visualstudio.com).  
 Example configuration could be found [here](https://gist.github.com/samigeorgiev/9ae961943212bc7872f46840519e308b).
 

@@ -1,4 +1,4 @@
-package edu.gacademy.account_operations.grpc.clients;
+package edu.gacademy.accountoperations.clients;
 
 import edu.gacademy.authentication.grpc.protocols.AuthenticationGrpc;
 import edu.gacademy.authentication.grpc.protocols.GetUserIdRequest;
@@ -7,39 +7,33 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import java.util.concurrent.TimeUnit;
-
+@Component
 public class AuthenticationClient {
 
-    private static ManagedChannel channel;
+    private final AuthenticationGrpc.AuthenticationBlockingStub stub;
 
-    private static AuthenticationGrpc.AuthenticationBlockingStub blockingStub;
-
-    private AuthenticationClient() {
+    @Autowired
+    public AuthenticationClient(@Value("${authentication.url}") String url) {
+        ManagedChannel channel = ManagedChannelBuilder.forTarget(url).usePlaintext().build();
+        stub = AuthenticationGrpc.newBlockingStub(channel);
     }
 
-    public static void init(String url) {
-        channel = ManagedChannelBuilder.forTarget(url).usePlaintext().build();
-        blockingStub = AuthenticationGrpc.newBlockingStub(channel);
-    }
-
-    public static int getUserId(String token) throws StatusRuntimeException {
+    public int getUserId(String token) throws StatusRuntimeException {
         GetUserIdRequest request = GetUserIdRequest.newBuilder().setToken(token).build();
         GetUserIdResponse response;
         try {
-            response = blockingStub.getUserId(request);
+            response = stub.getUserId(request);
         } catch (StatusRuntimeException e) {
             throw wrapException(e);
         }
         return response.getUserId();
     }
 
-    public static void destroy() throws InterruptedException {
-        channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-    }
-
-    private static StatusRuntimeException wrapException(StatusRuntimeException e) {
+    private StatusRuntimeException wrapException(StatusRuntimeException e) {
         String[] splitMessage = e.getMessage().split(" ", 3);
         int statusCode;
         if (splitMessage.length >= 2) {
