@@ -55,7 +55,6 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
     }
 
     @Override
-    @Transactional
     public void enrollCourse(
             EnrollCourseRequest request,
             StreamObserver<EnrollCourseResponse> responseObserver
