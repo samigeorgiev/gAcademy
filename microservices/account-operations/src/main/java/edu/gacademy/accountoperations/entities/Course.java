@@ -1,6 +1,7 @@
 package edu.gacademy.accountoperations.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "courses")
@@ -20,6 +21,9 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private Teacher creator;
+
+    @ManyToMany(mappedBy = "courses")
+    private Set<User> users;
 
     public Course() {
     }
@@ -59,5 +63,13 @@ public class Course {
 
     public void setCreator(Teacher creator) {
         this.creator = creator;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

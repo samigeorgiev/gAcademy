@@ -1,7 +1,7 @@
 package edu.gacademy.accountoperations.entities;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -21,11 +21,16 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Teacher teacher;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Enrollment> enrollments;
+    @ManyToMany
+    @JoinTable(
+            name = "enrollments",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private Set<Course> courses;
 
     public User() {
     }
@@ -76,11 +81,11 @@ public class User {
         this.teacher = teacher;
     }
 
-    public List<Enrollment> getEnrollments() {
-        return enrollments;
+    public Set<Course> getCourses() {
+        return courses;
     }
 
-    public void setEnrollments(List<Enrollment> enrollments) {
-        this.enrollments = enrollments;
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }

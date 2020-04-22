@@ -2,22 +2,21 @@ package edu.gacademy.accountoperations.service;
 
 import edu.gacademy.account_operations.grpc.protocols.*;
 import edu.gacademy.accountoperations.entities.Course;
-import edu.gacademy.accountoperations.entities.Enrollment;
 import edu.gacademy.accountoperations.entities.Teacher;
 import edu.gacademy.accountoperations.entities.User;
 import edu.gacademy.accountoperations.repositories.CourseRepository;
-import edu.gacademy.accountoperations.repositories.EnrollmentRepository;
 import edu.gacademy.accountoperations.repositories.TeacherRepository;
+import edu.gacademy.accountoperations.repositories.UserRepository;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 @GRpcService
 public class Service extends AccountOperationsGrpc.AccountOperationsImplBase {
@@ -26,17 +25,17 @@ public class Service extends AccountOperationsGrpc.AccountOperationsImplBase {
 
     private final TeacherRepository teacherRepository;
 
-    private final EnrollmentRepository enrollmentRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public Service(
             CourseRepository courseRepository,
             TeacherRepository teacherRepository,
-            EnrollmentRepository enrollmentRepository
+            UserRepository userRepository
     ) {
         this.courseRepository = courseRepository;
         this.teacherRepository = teacherRepository;
-        this.enrollmentRepository = enrollmentRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -56,6 +55,7 @@ public class Service extends AccountOperationsGrpc.AccountOperationsImplBase {
     }
 
     @Override
+    @Transactional
     public void enrollCourse(
             EnrollCourseRequest request,
             StreamObserver<EnrollCourseResponse> responseObserver
@@ -72,9 +72,8 @@ public class Service extends AccountOperationsGrpc.AccountOperationsImplBase {
         }
         Course course = courseOptional.get();
 
-        Stream<Course> enrolledCourses = enrollmentRepository.findAllByUser(user).stream()
-                .map(Enrollment::getCourse);
-        if (enrolledCourses.anyMatch(enrolledCourse -> enrolledCourse.getId() == course.getId())) {
+        Set<Course> courses = courseRepository.findAllByUsers(user);
+        if (courses.contains(course)) {
             responseObserver.onError(Status.ALREADY_EXISTS
                     .withDescription("Course already enrolled")
                     .asRuntimeException()
@@ -82,10 +81,9 @@ public class Service extends AccountOperationsGrpc.AccountOperationsImplBase {
             return;
         }
 
-        Enrollment enrollment = new Enrollment();
-        enrollment.setCourse(course);
-        enrollment.setUser(user);
-        enrollmentRepository.save(enrollment);
+        courses.add(course);
+        user.setCourses(courses);
+        userRepository.save(user);
 
         responseObserver.onNext(EnrollCourseResponse.newBuilder().build());
         responseObserver.onCompleted();
@@ -98,8 +96,7 @@ public class Service extends AccountOperationsGrpc.AccountOperationsImplBase {
     ) {
         User user = ContextEntries.USER.get();
 
-        List<Course> courses = enrollmentRepository.findAllByUser(user).stream()
-                .map(Enrollment::getCourse).collect(Collectors.toList());
+        Set<Course> courses = courseRepository.findAllByUsers(user);
         List<GetCoursesResponse.Course> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
             String creatorFirstName = course.getCreator().getUser().getFirstName();
