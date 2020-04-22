@@ -1,6 +1,6 @@
 package edu.gacademy.accountoperations.service;
 
-import edu.gacademy.account_operations.grpc.protocols.*;
+import edu.gacademy.accountoperations.grpc.protocols.*;
 import edu.gacademy.accountoperations.entities.Course;
 import edu.gacademy.accountoperations.entities.Teacher;
 import edu.gacademy.accountoperations.entities.User;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @GRpcService
-public class Service extends AccountOperationsGrpc.AccountOperationsImplBase {
+public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperationsImplBase {
 
     private final CourseRepository courseRepository;
 
@@ -28,7 +28,7 @@ public class Service extends AccountOperationsGrpc.AccountOperationsImplBase {
     private final UserRepository userRepository;
 
     @Autowired
-    public Service(
+    public AccountOperationsImpl(
             CourseRepository courseRepository,
             TeacherRepository teacherRepository,
             UserRepository userRepository
