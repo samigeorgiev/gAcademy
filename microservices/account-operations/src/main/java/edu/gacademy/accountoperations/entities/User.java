@@ -24,13 +24,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Teacher teacher;
 
-    @ManyToMany
-    @JoinTable(
-            name = "enrollments",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private Set<Course> courses;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Enrollment> enrollments;
 
     public User() {
     }
@@ -81,11 +76,11 @@ public class User {
         this.teacher = teacher;
     }
 
-    public Set<Course> getCourses() {
-        return courses;
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
     }
 
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 }

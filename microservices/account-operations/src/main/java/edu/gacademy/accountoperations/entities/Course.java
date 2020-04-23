@@ -18,12 +18,12 @@ public class Course {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private Teacher creator;
 
-    @ManyToMany(mappedBy = "courses")
-    private Set<User> users;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private Set<Enrollment> enrollments;
 
     public Course() {
     }
@@ -65,11 +65,19 @@ public class Course {
         this.creator = creator;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setEnrollments(Set<Enrollment> enrolledUser) {
+        this.enrollments = enrolledUser;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id == course.id;
     }
 }
