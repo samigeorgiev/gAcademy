@@ -10,6 +10,6 @@ import java.util.Set;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 
-    @Query("select c from Course c join c.enrollments e join e.user u where u=:user")
-    Set<Course> findAllByUser(@Param("user") User user);
+    @Query("select c from Course c join c.enrollments e join e.user u join e.payment p where u = :user and p is not null")
+    Set<Course> findAllEnrolledByUserAndPaid(@Param("user") User user);
 }

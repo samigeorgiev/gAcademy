@@ -34,12 +34,17 @@ public class AuthenticationClient {
     }
 
     private StatusRuntimeException wrapException(StatusRuntimeException e) {
+        if (e.getStatus() != Status.UNKNOWN) {
+            return e;
+        }
         String[] splitMessage = e.getMessage().split(" ", 3);
-        int statusCode;
+        int statusCode = Status.UNKNOWN.getCode().value();
         if (splitMessage.length >= 2) {
-            statusCode = Integer.parseInt(splitMessage[1]);
-        } else {
-            statusCode = Status.UNKNOWN.getCode().value();
+            try {
+                statusCode = Integer.parseInt(splitMessage[1]);
+            } catch (NumberFormatException ignored) {
+
+            }
         }
         String message;
         if (splitMessage.length >= 3) {
