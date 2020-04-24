@@ -8,10 +8,10 @@ import { AuthenticationContext } from '../context/authentication';
 import useAccountOperations from '../hooks/accountOperations';
 import useContentManagement from '../hooks/contentManagement';
 
-import CourseList from '../components/CourseList';
-
 import { GetCoursesByCategoryRequest } from '../proto/content-management_pb';
 import { EnrollCourseRequest } from '../proto/account-operations_pb';
+
+import CourseList from '../components/CourseList';
 
 import courseImage from '../images/tmp/course.png';
 
@@ -21,16 +21,15 @@ const Courses = props => {
     const { user } = useContext(AuthenticationContext);
 
     const {
-        methods: { getCoursesByCategory },
-        state
+        state: contentManagementState,
+        methods: contentManagementMethods
     } = useContentManagement();
-    const { response } = state;
 
-    const { methods } = useAccountOperations();
-    const { enrollCourse } = methods;
+    const { methods: accountOperationsMethods } = useAccountOperations();
 
     const location = useLocation();
 
+    const { getCoursesByCategory } = contentManagementMethods;
     useEffect(() => {
         const category = new URLSearchParams(location.search).get('category');
         const request = new GetCoursesByCategoryRequest();
@@ -38,12 +37,14 @@ const Courses = props => {
         getCoursesByCategory(request);
     }, [getCoursesByCategory, location]);
 
+    const { response } = contentManagementState;
     useEffect(() => {
         if (response) {
             setCourses(response.getCoursesList());
         }
     }, [response]);
 
+    const { enrollCourse } = accountOperationsMethods;
     const enrollHandler = courseId => {
         const request = new EnrollCourseRequest();
         request.setCourseid(courseId);

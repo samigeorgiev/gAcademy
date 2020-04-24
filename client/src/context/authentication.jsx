@@ -18,12 +18,11 @@ const AuthenticationContextProvider = props => {
     const [user, setUser] = useState(null);
     const [logOutTimeout, setLogOutTimeout] = useState(null);
 
-    const { methods, state } = useAccountOperations();
-    const { response } = state;
-    const { getAccount } = methods;
+    const { state, methods } = useAccountOperations();
 
     const history = useHistory();
 
+    const { response } = state;
     useEffect(() => {
         if (response) {
             setUser(user => ({
@@ -45,6 +44,7 @@ const AuthenticationContextProvider = props => {
         history.push('/');
     }, [setUser, logOutTimeout, setLogOutTimeout, history]);
 
+    const { getAccount } = methods;
     const getUserAccount = useCallback(
         token => {
             getAccount(new GetAccountRequest(), token);
@@ -53,9 +53,6 @@ const AuthenticationContextProvider = props => {
     );
 
     const tryLogIn = useCallback(() => {
-        if (user) {
-            return;
-        }
         const token = localStorage.getItem('token');
         const expiryDate = localStorage.getItem('expiryDate');
         const expDate = new Date(expiryDate);
@@ -69,7 +66,7 @@ const AuthenticationContextProvider = props => {
             setTimeout(logOut, expDate.getTime() - new Date().getTime())
         );
         getUserAccount(token);
-    }, [user, setUser, logOut, getUserAccount]);
+    }, [setUser, logOut, getUserAccount]);
 
     const logIn = useCallback(
         (token, expiresIn) => {
