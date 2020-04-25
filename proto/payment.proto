@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "edu.gacademy.payment.protocols";
+option java_multiple_files = true;
+
+service Payment {
+    rpc StartPayment (StartPaymentRequest) returns (StartPaymentResponse);
+}
+
+message StartPaymentRequest {
+    uint32 courseId = 1;
+}
+
+message StartPaymentResponse {
+    string message = 1;
+}
