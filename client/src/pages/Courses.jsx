@@ -17,10 +17,12 @@ const Courses = props => {
 
     const { user } = useContext(AuthenticationContext);
 
-    const { methods, state } = useAccountOperations();
-    const { getCourses } = methods;
-    const { isLoading, response, error } = state;
+    const {
+        state: { isLoading, response, error },
+        methods
+    } = useAccountOperations();
 
+    const { getCourses } = methods;
     const token = user && user.token;
     useEffect(() => {
         if (token) {

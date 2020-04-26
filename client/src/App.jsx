@@ -14,7 +14,11 @@ const TeacherPanel = React.lazy(() => import('./pages/TeacherPanel'));
 const App = props => {
     const { user, tryLogIn } = useContext(AuthenticationContext);
 
-    useEffect(() => tryLogIn(), [tryLogIn]);
+    useEffect(() => {
+        if (!user) {
+            tryLogIn();
+        }
+    }, [user, tryLogIn]);
 
     return (
         <Layout>

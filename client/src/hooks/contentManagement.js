@@ -1,13 +1,12 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import useGrpc from './grpc';
 
 import { CourseClient } from '../proto/content-management_grpc_web_pb';
 
-const useContentManagement = () => {
-    const url = process.env.REACT_APP_CONTENT_MANAGEMENT;
-    const courseClient = useMemo(() => new CourseClient(url), [url]);
+const courseClient = new CourseClient(process.env.REACT_APP_CONTENT_MANAGEMENT);
 
+const useContentManagement = () => {
     const [state, sendRequest] = useGrpc(courseClient);
 
     const getCategories = useCallback(
@@ -32,8 +31,8 @@ const useContentManagement = () => {
     );
 
     return {
-        methods: { getCategories, getCoursesByCategory, newCourse },
-        state
+        state,
+        methods: { getCategories, getCoursesByCategory, newCourse }
     };
 };
 

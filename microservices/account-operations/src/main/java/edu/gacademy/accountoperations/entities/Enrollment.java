@@ -19,6 +19,10 @@ public class Enrollment {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
     public Enrollment() {
     }
 
@@ -44,5 +48,13 @@ public class Enrollment {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

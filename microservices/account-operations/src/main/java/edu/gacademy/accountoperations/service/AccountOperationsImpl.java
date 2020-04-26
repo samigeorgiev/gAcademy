@@ -8,11 +8,11 @@ import edu.gacademy.accountoperations.entities.User;
 import edu.gacademy.accountoperations.repositories.CourseRepository;
 import edu.gacademy.accountoperations.repositories.EnrollmentRepository;
 import edu.gacademy.accountoperations.repositories.TeacherRepository;
-import edu.gacademy.accountoperations.repositories.UserRepository;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
         }
         Course course = courseOptional.get();
 
-        Set<Course> courses = courseRepository.findAllByUser(user);
+        Set<Course> courses = courseRepository.findAllEnrolledByUserAndPaid(user);
         if (courses.stream().anyMatch(c -> c.equals(course))) {
             responseObserver.onError(Status.ALREADY_EXISTS
                     .withDescription("Course already enrolled")
@@ -91,13 +91,14 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
     }
 
     @Override
+    @Transactional
     public void getCourses(
             GetCoursesRequest request,
             StreamObserver<GetCoursesResponse> responseObserver
     ) {
         User user = ContextEntries.USER.get();
 
-        Set<Course> courses = courseRepository.findAllByUser(user);
+        Set<Course> courses = courseRepository.findAllEnrolledByUserAndPaid(user);
         List<GetCoursesResponse.Course> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
             String creatorFirstName = course.getCreator().getUser().getFirstName();
