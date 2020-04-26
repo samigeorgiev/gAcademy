@@ -1,7 +1,7 @@
 import grpc
 import paypalrestsdk
 
-from models import *
+from models import Enrollment, Payment
 
 from proto.payment_pb2_grpc import PaymentServicer
 from proto.payment_pb2 import StartPaymentResponse, ExecutePaymentResponse
@@ -16,21 +16,20 @@ class PaymentService(PaymentServicer):
         session = self._Session()
 
         enrollment = session.query(Enrollment).\
-            filter_by(id = request.enrollmentId).first()
-        if enrollment == None:
+            filter_by(id=request.enrollmentId).first()
+        if enrollment is None:
             context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
             context.set_details('Invalid enrollment id')
             session.close()
             return StartPaymentResponse()
 
         payment_object = self._create_payment_object(
-            name = enrollment.course.title,
-            description = enrollment.course.description,
-            id = str(enrollment.id),
-            # price = enrollment.course.price,
-            price = '25.00',
-            return_url = request.returnUrl,
-            cancel_url = request.cancelUrl
+            name=enrollment.course.title,
+            description=enrollment.course.description,
+            id=str(enrollment.id),
+            price=str(enrollment.course.price),
+            return_url=request.returnUrl,
+            cancel_url=request.cancelUrl
         )
         payment = paypalrestsdk.Payment(payment_object)
         if not payment.create():
@@ -46,13 +45,13 @@ class PaymentService(PaymentServicer):
 
         session.commit()
         session.close()
-        return StartPaymentResponse(redirectUrl = redirecUrl)
+        return StartPaymentResponse(redirectUrl=redirecUrl)
 
     def ExecutePayment(self, request, context):
         payment = None
         try:
             payment = paypalrestsdk.Payment.find(request.paymentId)
-        except:
+        except paypalrestsdk.ResourceNotFound:
             context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
             context.set_details('Invalid payment id')
             return ExecutePaymentResponse()
@@ -63,10 +62,14 @@ class PaymentService(PaymentServicer):
             return ExecutePaymentResponse()
 
         session = self._Session()
+
         enrollment_id = self._get_sku_from_payment(payment)
         enrollment = session.query(Enrollment).\
-            filter_by(id = enrollment_id).first()
+            filter_by(id=enrollment_id).first()
         enrollment.payment = Payment()
+
+        enrollment.course.creator.week_profit += enrollment.course.price
+
         session.add(enrollment)
         session.commit()
         session.close()
@@ -81,7 +84,7 @@ class PaymentService(PaymentServicer):
             },
             'application_context': {
                 'brand_name': 'gAcademy',
-                'shipping_preference': 'NO_SHIPPING' 
+                'shipping_preference': 'NO_SHIPPING'
             },
             'transactions': [{
                 'description': 'Education courses from gAcademy',
@@ -107,4 +110,7 @@ class PaymentService(PaymentServicer):
         }
 
     def _get_sku_from_payment(self, payment):
-        return payment.to_dict()['transactions'][0]['item_list']['items'][0]['sku']
+        payment_object = payment.to_dict()
+        transaction = payment_object['transactions'][0]
+        item = transaction['item_list']['items'][0]
+        return item['sku']
