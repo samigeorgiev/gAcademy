@@ -5,12 +5,24 @@ option java_multiple_files = true;
 
 service Payment {
     rpc StartPayment (StartPaymentRequest) returns (StartPaymentResponse);
+    rpc ExecutePayment (ExecutePaymentRequest) returns (ExecutePaymentResponse);
 }
 
 message StartPaymentRequest {
-    uint32 courseId = 1;
+    uint32 enrollmentId = 1;
+    string returnUrl = 2;
+    string cancelUrl = 3;
 }
 
 message StartPaymentResponse {
-    string message = 1;
+    string redirectUrl = 1;
+}
+
+message ExecutePaymentRequest {
+    string paymentId = 1;
+    string payerId = 2;
+}
+
+message ExecutePaymentResponse {
+
 }
