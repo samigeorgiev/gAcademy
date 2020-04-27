@@ -18,6 +18,9 @@ public class Course {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "price")
+    private double price;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private Teacher creator;
@@ -28,9 +31,10 @@ public class Course {
     public Course() {
     }
 
-    public Course(String title, String description) {
+    public Course(String title, String description, double price) {
         this.title = title;
         this.description = description;
+        this.price = price;
     }
 
     public int getId() {
@@ -55,6 +59,14 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Teacher getCreator() {
