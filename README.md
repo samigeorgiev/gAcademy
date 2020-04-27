@@ -9,11 +9,11 @@ More info [here](https://drive.google.com/file/d/1CLuLhElY9Lvn_G-qVlMkA_7X-UUZwe
 
 ### Requirements
 
-- Linux OS
 - [docker:latest](https://docs.docker.com/install)
 - [docker-compose:latest](https://docs.docker.com/compose/install)
 - [node:13](https://nodejs.org/en/download)
 - [yarn:latest](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
+- [python:3.8](https://www.python.org/downloads)
 - [protobuf:latest](https://github.com/protocolbuffers/protobuf/releases)
 - [protoc-gen-grpc-web:latest](https://github.com/grpc/grpc-web/releases)
 

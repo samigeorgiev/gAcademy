@@ -22,7 +22,7 @@ Recommended way for doing it is adding them in IntelliJ running configuration or
 
 ## Running
 
-Move all proto files:
+Generate proto files:
 
 `$ ./genproto.sh`
 

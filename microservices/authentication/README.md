@@ -23,7 +23,7 @@ You should provide `.env` file with proper extension for Node environment with t
 
 ## Running
 
-Move all proto files:
+Generate proto files:
 
 `$ ./genproto.sh`
 
@@ -39,7 +39,7 @@ Start in production-local mode:
 
 `$ yarn start-local`
 
-**Note:** Use `yarn start` only in container environment 
+**Note:** Use `yarn start` only in container environment
 
 ## Linting
 
