@@ -5,13 +5,16 @@ import grpc
 
 from service import PaymentService
 
+
 class TestPaymentService(unittest.TestCase):
 
     def setUp(self):
         self._service = PaymentService(None)
 
     @patch('service.paypalrestsdk')
-    def test_startPayment_returns_invalid_argument_for_enrollmentId(self, mocked_api):
+    def test_startPayment_returns_invalid_argument_for_enrollmentId(
+        self, mocked_api
+    ):
         context = Mock()
         request = Mock()
         request.enrollmentId = -1
@@ -19,7 +22,8 @@ class TestPaymentService(unittest.TestCase):
         self._service._Session = Mock()
         session = self._service._Session.return_value
         session.query.return_value.filter_by = Mock()
-        session.query.return_value.filter_by.return_value.first.return_value = None
+        session.query.return_value.filter_by.return_value\
+            .first.return_value = None
 
         self._service.StartPayment(request, context)
 

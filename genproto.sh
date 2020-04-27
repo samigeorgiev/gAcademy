@@ -9,3 +9,7 @@ cd ../../../..
 cd microservices/content-management
 ./genproto.sh
 cd ../..
+
+cd microservices/payment
+./genproto.sh
+cd ../..
