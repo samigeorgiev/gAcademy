@@ -52,7 +52,7 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: pip install -r requirements-lock.txt
         working-directory: ${{env.working-directory}}
-      - run: ./genproto.sh
+      - run: ./genproto.sh container
         working-directory: ${{env.working-directory}}
       - run: python test.py
         working-directory: ${{env.working-directory}}
