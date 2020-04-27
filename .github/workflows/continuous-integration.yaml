@@ -52,6 +52,8 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: pip install -r requirements-lock.txt
         working-directory: ${{env.working-directory}}
+      - run: ./genproto.sh
+        working-directory: ${{env.working-directory}}
       - run: python test.py
         working-directory: ${{env.working-directory}}
       - run: flake8 --exclude=proto,__pycache__,env
