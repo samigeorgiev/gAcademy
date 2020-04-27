@@ -1,4 +1,11 @@
+# IDE folders
 /.idea
+
+# IntelliJ project
 /account-operations.iml
-/target
+
+# compiled proto
 /src/main/proto/
+
+# compiled classes
+/target
