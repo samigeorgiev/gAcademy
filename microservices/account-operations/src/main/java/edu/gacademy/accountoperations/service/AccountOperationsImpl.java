@@ -1,7 +1,7 @@
 package edu.gacademy.accountoperations.service;
 
 import edu.gacademy.accountoperations.entities.Enrollment;
-import edu.gacademy.accountoperations.grpc.protocols.*;
+import edu.gacademy.accountoperations.protocols.*;
 import edu.gacademy.accountoperations.entities.Course;
 import edu.gacademy.accountoperations.entities.Teacher;
 import edu.gacademy.accountoperations.entities.User;
@@ -107,6 +107,7 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
                     .setId(course.getId())
                     .setTitle(course.getTitle())
                     .setDescription(course.getDescription())
+                    .setPrice(course.getPrice())
                     .setCreator(creatorFirstName + " " + creatorLastName)
                     .build();
             coursesDTO.add(courseDTO);
