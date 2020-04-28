@@ -71,5 +71,5 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: yarn test --watch-all=false --passWithNoTests
         working-directory: ${{env.working-directory}}
-      # - run: yarn lint
-      #   working-directory: ${{env.working-directory}}
+      - run: yarn lint
+        working-directory: ${{env.working-directory}}
