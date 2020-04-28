@@ -41,7 +41,7 @@ message EnrollCourseRequest {
 }
 
 message EnrollCourseResponse {
-    // Only status code
+    uint32 enrollmentId = 1;
 }
 
 message GetCoursesRequest {

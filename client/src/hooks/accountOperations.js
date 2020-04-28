@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import useGrpc from './grpc';
 
+/* eslint-disable-next-line */
 import { AccountOperationsClient } from '../proto/account-operations_grpc_web_pb';
 
 const accountOperationsClient = new AccountOperationsClient(

@@ -86,7 +86,11 @@ public class AccountOperationsImpl extends AccountOperationsGrpc.AccountOperatio
         enrollment.setCourse(course);
         enrollmentRepository.save(enrollment);
 
-        responseObserver.onNext(EnrollCourseResponse.newBuilder().build());
+        responseObserver.onNext(EnrollCourseResponse
+                .newBuilder()
+                .setEnrollmentId(enrollment.getId())
+                .build()
+        );
         responseObserver.onCompleted();
     }
 

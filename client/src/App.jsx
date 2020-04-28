@@ -8,6 +8,7 @@ import { AuthenticationContext } from './context/authentication';
 import Layout from './components/Layout';
 
 const Courses = React.lazy(() => import('./pages/Courses'));
+const ExecutePayment = React.lazy(() => import('./pages/ExecutePayment'));
 const ExploreCourses = React.lazy(() => import('./pages/ExploreCourses'));
 const TeacherPanel = React.lazy(() => import('./pages/TeacherPanel'));
 
@@ -35,6 +36,13 @@ const App = props => {
                     <Route path="/courses" exact>
                         <Suspense fallback={<Loader active />}>
                             <Courses />
+                        </Suspense>
+                    </Route>
+                ) : null}
+                {user ? (
+                    <Route path="/execute-payment" exact>
+                        <Suspense fallback={<Loader active />}>
+                            <ExecutePayment />
                         </Suspense>
                     </Route>
                 ) : null}
