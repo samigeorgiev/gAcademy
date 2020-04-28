@@ -73,7 +73,7 @@ const Courses = props => {
     const { response: paymentResponse } = paymentState;
     useEffect(() => {
         if (paymentResponse) {
-            window.location.replace(paymentResponse.getRedirecturl());
+            window.location.href = paymentResponse.getRedirecturl();
         }
     }, [paymentResponse, history]);
 
