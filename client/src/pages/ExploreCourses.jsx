@@ -1,15 +1,18 @@
+// TODO add error handling
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Button, Container, Item, Modal } from 'semantic-ui-react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { AuthenticationContext } from '../context/authentication';
 
 import useAccountOperations from '../hooks/accountOperations';
 import useContentManagement from '../hooks/contentManagement';
+import usePayment from '../hooks/payment';
 
-import { GetCoursesByCategoryRequest } from '../proto/content-management_pb';
 import { EnrollCourseRequest } from '../proto/account-operations_pb';
+import { GetCoursesByCategoryRequest } from '../proto/content-management_pb';
+import { StartPaymentRequest } from '../proto/payment_pb';
 
 import ConfirmationModalBody from '../components/ConfirmationModalBody';
 import CourseList from '../components/CourseList';
@@ -33,7 +36,10 @@ const Courses = props => {
         methods: accountOperationsMethods
     } = useAccountOperations();
 
+    const { state: paymentState, methods: paymentMethods } = usePayment();
+
     const location = useLocation();
+    const history = useHistory();
 
     const { getCoursesByCategory } = contentManagementMethods;
     useEffect(() => {
@@ -51,11 +57,25 @@ const Courses = props => {
     }, [contentManagementResponse]);
 
     const { response: accountOperationsResponse } = accountOperationsState;
+    const { startPayment } = paymentMethods;
     useEffect(() => {
         if (accountOperationsResponse) {
-            setIsModalShown(false);
+            const request = new StartPaymentRequest();
+            request.setEnrollmentid(
+                accountOperationsResponse.getEnrollmentid()
+            );
+            request.setReturnurl(window.location.origin + '/execute-payment');
+            request.setCancelurl(window.location.href);
+            startPayment(request);
         }
-    }, [accountOperationsResponse, setIsModalShown]);
+    }, [accountOperationsResponse, startPayment]);
+
+    const { response: paymentResponse } = paymentState;
+    useEffect(() => {
+        if (paymentResponse) {
+            window.location.href = paymentResponse.getRedirecturl();
+        }
+    }, [paymentResponse, history]);
 
     const { enrollCourse } = accountOperationsMethods;
     const enrollHandler = () => {
@@ -88,7 +108,10 @@ const Courses = props => {
             >
                 <ConfirmationModalBody
                     title="Buy a course"
-                    isLoading={accountOperationsState.isLoading}
+                    isLoading={
+                        accountOperationsState.isLoading ||
+                        paymentState.isLoading
+                    }
                     onClose={() => setIsModalShown(false)}
                     onConfirm={enrollHandler}
                 >
@@ -99,7 +122,7 @@ const Courses = props => {
                 <CourseList
                     isLoading={false}
                     error={false}
-                    header="My Courses"
+                    header="Courses"
                     missingCoursesMessage="You don't have any courses"
                 >
                     {courses.map(course => (

@@ -17,10 +17,7 @@ const Courses = props => {
 
     const { user } = useContext(AuthenticationContext);
 
-    const {
-        state: { isLoading, response, error },
-        methods
-    } = useAccountOperations();
+    const { state, methods } = useAccountOperations();
 
     const { getCourses } = methods;
     const token = user && user.token;
@@ -30,6 +27,7 @@ const Courses = props => {
         }
     }, [getCourses, token]);
 
+    const { response } = state;
     useEffect(() => {
         if (response) {
             setCourses(response.getCoursesList());
@@ -39,8 +37,8 @@ const Courses = props => {
     return (
         <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
             <CourseList
-                isLoading={isLoading}
-                error={error}
+                isLoading={state.isLoading}
+                error={state.error}
                 header="My Courses"
                 missingCoursesMessage="You don't have any courses"
             >

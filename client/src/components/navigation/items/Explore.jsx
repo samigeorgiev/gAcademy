@@ -13,13 +13,13 @@ const Explore = props => {
     const history = useHistory();
 
     const { methods, state } = useContentManagement();
-    const { getCategories } = methods;
-    const { isLoading, response } = state;
 
+    const { getCategories } = methods;
     useEffect(() => {
         getCategories(new GetCategoriesRequest());
     }, [getCategories]);
 
+    const { response } = state;
     useEffect(() => {
         if (response) {
             setCategories(response.getCategoriesList());
@@ -44,7 +44,7 @@ const Explore = props => {
                     ))
                 ) : (
                     <Dropdown.Item>
-                        <Loader active={isLoading} />
+                        <Loader active={state.isLoading} />
                     </Dropdown.Item>
                 )}
             </Dropdown.Menu>
