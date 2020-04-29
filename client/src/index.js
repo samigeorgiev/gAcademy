@@ -9,6 +9,8 @@ import AuthenticationContextProvider from './context/authentication';
 import * as serviceWorker from './serviceWorker';
 
 import 'semantic-ui-css/semantic.min.css';
+import 'video-react/dist/video-react.css';
+
 import './index.css';
 
 const app = (
