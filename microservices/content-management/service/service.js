@@ -4,9 +4,7 @@ const { getRepository } = require('typeorm');
 
 const errorHandler = require('../util/errorHandler');
 const Course = require('../entity/CourseSchema');
-const Lesson = require('../entity/LessonSchema');
 const Category = require('../entity/CategorySchema');
-const CourseCategories = require('../entity/CourseCategorySchema');
 const Teacher = require('../entity/TeacherSchema');
 
 exports.newCourse = async (call, callback) => {
@@ -27,87 +25,82 @@ exports.newCourse = async (call, callback) => {
 };
 
 exports.getCourse = async (call, callback) => {
-    const { id } = call.request;
-    const courseRepository = getRepository(Course);
-
-    try {
-        course = await courseRepository.find({
-            relations: ['categories', 'teachers'],
-            where: { id: id },
-            order: { id: 'ASC', title: 'ASC' },
-        });
-    } catch (error) {
-        const status = grpc.status.INTERNAL;
-        return errorHandler(callback, status, 'Category does not exist', error);
+    const course = await getRepository(Course)
+        .createQueryBuilder('courses')
+        .select('courses.id', 'id')
+        .addSelect('courses.title', 'title')
+        .addSelect('courses.description', 'description')
+        .addSelect('t.id', 'creator_id')
+        .addSelect('u.firstName', 'firstName')
+        .addSelect('u.lastName', 'lastName')
+        .addSelect('cc.category_id', 'category_id')
+        .addSelect('ct.name', 'category_name')
+        .leftJoin('courses.creator', 't')
+        .leftJoin('t.user', 'u')
+        .leftJoin('courses.course_categories', 'cc')
+        .leftJoin('cc.category', 'ct')
+        .where('courses.id = :id', { id: call.request.id })
+        .getRawMany();
+    modifiedCourse = {
+        id: course[0].id,
+        title: course[0].title,
+        description: course[0].description,
+        categories: [],
+    };
+    for (let i = 0; i < course.length; i++) {
+        category = {
+            id: course[i].category_id,
+            name: course[i].category_name,
+        };
+        modifiedCourse.categories.push(category);
     }
-
-    course = course[0];
-    callback(null, course);
+    console.log(modifiedCourse);
+    callback(null, modifiedCourse);
 };
 
 exports.getCoursesByCategory = async (call, callback) => {
-    const course_categories = await getRepository(CourseCategories).find({
-        where: { category: { id: call.request.id } },
-    });
-    const courses = course_categories.map((cc) => ({
-        id: cc.course.id,
-        title: cc.course.title,
-        description: cc.course.description,
+    downloadCourses = await getRepository(Course)
+        .createQueryBuilder('courses')
+        .select('courses.id', 'id')
+        .addSelect('courses.title', 'title')
+        .addSelect('courses.description', 'description')
+        .addSelect('cc.category_id', 'category_id')
+        .addSelect('t.id', 'teacherId')
+        .addSelect('u.firstName', 'firstName')
+        .addSelect('u.lastName', 'lastName')
+        .leftJoin('courses.course_categories', 'cc')
+        .leftJoin('courses.creator', 't')
+        .leftJoin('t.user', 'u')
+        .where('cc.category_id = :category_id', {category_id: call.request.id})
+        .getRawMany();
+
+    newCourse = {
+        id: null,
+        title: null,
+        description: null,
         teacher: {
-            id: cc.course.creator.id,
-            name:
-                cc.course.creator.user.firstName +
-                ' ' +
-                cc.course.creator.user.lastName,
+            id: null,
+            name: null,
         },
-    }));
-    for (let i = 0; i < courses.length; i++) {
-        for (let j = i + 1; j < courses.length; j++) {
-            if (courses[i].id === courses[j].id) {
-                courses.splice(j, 1);
-            }
-        }
+    };
+    courses = [];
+    for (let i = 0; i < downloadCourses.length; i++) {
+        courses.push(newCourse);
+        courses[i] = {
+            id: downloadCourses[i].id,
+            title: downloadCourses[i].title,
+            description: downloadCourses[i].description,
+            teacher: {
+                id: downloadCourses[i].teacherId,
+                name:
+                downloadCourses[i].firstName +
+                ' ' +
+                downloadCourses[i].lastName,
+            },
+        };
     }
-    callback(null, { courses });
-};
-
-exports.newLesson = async (call, callback) => {
-    const { title, content, categoryId, teacherId } = call.request;
-
-    const lessonRepository = getRepository(Lesson);
-    const lesson = await lessonRepository.insert({
-        title: title,
-        content: content,
-    });
-    const lessonId = lesson.raw[0].id;
-
-    await lessonRepository
-        .createQueryBuilder()
-        .update(Lesson)
-        .set({ categories: categoryId, teachers: teacherId })
-        .where('id = :id', { id: lessonId })
-        .execute();
-
-    callback(null);
-};
-
-exports.getLesson = async (call, callback) => {
-    const { id } = call.request;
-    const lessonRepository = getRepository(Lesson);
-
-    try {
-        lesson = await lessonRepository.find({
-            relations: ['categories', 'teachers'],
-            where: { id: id },
-            order: { id: 'ASC', title: 'ASC' },
-        });
-    } catch (error) {
-        const status = grpc.status.INTERNAL;
-        return errorHandler(callback, status, 'Lesson does not exist', error);
-    }
-
-    lesson = lesson[0];
-    callback(null, lesson);
+    console.log(courses);
+    callback(null, {courses});
 };
 
 exports.getCategories = async (call, callback) => {

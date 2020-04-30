@@ -30,14 +30,10 @@ message GetCourseResponse {
 		uint32 id = 1;
 		string name = 2;
 	}
-	message Teacher {
-		uint32 id = 1;
-	}
 	uint32 id = 1;
 	string title = 2;
 	string description = 3;
 	repeated Category categories = 4;
-	Teacher teachers = 5;
 }
 
 message GetCoursesByCategoryRequest {
