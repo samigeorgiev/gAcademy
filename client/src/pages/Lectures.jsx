@@ -13,7 +13,7 @@ const Lectures = props => {
                 size="huge"
                 style={{ marginTop: '2rem' }}
             />
-            <VideoPlayer src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" />
+            <VideoPlayer src="http://localhost:8010/input.mp4" />
         </>
     );
 };

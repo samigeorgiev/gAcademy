@@ -8,7 +8,7 @@ const Courses = props => {
 
     return (
         <Button
-            onClick={() => history.push('/courses')}
+            onClick={() => history.push('/enrolled-courses')}
             size="medium"
             content="Courses"
             style={{ color: '#247291', background: 'none' }}

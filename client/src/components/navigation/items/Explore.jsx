@@ -35,7 +35,7 @@ const Explore = props => {
                             key={category.getId()}
                             onClick={() =>
                                 history.push(
-                                    '/explore?category=' + category.getId()
+                                    '/courses?category=' + category.getId()
                                 )
                             }
                         >

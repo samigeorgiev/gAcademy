@@ -1,6 +1,8 @@
+// TODO for refactoring
 import React, { useState } from 'react';
 
-import { Button, Container, Item, Modal } from 'semantic-ui-react';
+import { Input, Button, Container, Item, Modal } from 'semantic-ui-react';
+import tus from 'tus-js-client';
 
 import CourseList from '../components/CourseList';
 import CreateCourse from '../components/CreateCourse';
@@ -58,6 +60,44 @@ const TeacherPanel = props => {
                                         floated="right"
                                         size="mini"
                                         color="grey"
+                                    />
+                                    <Button
+                                        icon="plus"
+                                        floated="right"
+                                        size="mini"
+                                    />
+                                    <Input
+                                        type="file"
+                                        onChange={e => {
+                                            const file = e.target.files[0];
+                                            const upload = new tus.Upload(
+                                                file,
+                                                {
+                                                    endpoint:
+                                                        process.env
+                                                            .REACT_APP_RESOURCE_MANAGEMENT +
+                                                        '/courses',
+                                                    retryDelays: [
+                                                        0,
+                                                        3000,
+                                                        5000,
+                                                        10000,
+                                                        20000
+                                                    ],
+                                                    metadata: {
+                                                        filename: file.name,
+                                                        filetype: file.type
+                                                    },
+                                                    onError: error =>
+                                                        console.log(error),
+                                                    onProgress: progress =>
+                                                        console.log(progress),
+                                                    onSuccess: () =>
+                                                        console.log('success')
+                                                }
+                                            );
+                                            upload.start();
+                                        }}
                                     />
                                 </Item.Extra>
                             </Item.Content>
