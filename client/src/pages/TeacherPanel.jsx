@@ -1,4 +1,5 @@
 // TODO for refactoring
+/* eslint-disable */
 import React, { useState } from 'react';
 
 import { Input, Button, Container, Item, Modal } from 'semantic-ui-react';
@@ -70,13 +71,14 @@ const TeacherPanel = props => {
                                         type="file"
                                         onChange={e => {
                                             const file = e.target.files[0];
+                                            const endpoint =
+                                                process.env
+                                                    .REACT_APP_RESOURCE_MANAGEMENT +
+                                                '/courses';
                                             const upload = new tus.Upload(
                                                 file,
                                                 {
-                                                    endpoint:
-                                                        process.env
-                                                            .REACT_APP_RESOURCE_MANAGEMENT +
-                                                        '/courses',
+                                                    endpoint: endpoint,
                                                     retryDelays: [
                                                         0,
                                                         3000,
