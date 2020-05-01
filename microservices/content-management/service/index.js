@@ -2,8 +2,6 @@ const service = require('./service');
 
 exports.newCourse = async (call, callback) => {
     service.newCourse(call, callback);
-    console.log(call.metadata.get('Authorization'));
-    console.log(call.metadata);
 };
 
 exports.getCourse = async (call, callback) => {

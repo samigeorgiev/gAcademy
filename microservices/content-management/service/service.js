@@ -54,7 +54,6 @@ exports.getCourse = async (call, callback) => {
         };
         modifiedCourse.categories.push(category);
     }
-    console.log(modifiedCourse);
     callback(null, modifiedCourse);
 };
 
@@ -99,7 +98,6 @@ exports.getCoursesByCategory = async (call, callback) => {
             },
         };
     }
-    console.log(courses);
     callback(null, {courses});
 };
 
