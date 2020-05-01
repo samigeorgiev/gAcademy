@@ -3,7 +3,7 @@
 ![Continuos Integration](https://github.com/samigeorgiev/gAcademy/workflows/Continuos%20Integration/badge.svg)
 
 An innovative system for online courses and private lessons.  
-More info [here](https://drive.google.com/file/d/1CLuLhElY9Lvn_G-qVlMkA_7X-UUZwe8h/view?usp=sharing).
+More info [here](https://docs.google.com/document/d/1fkdSdzDGGP2k6GoWZbLf5tiuc6XammQNQSOXZIz-FHo/edit?usp=sharing).
 
 ## Running
 
