@@ -11,7 +11,10 @@
     "lint": "eslint './**/*.js'"
   },
   "dependencies": {
-    "express": "^6.13.7"
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.7-alpha.3",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
