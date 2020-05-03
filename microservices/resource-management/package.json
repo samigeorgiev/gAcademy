@@ -1,0 +1,21 @@
+{
+  "name": "resource-management",
+  "version": "1.0.0",
+  "description": "Resource managment microservice in gAcademy app",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development --exec 'yarn lint && node'",
+    "dev-force": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development",
+    "lint": "eslint './**/*.js'"
+  },
+  "dependencies": {
+    "express": "^6.13.7"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.2"
+  }
+}
