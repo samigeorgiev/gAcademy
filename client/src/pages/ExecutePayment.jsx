@@ -28,7 +28,7 @@ const ExecutePayment = props => {
     const { response } = state;
     useEffect(() => {
         if (response) {
-            history.push('/courses');
+            history.push('/enrolled-courses');
         }
     }, [response, history]);
 
