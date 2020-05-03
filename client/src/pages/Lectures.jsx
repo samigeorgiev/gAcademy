@@ -13,7 +13,7 @@ const Lectures = props => {
                 size="huge"
                 style={{ marginTop: '2rem' }}
             />
-            <VideoPlayer src="http://localhost:8010/input.mp4" />
+            <VideoPlayer src="http://localhost:8004/download" />
         </>
     );
 };

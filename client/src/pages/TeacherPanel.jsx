@@ -74,31 +74,39 @@ const TeacherPanel = props => {
                                             const endpoint =
                                                 process.env
                                                     .REACT_APP_RESOURCE_MANAGEMENT +
-                                                '/courses';
-                                            const upload = new tus.Upload(
-                                                file,
-                                                {
-                                                    endpoint: endpoint,
-                                                    retryDelays: [
-                                                        0,
-                                                        3000,
-                                                        5000,
-                                                        10000,
-                                                        20000
-                                                    ],
-                                                    metadata: {
-                                                        filename: file.name,
-                                                        filetype: file.type
-                                                    },
-                                                    onError: error =>
-                                                        console.log(error),
-                                                    onProgress: progress =>
-                                                        console.log(progress),
-                                                    onSuccess: () =>
-                                                        console.log('success')
-                                                }
-                                            );
-                                            upload.start();
+                                                '/upload';
+                                            // const upload = new tus.Upload(
+                                            //     file,
+                                            //     {
+                                            //         endpoint: endpoint,
+                                            //         retryDelays: [
+                                            //             0,
+                                            //             3000,
+                                            //             5000,
+                                            //             10000,
+                                            //             20000
+                                            //         ],
+                                            //         metadata: {
+                                            //             filename: file.name,
+                                            //             filetype: file.type
+                                            //         },
+                                            //         onError: error =>
+                                            //             console.log(error),
+                                            //         onProgress: progress =>
+                                            //             console.log(progress),
+                                            //         onSuccess: () =>
+                                            //             console.log('success')
+                                            //     }
+                                            // );
+                                            // upload.start();
+                                            const body = new FormData();
+                                            body.append('video', file);
+                                            fetch(endpoint, {
+                                                method: 'POST',
+                                                body
+                                            }).then(response => {
+                                                console.log(response);
+                                            });
                                         }}
                                     />
                                 </Item.Extra>
