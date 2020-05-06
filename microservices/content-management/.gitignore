@@ -1,5 +1,11 @@
-node_modules/
-yarn-error.log
-.env
-.env.development
-proto/
+# IDE folders
+/.idea
+
+# IntelliJ project
+/content-management.iml
+
+# compiled proto
+/src/main/proto/
+
+# compiled classes
+/target
