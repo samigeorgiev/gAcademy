@@ -1,68 +1,55 @@
 version: "3"
 
 services:
-    authentication:
-        build: ./microservices/authentication
-        environment: 
-            - NODE_ENV=${NODE_ENV}
-            - DB_HOST=${DB_HOST}
-            - DB_PORT=${DB_PORT}
-            - DB_USERNAME=${DB_USERNAME}
-            - DB_PASSWORD=${DB_PASSWORD}
-            - DB_DATABASE=${DB_DATABASE}
-            - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
-            - JWT_SECRET=${JWT_SECRET}
-            - JWT_VALID_TIME=${JWT_VALID_TIME}
-        volumes: 
-            - ./microservices/authentication/logs:/app/logs
-        networks:
-            - microservices
+  authentication:
+    build: ./microservices/authentication
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_VALID_TIME=${JWT_VALID_TIME}
+    volumes:
+      - ./microservices/authentication/logs:/app/logs
+    networks:
+      - microservices
 
-    content-management:
-        build: ./microservices/content-management
-        environment: 
-            - NODE_ENV=${NODE_ENV}
-            - DB_HOST=${DB_HOST}
-            - DB_PORT=${DB_PORT}
-            - DB_USERNAME=${DB_USERNAME}
-            - DB_PASSWORD=${DB_PASSWORD}
-            - DB_DATABASE=${DB_DATABASE}
-            - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
-        networks: 
-            - microservices
+  content-management:
+    build: ./microservices/content-management
+    environment:
+      - DB_URL=jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_DATABASE
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - AUTHENTICATION_URL=authentication:9000
+    networks:
+      - microservices
 
-    account-operations:
-        build: ./microservices/account-operations
-        environment:
-            - DB_URL=${DB_JDBC_URL}
-            - DB_USERNAME=${DB_USERNAME}
-            - DB_PASSWORD=${DB_PASSWORD}
-            - AUTHENTICATION_URL=authentication:9000
-        networks: 
-            - microservices
+  payment:
+    build: ./microservices/payment
+    environment:
+      - DB_URL=postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_DATABASE
+      - PAYPAL_MODE=${PAYPAL_MODE}
+      - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}
+      - PAYPAL_CLIENT_SECRET=${PAYPAL_CLIENT_SECRET}
+    networks:
+      - microservices
 
-    payment:
-        build: ./microservices/payment
-        environment:
-            - DB_URL=${DB_CONNECTION_STRING}
-            - PAYPAL_MODE=${PAYPAL_MODE}
-            - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}
-            - PAYPAL_CLIENT_SECRET=${PAYPAL_CLIENT_SECRET}
-        networks: 
-            - microservices
-
-    proxy:
-        build: ./proxy
-        volumes:
-            - ./proxy/logs:/tmp
-        ports: 
-            - "9901:9901"
-            - "8000:8000"
-            - "8001:8001"
-            - "8002:8002"
-            - "8003:8003"
-        networks:
-            - microservices
+  proxy:
+    build: ./proxy
+    volumes:
+      - ./proxy/logs:/tmp
+    ports:
+      - "9901:9901"
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+      - "8003:8003"
+    networks:
+      - microservices
 
 networks:
-    microservices:
+  microservices:
