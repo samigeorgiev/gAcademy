@@ -20,6 +20,7 @@ const useAuthentication = () => {
         },
         [sendRequest]
     );
+
     const logIn = useCallback(
         request => {
             sendRequest('logIn', request, {});

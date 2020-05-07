@@ -1,3 +1,4 @@
+// TODO for refactoring
 import React from 'react';
 
 import { Button, Dimmer, Loader, Modal } from 'semantic-ui-react';

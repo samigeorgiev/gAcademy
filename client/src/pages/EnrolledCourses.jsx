@@ -4,26 +4,26 @@ import { Button, Container, Item } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../context/authentication';
 
-import useAccountOperations from '../hooks/accountOperations';
+import useEnrollmentManagement from '../hooks/enrollmentManagement';
 
-import { GetCoursesRequest } from '../proto/account-operations_pb';
+import { GetEnrolledCoursesRequest } from '../proto/content-management_pb';
 
 import CourseList from '../components/CourseList';
 
 import courseImage from '../images/tmp/course.png';
 
-const Courses = props => {
+const EnrolledCourses = props => {
     const [courses, setCourses] = useState([]);
 
     const { user } = useContext(AuthenticationContext);
 
-    const { state, methods } = useAccountOperations();
+    const { state, methods } = useEnrollmentManagement();
 
     const { getCourses } = methods;
     const token = user && user.token;
     useEffect(() => {
         if (token) {
-            getCourses(new GetCoursesRequest(), token);
+            getCourses(new GetEnrolledCoursesRequest(), token);
         }
     }, [getCourses, token]);
 
@@ -47,7 +47,7 @@ const Courses = props => {
                         <Item.Image size="tiny" src={courseImage} />
                         <Item.Content>
                             <Item.Header content={course.getTitle()} />
-                            <Item.Meta content={'Samuil'} />
+                            <Item.Meta content={course.getCreator()} />
                             <Item.Description
                                 content={course.getDescription()}
                             />
@@ -66,4 +66,4 @@ const Courses = props => {
     );
 };
 
-export default Courses;
+export default EnrolledCourses;

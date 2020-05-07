@@ -1,3 +1,4 @@
+// TODO for refactoring
 import React, { useState } from 'react';
 
 import { Search, Responsive } from 'semantic-ui-react';

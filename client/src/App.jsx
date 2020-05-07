@@ -7,7 +7,7 @@ import { AuthenticationContext } from './context/authentication';
 
 import Layout from './components/Layout';
 
-const Courses = React.lazy(() => import('./pages/Courses'));
+const EnrolledCourses = React.lazy(() => import('./pages/EnrolledCourses'));
 const ExecutePayment = React.lazy(() => import('./pages/ExecutePayment'));
 const ExploreCourses = React.lazy(() => import('./pages/ExploreCourses'));
 const Lectures = React.lazy(() => import('./pages/Lectures'));
@@ -36,7 +36,7 @@ const App = props => {
                 {user ? (
                     <Route path="/enrolled-courses" exact>
                         <Suspense fallback={<Loader active />}>
-                            <Courses />
+                            <EnrolledCourses />
                         </Suspense>
                     </Route>
                 ) : null}

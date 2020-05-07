@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import useAccountOperations from '../hooks/accountOperations';
+import useAccountManagement from '../hooks/accountManagement';
 
-import { GetAccountRequest } from '../proto/account-operations_pb';
+import { GetAccountRequest } from '../proto/content-management_pb';
 
 const AuthenticationContext = React.createContext({
     user: null,
@@ -18,7 +18,7 @@ const AuthenticationContextProvider = props => {
     const [user, setUser] = useState(null);
     const [logOutTimeout, setLogOutTimeout] = useState(null);
 
-    const { state, methods } = useAccountOperations();
+    const { state, methods } = useAccountManagement();
 
     const history = useHistory();
 

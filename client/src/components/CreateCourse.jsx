@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 
 import { Dropdown, Form, Modal } from 'semantic-ui-react';
 
-import useContentManagement from '../hooks/contentManagement';
+import useContentManagement from '../hooks/courseManagement';
 
 import {
     GetCategoriesRequest,
-    NewCourseRequest
+    CreateCourseRequest
 } from '../proto/content-management_pb';
 
 const CreateCourse = props => {
@@ -17,7 +17,7 @@ const CreateCourse = props => {
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const {
-        methods: { getCategories, newCourse },
+        methods: { getCategories, createCourse },
         state: { response }
     } = useContentManagement();
 
@@ -39,11 +39,11 @@ const CreateCourse = props => {
 
     const submitHandler = event => {
         event.preventDefault();
-        const request = new NewCourseRequest();
+        const request = new CreateCourse();
         request.setTitle(title);
         request.setDescription(description);
         request.setCategoriesidsList(selectedCategories);
-        newCourse(request);
+        createCourse(request);
         props.onClose();
     };
 

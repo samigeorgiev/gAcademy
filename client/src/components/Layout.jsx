@@ -1,3 +1,4 @@
+// TODO remove modal from layout
 import React, { useState } from 'react';
 
 import { Modal, Sidebar } from 'semantic-ui-react';
