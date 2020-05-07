@@ -1,19 +1,20 @@
+// TODO refactoring
 import React, { useContext, useEffect } from 'react';
 
 import { Message } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../context/authentication';
 
-import useAccountOperations from '../hooks/accountOperations';
+import useAccountManagement from '../hooks/accountManagement';
 
-import { BecomeTeacherRequest } from '../proto/account-operations_pb';
+import { BecomeTeacherRequest } from '../proto/content-management_pb';
 
 import ConfirmationModalBody from './ConfirmationModalBody';
 
 const BecomeTeacher = props => {
     const { user, becomeTeacher } = useContext(AuthenticationContext);
 
-    const { methods, state } = useAccountOperations();
+    const { methods, state } = useAccountManagement();
     const { becomeTeacher: gprcBecomeTeacher } = methods;
     const { isLoading, response, error } = state;
 

@@ -1,4 +1,5 @@
 // TODO add error handling
+// TODO refactoring
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Button, Container, Item, Modal } from 'semantic-ui-react';
@@ -6,11 +7,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { AuthenticationContext } from '../context/authentication';
 
-import useAccountOperations from '../hooks/accountOperations';
-import useContentManagement from '../hooks/contentManagement';
+import useEnrollmentManagement from '../hooks/enrollmentManagement';
+import useCourseManagement from '../hooks/courseManagement';
 import usePayment from '../hooks/payment';
 
-import { EnrollCourseRequest } from '../proto/account-operations_pb';
+import { EnrollCourseRequest } from '../proto/content-management_pb';
 import { GetCoursesByCategoryRequest } from '../proto/content-management_pb';
 import { StartPaymentRequest } from '../proto/payment_pb';
 
@@ -29,12 +30,12 @@ const Courses = props => {
     const {
         state: contentManagementState,
         methods: contentManagementMethods
-    } = useContentManagement();
+    } = useCourseManagement();
 
     const {
         state: accountOperationsState,
         methods: accountOperationsMethods
-    } = useAccountOperations();
+    } = useEnrollmentManagement();
 
     const { state: paymentState, methods: paymentMethods } = usePayment();
 

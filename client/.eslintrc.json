@@ -27,17 +27,28 @@
         "react"
     ],
     "rules": {
-        "indent": ["error", 4],
+        "indent": [
+            "error",
+            4
+        ],
         "arrow-parens": "off",
         "comma-dangle": "off",
         "object-curly-spacing": "off",
         "operator-linebreak": [
             "error",
             "after",
-            { "overrides": { "?": "before", ":": "before" } }
+            {
+                "overrides": {
+                    "?": "before",
+                    ":": "before"
+                }
+            }
         ],
         "require-jsdoc": "off",
         "react/prop-types": "off"
     },
-    "ignorePatterns": ["serviceWorker.js", "*_pb.js"]
+    "ignorePatterns": [
+        "serviceWorker.js",
+        "*_pb.js"
+    ]
 }
