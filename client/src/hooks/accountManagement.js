@@ -2,7 +2,9 @@ import { useCallback } from 'react';
 
 import useGrpc from './grpc';
 
-import { AccountManagementClient } from '../proto/content-management_grpc_web_pb';
+import {
+    AccountManagementClient //
+} from '../proto/content-management_grpc_web_pb';
 
 const accountManagementClient = new AccountManagementClient(
     process.env.REACT_APP_CONTENT_MANAGEMENT

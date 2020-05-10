@@ -1,9 +1,12 @@
-// TODO for refactoring
-/* eslint-disable */
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import { Input, Button, Container, Item, Modal } from 'semantic-ui-react';
-import tus from 'tus-js-client';
+import { Button, Container, Item } from 'semantic-ui-react';
+
+import { AuthenticationContext } from '../context/authentication';
+
+import useCourseManagement from '../hooks/courseManagement';
+
+import { GetCreatedCoursesRequest } from '../proto/content-management_pb';
 
 import CourseList from '../components/CourseList';
 import CreateCourse from '../components/CreateCourse';
@@ -11,42 +14,52 @@ import CreateCourse from '../components/CreateCourse';
 import courseImage from '../images/tmp/course.png';
 
 const TeacherPanel = props => {
-    const [isModalShown, setIsModalShown] = useState(false);
+    const [createdCourses, setCreatedCourses] = useState([]);
+    const [isCreateCourseShown, setIsCreateCourseShown] = useState(false);
 
-    const courses = [
-        {
-            id: 1,
-            title: 'React',
-            description: 'Amazing course'
+    const { user } = useContext(AuthenticationContext);
+    const { token } = user;
+
+    const { state, methods } = useCourseManagement();
+    const { getCreatedCourses } = methods;
+
+    useEffect(() => {
+        getCreatedCourses(new GetCreatedCoursesRequest(), token);
+    }, [getCreatedCourses, token]);
+
+    const { response, error } = state;
+    useEffect(() => {
+        if (response && !error) {
+            setCreatedCourses(response.getCreatedcoursesList());
         }
-    ];
+    }, [response, error, setCreatedCourses]);
+
+    const closeCreatedCourseHandler = isNewCourseCreated => {
+        setIsCreateCourseShown(false);
+        if (isNewCourseCreated) {
+            getCreatedCourses(new GetCreatedCoursesRequest(), token);
+        }
+    };
 
     return (
         <>
-            <Modal
-                open={isModalShown}
-                onClose={() => setIsModalShown(false)}
-                size="tiny"
-                centered={false}
-                closeIcon
-                closeOnEscape={false}
-            >
-                <CreateCourse onClose={() => setIsModalShown(false)} />
-            </Modal>
+            {isCreateCourseShown ? (
+                <CreateCourse onClose={closeCreatedCourseHandler} />
+            ) : null}
             <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
                 <CourseList
-                    isLoading={false}
-                    error={false}
                     header="Created courses"
+                    isLoading={state.isLoading}
+                    error={state.error}
                     missingCoursesMessage="You haven't created any courses"
                 >
-                    {courses.map(course => (
-                        <Item key={course.id}>
+                    {createdCourses.map(course => (
+                        <Item key={course.getId()} as="li">
                             <Item.Image size="tiny" src={courseImage} />
                             <Item.Content>
-                                <Item.Header content={course.title} />
+                                <Item.Header content={course.getTitle()} />
                                 <Item.Description
-                                    content={course.description}
+                                    content={course.getDescription()}
                                 />
                                 <Item.Extra>
                                     <Button
@@ -67,55 +80,13 @@ const TeacherPanel = props => {
                                         floated="right"
                                         size="mini"
                                     />
-                                    <Input
-                                        type="file"
-                                        onChange={e => {
-                                            const file = e.target.files[0];
-                                            const endpoint =
-                                                process.env
-                                                    .REACT_APP_RESOURCE_MANAGEMENT +
-                                                '/upload';
-                                            // const upload = new tus.Upload(
-                                            //     file,
-                                            //     {
-                                            //         endpoint: endpoint,
-                                            //         retryDelays: [
-                                            //             0,
-                                            //             3000,
-                                            //             5000,
-                                            //             10000,
-                                            //             20000
-                                            //         ],
-                                            //         metadata: {
-                                            //             filename: file.name,
-                                            //             filetype: file.type
-                                            //         },
-                                            //         onError: error =>
-                                            //             console.log(error),
-                                            //         onProgress: progress =>
-                                            //             console.log(progress),
-                                            //         onSuccess: () =>
-                                            //             console.log('success')
-                                            //     }
-                                            // );
-                                            // upload.start();
-                                            const body = new FormData();
-                                            body.append('video', file);
-                                            fetch(endpoint, {
-                                                method: 'POST',
-                                                body
-                                            }).then(response => {
-                                                console.log(response);
-                                            });
-                                        }}
-                                    />
                                 </Item.Extra>
                             </Item.Content>
                         </Item>
                     ))}
                 </CourseList>
                 <Button
-                    onClick={() => setIsModalShown(true)}
+                    onClick={() => setIsCreateCourseShown(true)}
                     circular
                     icon="plus"
                     color="green"

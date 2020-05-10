@@ -22,11 +22,11 @@ const SignUp = props => {
 
     const { onClose } = props;
     useEffect(() => {
-        if (response) {
+        if (response && !error.message) {
             logIn(response.getToken(), response.getExpiresin());
             onClose();
         }
-    }, [response, logIn, onClose]);
+    }, [response, error, logIn, onClose]);
 
     const inputs = {
         firstName: {
@@ -72,7 +72,13 @@ const SignUp = props => {
     };
 
     return (
-        <>
+        <Modal
+            onClose={props.onClose}
+            centered={false}
+            size="mini"
+            open
+            closeIcon
+        >
             <Modal.Header>SignUp</Modal.Header>
             <Modal.Content>
                 <Form
@@ -83,7 +89,7 @@ const SignUp = props => {
                     onClose={props.onClose}
                 />
             </Modal.Content>
-        </>
+        </Modal>
     );
 };
 

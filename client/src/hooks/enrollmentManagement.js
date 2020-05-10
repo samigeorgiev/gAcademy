@@ -2,7 +2,9 @@ import { useCallback } from 'react';
 
 import useGrpc from './grpc';
 
-import { EnrollmentManagementClient } from '../proto/content-management_grpc_web_pb';
+import {
+    EnrollmentManagementClient //
+} from '../proto/content-management_grpc_web_pb';
 
 const enrollmentManagementClient = new EnrollmentManagementClient(
     process.env.REACT_APP_CONTENT_MANAGEMENT

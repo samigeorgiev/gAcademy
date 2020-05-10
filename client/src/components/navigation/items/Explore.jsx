@@ -19,12 +19,12 @@ const Explore = props => {
         getCategories(new GetCategoriesRequest());
     }, [getCategories]);
 
-    const { response } = state;
+    const { response, error } = state;
     useEffect(() => {
-        if (response) {
+        if (response && !error) {
             setCategories(response.getCategoriesList());
         }
-    }, [response]);
+    }, [response, error]);
 
     return (
         <Dropdown item text="Explore">
