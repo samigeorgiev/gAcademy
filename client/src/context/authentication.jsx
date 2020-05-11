@@ -22,9 +22,9 @@ const AuthenticationContextProvider = props => {
 
     const history = useHistory();
 
-    const { response } = state;
+    const { response, error } = state;
     useEffect(() => {
-        if (response) {
+        if (response && !error) {
             setUser(user => ({
                 token: user.token,
                 email: response.getEmail(),
@@ -33,7 +33,7 @@ const AuthenticationContextProvider = props => {
                 isTeacher: response.getIsteacher()
             }));
         }
-    }, [response]);
+    }, [response, error]);
 
     const logOut = useCallback(() => {
         clearTimeout(logOutTimeout);

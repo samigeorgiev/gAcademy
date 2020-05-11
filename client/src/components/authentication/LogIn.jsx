@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 
-import validator from 'validator';
 import { Modal } from 'semantic-ui-react';
 
 import useAuthentication from '../../hooks/authentication';
@@ -20,26 +19,25 @@ const LogIn = props => {
 
     const { onClose } = props;
     useEffect(() => {
-        if (response) {
+        if (response && !error.message) {
             logIn(response.getToken(), response.getExpiresin());
             onClose();
         }
-    }, [response, logIn, onClose]);
+    }, [response, error, logIn, onClose]);
 
     const inputs = {
         email: {
             type: 'email',
             placeholder: 'Email',
             icon: 'mail',
-            validate: value =>
-                validator.isEmail(validator.normalizeEmail(value)),
+            validate: () => true,
             validationError: 'Invalid email'
         },
         password: {
             type: 'password',
             placeholder: 'Password',
             icon: 'mail',
-            validate: value => true,
+            validate: () => true,
             validationError: null
         }
     };
@@ -53,7 +51,13 @@ const LogIn = props => {
     };
 
     return (
-        <>
+        <Modal
+            onClose={props.onClose}
+            centered={false}
+            size="mini"
+            open
+            closeIcon
+        >
             <Modal.Header>Login</Modal.Header>
             <Modal.Content>
                 <Form
@@ -64,7 +68,7 @@ const LogIn = props => {
                     onClose={props.onClose}
                 />
             </Modal.Content>
-        </>
+        </Modal>
     );
 };
 

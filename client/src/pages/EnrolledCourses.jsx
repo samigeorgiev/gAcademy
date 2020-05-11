@@ -19,28 +19,28 @@ const EnrolledCourses = props => {
 
     const { state, methods } = useEnrollmentManagement();
 
-    const { getCourses } = methods;
-    const token = user && user.token;
+    const { getEnrolledCourses } = methods;
+    const { token } = user;
     useEffect(() => {
         if (token) {
-            getCourses(new GetEnrolledCoursesRequest(), token);
+            getEnrolledCourses(new GetEnrolledCoursesRequest(), token);
         }
-    }, [getCourses, token]);
+    }, [getEnrolledCourses, token]);
 
-    const { response } = state;
+    const { response, error } = state;
     useEffect(() => {
-        if (response) {
-            setCourses(response.getCoursesList());
+        if (response && !error) {
+            setCourses(response.getEnrolledcoursesList());
         }
-    }, [response]);
+    }, [response, error]);
 
     return (
         <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
             <CourseList
-                isLoading={state.isLoading}
-                error={state.error}
                 header="My Courses"
                 missingCoursesMessage="You don't have any courses"
+                isLoading={state.isLoading}
+                error={state.error}
             >
                 {courses.map(course => (
                     <Item key={course.getId()} as="li">

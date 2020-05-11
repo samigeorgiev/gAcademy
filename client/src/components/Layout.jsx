@@ -1,7 +1,6 @@
-// TODO remove modal from layout
 import React, { useState } from 'react';
 
-import { Modal, Sidebar } from 'semantic-ui-react';
+import { Sidebar } from 'semantic-ui-react';
 
 import BecomeTeacher from './BecomeTeacher';
 import LogIn from './authentication/LogIn';
@@ -46,15 +45,7 @@ const Layout = props => {
                 />
                 <main>
                     <>
-                        <Modal
-                            open={shownForm !== null}
-                            onClose={closeForm}
-                            centered={false}
-                            size="mini"
-                            closeIcon
-                        >
-                            {shownForm && forms[shownForm]}
-                        </Modal>
+                        {shownForm && forms[shownForm]}
                         {props.children}
                     </>
                 </main>
