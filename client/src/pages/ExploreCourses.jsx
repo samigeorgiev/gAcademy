@@ -9,7 +9,7 @@ import useCourseManagement from '../hooks/courseManagement';
 
 import { GetCoursesRequest } from '../proto/content-management_pb';
 
-import CourseList from '../components/CourseList';
+import CourseList from '../components/course/CourseList';
 import EnrollmentConfirmation from '../components/EnrollmentConfirmation';
 
 import courseImage from '../images/tmp/course.png';

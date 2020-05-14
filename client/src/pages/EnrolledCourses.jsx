@@ -8,7 +8,7 @@ import useEnrollmentManagement from '../hooks/enrollmentManagement';
 
 import { GetEnrolledCoursesRequest } from '../proto/content-management_pb';
 
-import CourseList from '../components/CourseList';
+import CourseList from '../components/course/CourseList';
 
 import courseImage from '../images/tmp/course.png';
 

@@ -10,9 +10,9 @@ import {
     Modal
 } from 'semantic-ui-react';
 
-import { AuthenticationContext } from '../context/authentication';
+import { AuthenticationContext } from '../../context/authentication';
 
-import useCourseManagement from '../hooks/courseManagement';
+import useCourseManagement from '../../hooks/courseManagement';
 
 import {
     GetCategoriesRequest,
@@ -20,7 +20,7 @@ import {
     CreatedCourse,
     CreateCourseRequest,
     CreateCourseResponse
-} from '../proto/content-management_pb';
+} from '../../proto/content-management_pb';
 
 const CreateCourse = props => {
     const [allCategories, setAllCategories] = useState([]);

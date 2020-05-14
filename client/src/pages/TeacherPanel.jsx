@@ -8,8 +8,8 @@ import useCourseManagement from '../hooks/courseManagement';
 
 import { GetCreatedCoursesRequest } from '../proto/content-management_pb';
 
-import CourseList from '../components/CourseList';
-import CreateCourse from '../components/CreateCourse';
+import CourseList from '../components/course/CourseList';
+import CreateCourse from '../components/course/CreateCourse';
 
 import courseImage from '../images/tmp/course.png';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Header } from 'semantic-ui-react';
 
-import VideoPlayer from '../components/VideoPlayer';
+import VideoPlayer from '../components/lecture/VideoPlayer';
 
 const Lectures = props => {
     return (
