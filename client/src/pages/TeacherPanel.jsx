@@ -10,12 +10,14 @@ import { GetCreatedCoursesRequest } from '../proto/content-management_pb';
 
 import CourseList from '../components/course/CourseList';
 import CreateCourse from '../components/course/CreateCourse';
+import LectureEditList from '../components/lecture/LectureEditList';
 
 import courseImage from '../images/tmp/course.png';
 
 const TeacherPanel = props => {
     const [createdCourses, setCreatedCourses] = useState([]);
     const [isCreateCourseShown, setIsCreateCourseShown] = useState(false);
+    const [selectedCourseLectures, setSelectedCourseLectures] = useState(null);
 
     const { user } = useContext(AuthenticationContext);
     const { token } = user;
@@ -43,6 +45,12 @@ const TeacherPanel = props => {
 
     return (
         <>
+            {selectedCourseLectures ? (
+                <LectureEditList
+                    course={selectedCourseLectures}
+                    onClose={() => setSelectedCourseLectures(null)}
+                />
+            ) : null}
             {isCreateCourseShown ? (
                 <CreateCourse onClose={closeCreatedCourseHandler} />
             ) : null}
@@ -76,7 +84,12 @@ const TeacherPanel = props => {
                                         color="grey"
                                     />
                                     <Button
-                                        icon="plus"
+                                        onClick={() =>
+                                            setSelectedCourseLectures(
+                                                course.getId()
+                                            )
+                                        }
+                                        icon="list"
                                         floated="right"
                                         size="mini"
                                     />
