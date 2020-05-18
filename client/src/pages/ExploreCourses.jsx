@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Button, Container, Item } from 'semantic-ui-react';
+import { Button, Container, Item, Label } from 'semantic-ui-react';
 import { useLocation } from 'react-router-dom';
 
 import { AuthenticationContext } from '../context/authentication';
@@ -63,8 +63,12 @@ const Courses = props => {
                                 <Item.Description
                                     content={course.getDescription()}
                                 />
-                                {user ? (
-                                    <Item.Extra>
+                                <Item.Extra>
+                                    <Label
+                                        content={course.getPrice()}
+                                        icon="euro"
+                                    />
+                                    {user ? (
                                         <Button
                                             onClick={() =>
                                                 setSelectedCourse(course)
@@ -73,8 +77,8 @@ const Courses = props => {
                                             floated="right"
                                             color="blue"
                                         />
-                                    </Item.Extra>
-                                ) : null}
+                                    ) : null}
+                                </Item.Extra>
                             </Item.Content>
                         </Item>
                     ))}

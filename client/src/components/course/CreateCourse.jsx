@@ -25,6 +25,7 @@ import {
 const CreateCourse = props => {
     const [allCategories, setAllCategories] = useState([]);
     const [title, setTitle] = useState('');
+    const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
 
@@ -64,6 +65,7 @@ const CreateCourse = props => {
 
         const course = new CreatedCourse();
         course.setTitle(title);
+        course.setPrice(+price);
         course.setDescription(description);
         course.setCategoriesidsList(selectedCategories);
 
@@ -78,8 +80,16 @@ const CreateCourse = props => {
                 <Form.Input
                     value={title}
                     onChange={event => setTitle(event.target.value)}
-                    fluid
                     placeholder="Title"
+                    fluid
+                />
+                <Form.Input
+                    type="number"
+                    step="0.01"
+                    value={price}
+                    onChange={event => setPrice(event.target.value)}
+                    placeholder="Price"
+                    fluid
                 />
                 <Form.TextArea
                     value={description}
@@ -120,6 +130,7 @@ const CreateCourse = props => {
                 negative
                 header="Error occurred"
                 content={state.error.message}
+                style={{ margin: '1rem' }}
             />
         );
     }

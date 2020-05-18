@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Button, Container, Item } from 'semantic-ui-react';
+import { Button, Container, Item, Label } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../context/authentication';
 
@@ -70,6 +70,10 @@ const TeacherPanel = props => {
                                     content={course.getDescription()}
                                 />
                                 <Item.Extra>
+                                    <Label
+                                        content={course.getPrice()}
+                                        icon="euro"
+                                    />
                                     <Button
                                         icon="remove"
                                         floated="right"
@@ -105,7 +109,7 @@ const TeacherPanel = props => {
                     color="green"
                     size="huge"
                     floated="right"
-                    style={{ marginRight: '1rem' }}
+                    style={{ margin: '0 1rem 1rem' }}
                 />
             </Container>
         </>
