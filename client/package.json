@@ -15,7 +15,6 @@
         "react-scripts": "3.4.1",
         "semantic-ui-css": "^2.4.1",
         "semantic-ui-react": "^0.88.2",
-        "tus-js-client": "^1.8.0",
         "validator": "^13.0.0",
         "video-react": "^0.14.1"
     },
