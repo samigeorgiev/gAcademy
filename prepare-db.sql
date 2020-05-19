@@ -42,3 +42,6 @@ create table enrollments (
     user_id integer references users(id) not null,
     payment_id integer references payments(id)
 );
+
+insert into categories
+values (default, 'Math'), (default, 'History'), (default, 'Programming');
