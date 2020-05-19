@@ -57,7 +57,9 @@ If you run all of the microservices and the client on the same host use `.env.ex
 In the `client/` folder run:
 
 `$ ./genproto.sh`
+
 `$ yarn install`
+
 `$ yarn start`
 
 ## Development
