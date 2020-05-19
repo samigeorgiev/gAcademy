@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd microservices/authentication/src
 ./genproto.sh
 cd ../../..

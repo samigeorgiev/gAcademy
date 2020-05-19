@@ -1,23 +1,22 @@
+#!/bin/bash
+
 # Database
-export DB_HOST=rogue.db.elephantsql.com
-export DB_PORT=5432
-export DB_USERNAME=lrvqviyx
-export DB_PASSWORD=2lGO5_DYlEe1mcKIV9UceUtqdiTyYuoh
-export DB_DATABASE=lrvqviyx
+DB_HOST=172.20.0.1; export DB_HOST
+DB_PORT=5432; export DB_PORT
+DB_USERNAME=postgres; export DB_USERNAME
+DB_PASSWORD=postgres; export DB_PASSWORD
+DB_DATABASE=postgres; export DB_DATABASE
 
-export DB_SYNCHRONIZE=false
-
-export DB_JDBC_URL=jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_DATABASE
-export DB_CONNECTION_STRING=postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_DATABASE
+DB_SYNCHRONIZE=false; export DB_SYNCHRONIZE
 
 # Node specific
-export NODE_ENV=development
+NODE_ENV=production; export NODE_ENV
 
 # Auth
-export JWT_SECRET=secret
-export JWT_VALID_TIME=7200000
+JWT_SECRET=secret; export JWT_SECRET
+JWT_VALID_TIME=86400000; export JWT_VALID_TIME
 
 # Payment
-export PAYPAL_MODE=sandbox
-export PAYPAL_CLIENT_ID=get it from paypal developer
-export PAYPAL_CLIENT_SECRET=get it from paypal developer
+PAYPAL_MODE=sandbox; export PAYPAL_MODE
+PAYPAL_CLIENT_ID='PayPal developer account is necessary'; export PAYPAL_CLIENT_ID
+PAYPAL_CLIENT_SECRET='PayPal developer account is necessary'; export PAYPAL_CLIENT_SECRET

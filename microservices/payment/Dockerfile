@@ -8,6 +8,8 @@ RUN pip install -r requirements-lock.txt
 
 COPY . .
 
+RUN /app/compileproto.sh
+
 ENV PORT 9000
 EXPOSE 9000
 

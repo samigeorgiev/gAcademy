@@ -1,14 +1,17 @@
 # IDE folders
 /.vscode
 
-# compiled proto
-/proto
-
-# virtual env
+#virtual env
 /env
+
+#compiled proto
+/proto/*.py
 
 # python chache
 __pycache__
 
 # env
 /.env*
+
+.gitignore
+README.md
