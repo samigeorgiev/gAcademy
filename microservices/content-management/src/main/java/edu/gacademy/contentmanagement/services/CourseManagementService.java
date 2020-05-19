@@ -100,6 +100,19 @@ public class CourseManagementService extends CourseManagementGrpc.CourseManageme
         }
 
         CreatedCourse createdCourseDto = request.getCreatedCourse();
+        if (
+            createdCourseDto.getTitle().equals("") ||
+            createdCourseDto.getDescription().equals("") ||
+            createdCourseDto.getPrice() == 0 ||
+            createdCourseDto.getCategoriesIdsList().size() == 0
+        ) {
+            responseObserver.onError(Status.INVALID_ARGUMENT
+                .withDescription("Course information is incomplete")
+                .asRuntimeException()
+            );
+            return;
+        }
+
         Course createdCourse = new Course(
                 createdCourseDto.getTitle(),
                 createdCourseDto.getDescription(),
