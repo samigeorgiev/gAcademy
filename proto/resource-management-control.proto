@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package resource_management_control;
+
+service Lecture {
+
+}
