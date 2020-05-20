@@ -6,7 +6,12 @@ import { AuthenticationContext } from '../context/authentication';
 
 import useCourseManagement from '../hooks/courseManagement';
 
-import { GetCreatedCoursesRequest } from '../proto/content-management_pb';
+import {
+    DeleteCourseRequest,
+    DeleteCourseResponse,
+    GetCreatedCoursesRequest,
+    GetCreatedCoursesResponse
+} from '../proto/content-management_pb';
 
 import CourseList from '../components/course/CourseList';
 import CreateCourse from '../components/course/CreateCourse';
@@ -23,24 +28,41 @@ const TeacherPanel = props => {
     const { token } = user;
 
     const { state, methods } = useCourseManagement();
+    const { response, error } = state;
     const { getCreatedCourses } = methods;
 
     useEffect(() => {
         getCreatedCourses(new GetCreatedCoursesRequest(), token);
     }, [getCreatedCourses, token]);
 
-    const { response, error } = state;
     useEffect(() => {
-        if (response && !error) {
+        if (
+            response &&
+            response instanceof GetCreatedCoursesResponse &&
+            !error
+        ) {
             setCreatedCourses(response.getCreatedcoursesList());
         }
     }, [response, error, setCreatedCourses]);
+
+    useEffect(() => {
+        if (response && response instanceof DeleteCourseResponse && !error) {
+            getCreatedCourses(new GetCreatedCoursesRequest(), token);
+        }
+    }, [response, error, getCreatedCourses, token]);
 
     const closeCreatedCourseHandler = isNewCourseCreated => {
         setIsCreateCourseShown(false);
         if (isNewCourseCreated) {
             getCreatedCourses(new GetCreatedCoursesRequest(), token);
         }
+    };
+
+    const { deleteCourse } = methods;
+    const deleteCourseHandler = courseId => {
+        const request = new DeleteCourseRequest();
+        request.setId(courseId);
+        deleteCourse(request, token);
     };
 
     return (
@@ -75,18 +97,21 @@ const TeacherPanel = props => {
                                         icon="euro"
                                     />
                                     <Button
+                                        onClick={() =>
+                                            deleteCourseHandler(course.getId())
+                                        }
                                         icon="remove"
                                         floated="right"
                                         color="red"
                                         size="mini"
                                         inverted
                                     />
-                                    <Button
+                                    {/* <Button
                                         icon="pencil"
                                         floated="right"
                                         size="mini"
                                         color="grey"
-                                    />
+                                    /> */}
                                     <Button
                                         onClick={() =>
                                             setSelectedCourseLectures(
