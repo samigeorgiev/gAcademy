@@ -1,14 +1,7 @@
 // TODO remove instanceof
 import React, { useContext, useEffect, useState } from 'react';
 
-import {
-    Dimmer,
-    Dropdown,
-    Form,
-    Loader,
-    Message,
-    Modal
-} from 'semantic-ui-react';
+import { Dropdown, Form, Message, Modal } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../../context/authentication';
 
@@ -74,67 +67,6 @@ const CreateCourse = props => {
         createCourse(request, token);
     };
 
-    let modalContent = (
-        <Modal.Content>
-            <Form onSubmit={submitHandler}>
-                <Form.Input
-                    value={title}
-                    onChange={event => setTitle(event.target.value)}
-                    placeholder="Title"
-                    fluid
-                />
-                <Form.Input
-                    type="number"
-                    step="0.01"
-                    value={price}
-                    onChange={event => setPrice(event.target.value)}
-                    placeholder="Price"
-                    fluid
-                />
-                <Form.TextArea
-                    value={description}
-                    onChange={event => setDescription(event.target.value)}
-                    placeholder="Description"
-                />
-                <Dropdown
-                    value={selectedCategories}
-                    onChange={(event, data) =>
-                        setSelectedCategories(data.value)
-                    }
-                    options={allCategories}
-                    placeholder="Categories"
-                    multiple
-                    search
-                    selection
-                    fluid
-                />
-                <Form.Button
-                    content="Submit"
-                    primary
-                    fluid
-                    style={{ marginTop: '1rem', background: '#247291' }}
-                />
-            </Form>
-        </Modal.Content>
-    );
-    if (state.isLoading) {
-        modalContent = (
-            <Dimmer active>
-                <Loader />
-            </Dimmer>
-        );
-    }
-    if (state.error) {
-        modalContent = (
-            <Message
-                negative
-                header="Error occurred"
-                content={state.error.message}
-                style={{ margin: '1rem' }}
-            />
-        );
-    }
-
     return (
         <Modal
             onClose={() => props.onClose(false)}
@@ -145,7 +77,56 @@ const CreateCourse = props => {
             closeIcon
         >
             <Modal.Header content="Create new course" />
-            {modalContent}
+            <Modal.Content>
+                <Form
+                    onSubmit={submitHandler}
+                    loading={state.isLoading}
+                    error={state.error !== null}
+                >
+                    <Message
+                        error
+                        header="Error occurred"
+                        content={state.error && state.error.message}
+                    />
+                    <Form.Input
+                        value={title}
+                        onChange={event => setTitle(event.target.value)}
+                        placeholder="Title"
+                        fluid
+                    />
+                    <Form.Input
+                        type="number"
+                        step="0.01"
+                        value={price}
+                        onChange={event => setPrice(event.target.value)}
+                        placeholder="Price"
+                        fluid
+                    />
+                    <Form.TextArea
+                        value={description}
+                        onChange={event => setDescription(event.target.value)}
+                        placeholder="Description"
+                    />
+                    <Dropdown
+                        value={selectedCategories}
+                        onChange={(event, data) =>
+                            setSelectedCategories(data.value)
+                        }
+                        options={allCategories}
+                        placeholder="Categories"
+                        multiple
+                        search
+                        selection
+                        fluid
+                    />
+                    <Form.Button
+                        content="Submit"
+                        primary
+                        fluid
+                        style={{ marginTop: '1rem', background: '#247291' }}
+                    />
+                </Form>
+            </Modal.Content>
         </Modal>
     );
 };
