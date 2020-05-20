@@ -37,6 +37,9 @@ const EnrolledCourses = props => {
         }
     }, [response, error]);
 
+    const playHandler = courseId =>
+        history.push(`courses/${courseId}/lectures`);
+
     return (
         <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
             <CourseList
@@ -56,11 +59,7 @@ const EnrolledCourses = props => {
                             />
                             <Item.Extra>
                                 <Button
-                                    onClick={() =>
-                                        history.push(
-                                            `/courses/${course.getId()}/lectures`
-                                        )
-                                    }
+                                    onClick={() => playHandler(course.getId())}
                                     icon="play"
                                     floated="right"
                                     color="green"
