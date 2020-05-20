@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Button, Container, Item } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
 
 import { AuthenticationContext } from '../context/authentication';
 
@@ -18,6 +19,8 @@ const EnrolledCourses = props => {
     const { user } = useContext(AuthenticationContext);
 
     const { state, methods } = useEnrollmentManagement();
+
+    const history = useHistory();
 
     const { getEnrolledCourses } = methods;
     const { token } = user;
@@ -53,6 +56,11 @@ const EnrolledCourses = props => {
                             />
                             <Item.Extra>
                                 <Button
+                                    onClick={() =>
+                                        history.push(
+                                            `/courses/${course.getId()}/lectures`
+                                        )
+                                    }
                                     icon="play"
                                     floated="right"
                                     color="green"
