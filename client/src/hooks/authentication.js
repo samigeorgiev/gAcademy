@@ -1,15 +1,14 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import useGrpc from './grpc';
 
 import { AuthenticationClient } from '../proto/authentication_grpc_web_pb';
 
-const useAuthentication = () => {
-    const url = process.env.REACT_APP_AUTHENTICATION;
-    const authenticationClient = useMemo(() => new AuthenticationClient(url), [
-        url
-    ]);
+const authenticationClient = new AuthenticationClient(
+    process.env.REACT_APP_AUTHENTICATION
+);
 
+const useAuthentication = () => {
     const [state, sendRequest] = useGrpc(authenticationClient);
     const errorSegments = state.error && state.error.message.split(' ');
     const errorCode = state.error && errorSegments.shift();
@@ -21,6 +20,7 @@ const useAuthentication = () => {
         },
         [sendRequest]
     );
+
     const logIn = useCallback(
         request => {
             sendRequest('logIn', request, {});
@@ -29,8 +29,8 @@ const useAuthentication = () => {
     );
 
     return {
-        methods: { signUp, logIn },
-        state: { ...state, error: { code: errorCode, message: errorMessage } }
+        state: { ...state, error: { code: errorCode, message: errorMessage } },
+        methods: { signUp, logIn }
     };
 };
 

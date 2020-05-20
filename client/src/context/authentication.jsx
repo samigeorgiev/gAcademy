@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import useAccountOperations from '../hooks/accountOperations';
+import useAccountManagement from '../hooks/accountManagement';
 
-import { GetAccountRequest } from '../proto/account-operations_pb';
+import { GetAccountRequest } from '../proto/content-management_pb';
 
 const AuthenticationContext = React.createContext({
     user: null,
@@ -18,14 +18,13 @@ const AuthenticationContextProvider = props => {
     const [user, setUser] = useState(null);
     const [logOutTimeout, setLogOutTimeout] = useState(null);
 
-    const { methods, state } = useAccountOperations();
-    const { response } = state;
-    const { getAccount } = methods;
+    const { state, methods } = useAccountManagement();
 
     const history = useHistory();
 
+    const { response, error } = state;
     useEffect(() => {
-        if (response) {
+        if (response && !error) {
             setUser(user => ({
                 token: user.token,
                 email: response.getEmail(),
@@ -34,7 +33,7 @@ const AuthenticationContextProvider = props => {
                 isTeacher: response.getIsteacher()
             }));
         }
-    }, [response]);
+    }, [response, error]);
 
     const logOut = useCallback(() => {
         clearTimeout(logOutTimeout);
@@ -45,6 +44,7 @@ const AuthenticationContextProvider = props => {
         history.push('/');
     }, [setUser, logOutTimeout, setLogOutTimeout, history]);
 
+    const { getAccount } = methods;
     const getUserAccount = useCallback(
         token => {
             getAccount(new GetAccountRequest(), token);
@@ -53,9 +53,6 @@ const AuthenticationContextProvider = props => {
     );
 
     const tryLogIn = useCallback(() => {
-        if (user) {
-            return;
-        }
         const token = localStorage.getItem('token');
         const expiryDate = localStorage.getItem('expiryDate');
         const expDate = new Date(expiryDate);
@@ -69,7 +66,7 @@ const AuthenticationContextProvider = props => {
             setTimeout(logOut, expDate.getTime() - new Date().getTime())
         );
         getUserAccount(token);
-    }, [user, setUser, logOut, getUserAccount]);
+    }, [setUser, logOut, getUserAccount]);
 
     const logIn = useCallback(
         (token, expiresIn) => {

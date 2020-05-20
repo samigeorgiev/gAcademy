@@ -1,86 +1,97 @@
 syntax = "proto3";
 
-package content_management;
+option java_package = "edu.gacademy.contentmanagement.protocols";
+option java_multiple_files = true;
 
-service Course {
-    rpc NewCourse(NewCourseRequest) returns (NewCourseResponse);
-    rpc GetCourse(GetCourseRequest) returns (GetCourseResponse);
-    rpc GetCoursesByCategory(GetCoursesByCategoryRequest) returns (GetCoursesByCategoryResponse);
-    rpc NewLesson(NewLessonRequest) returns (NewLessonResponse);
-    rpc GetLesson(GetLessonsRequest) returns (GetLessonsResponse);
-    rpc GetCategories(GetCategoriesRequest) returns (GetCategoriesResponse);
+service AccountManagement {
+	rpc GetAccount (GetAccountRequest) returns (GetAccountResponse);
+    rpc BecomeTeacher (BecomeTeacherRequest) returns (BecomeTeacherResponse);
 }
 
-message NewCourseRequest {
-    string title = 1;
-    string description = 2;
-    repeated uint32 categoriesIds = 3;
+service CourseManagement {
+	rpc GetCourses (GetCoursesRequest) returns (GetCoursesResponse);
+	rpc GetCourse (GetCourseRequest) returns (GetCourseResponse);
+	rpc CreateCourse (CreateCourseRequest) returns (CreateCourseResponse);
+	rpc GetCreatedCourses (GetCreatedCoursesRequest) returns (GetCreatedCoursesResponse);
+	rpc UpdateCourse (UpdateCourseRequest) returns (UpdateCourseResponse);
+	rpc DeleteCourse (DeleteCourseRequest) returns (DeleteCourseResponse);
+	rpc GetCategories (GetCategoriesRequest) returns (GetCategoriesResponse);
 }
 
-message NewCourseResponse {
-
+service EnrollmentManagement {
+	rpc GetEnrolledCourses (GetEnrolledCoursesRequest) returns (GetEnrolledCoursesResponse);
+	rpc EnrollCourse (EnrollCourseRequest) returns (EnrollCourseResponse);
 }
 
-message GetCourseRequest {
-    uint32 id = 1;
+message GetAccountRequest {
+    // Only metadata
 }
 
-message GetCourseResponse {
-	message Category {
-		uint32 id = 1;
-		string name = 2;
-	}
-	message Teacher {
-		uint32 id = 1;
-	}
-	uint32 id = 1;
-	string title = 2;
-	string description = 3;
-	repeated Category categories = 4;
-	Teacher teachers = 5;
+message GetAccountResponse {
+    string firstName = 1;
+    string lastName = 2;
+    string email = 3;
+    bool isTeacher = 4;
 }
 
-message GetCoursesByCategoryRequest {
-	uint32 id = 1;
+message BecomeTeacherRequest {
+    // Only metadata
 }
 
-message GetCoursesByCategoryResponse {
-	message Course {
-		message Teacher {
-			uint32 id = 1;
-			string name = 2;
-		}	
-		uint32 id = 1;
-		string title = 2;
-		string description = 3;
-		Teacher teacher = 5;
-	}
+message BecomeTeacherResponse {
+    // Only status code
+}
+
+message GetCoursesRequest {
+	uint32 categoryId = 1;
+}
+
+message GetCoursesResponse {
 	repeated Course courses = 1;
 }
 
-message NewLessonRequest {
-	string title = 1;
-	string content = 2;
-	uint32 teacherId = 3;
-	uint32 categoryId = 4;
-}
-
-message NewLessonResponse {
-	
-}
-
-message GetLessonsRequest {
+message GetCourseRequest {
 	uint32 id = 1;
 }
 
-message GetLessonsResponse {
+message GetCourseResponse {
+	Course course = 1;
+}
+
+message CreateCourseRequest {
+	CreatedCourse createdCourse = 1;
+}
+
+message CreateCourseResponse {
+	// Only status code
+}
+
+message GetCreatedCoursesRequest {
+	// Only metadata
+}
+
+message GetCreatedCoursesResponse {
+	repeated CreatedCourse createdCourses = 1;
+}
+
+message UpdateCourseRequest {
+	CreatedCourse updatedCourse = 1;
+}
+
+message UpdateCourseResponse {
+	// Only status code
+}
+
+message DeleteCourseRequest {
 	uint32 id = 1;
-	string title = 2;
-	string content = 3;
+}
+
+message DeleteCourseResponse {
+	// Only status code
 }
 
 message GetCategoriesRequest {
-	
+	// Nothing
 }
 
 message GetCategoriesResponse {
@@ -89,4 +100,36 @@ message GetCategoriesResponse {
 		string name = 2;
 	}
 	repeated Category categories = 1;
+}
+
+message GetEnrolledCoursesRequest {
+	// Only metadata
+}
+
+message GetEnrolledCoursesResponse {
+	repeated Course enrolledCourses = 1;
+}
+
+message EnrollCourseRequest {
+	uint32 courseId = 1;
+}
+
+message EnrollCourseResponse {
+	uint32 enrollmentId = 1;
+}
+
+message Course {
+	uint32 id = 1;
+	string title = 2;
+	string description = 3;
+	double price = 4;
+	string creator = 5;
+}
+
+message CreatedCourse {
+	uint32 id = 1;
+	string title = 2;
+	string description = 3;
+	double price = 4;
+	repeated uint32 categoriesIds = 5;
 }

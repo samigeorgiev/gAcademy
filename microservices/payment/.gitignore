@@ -1,0 +1,14 @@
+# IDE folders
+/.vscode
+
+# compiled proto
+/proto
+
+# virtual env
+/env
+
+# python chache
+__pycache__
+
+# env
+/.env*

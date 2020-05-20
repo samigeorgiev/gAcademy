@@ -6,6 +6,6 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     synchronize: process.env.DB_SYNCHRONIZE === 'true',
-    entities: ['src/entity/*.js'],
-    logging: process.env.NODE_ENV !== 'production'
+    entities: ['src/entities/*.js'],
+    logging: process.env.NODE_ENV === 'development'
 };

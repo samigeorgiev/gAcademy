@@ -1,6 +1,6 @@
 FROM envoyproxy/envoy:v1.14.1
 
-COPY ./envoy.yaml /etc/envoy/envoy.yaml
+COPY envoy.yaml /etc/envoy/envoy.yaml
 
 EXPOSE 9901
 EXPOSE 8000

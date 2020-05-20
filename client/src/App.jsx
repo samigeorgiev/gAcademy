@@ -7,14 +7,20 @@ import { AuthenticationContext } from './context/authentication';
 
 import Layout from './components/Layout';
 
-const Courses = React.lazy(() => import('./pages/Courses'));
+const EnrolledCourses = React.lazy(() => import('./pages/EnrolledCourses'));
+const ExecutePayment = React.lazy(() => import('./pages/ExecutePayment'));
 const ExploreCourses = React.lazy(() => import('./pages/ExploreCourses'));
+const Lectures = React.lazy(() => import('./pages/Lectures'));
 const TeacherPanel = React.lazy(() => import('./pages/TeacherPanel'));
 
 const App = props => {
     const { user, tryLogIn } = useContext(AuthenticationContext);
 
-    useEffect(() => tryLogIn(), [tryLogIn]);
+    useEffect(() => {
+        if (!user) {
+            tryLogIn();
+        }
+    }, [user, tryLogIn]);
 
     return (
         <Layout>
@@ -22,15 +28,29 @@ const App = props => {
                 <Route path="/" exact>
                     <h1>Home Route</h1>
                 </Route>
-                <Route path="/explore" exact>
+                <Route path="/courses" exact>
                     <Suspense fallback={<Loader active />}>
                         <ExploreCourses />
                     </Suspense>
                 </Route>
                 {user ? (
-                    <Route path="/courses" exact>
+                    <Route path="/enrolled-courses" exact>
                         <Suspense fallback={<Loader active />}>
-                            <Courses />
+                            <EnrolledCourses />
+                        </Suspense>
+                    </Route>
+                ) : null}
+                {user ? (
+                    <Route path="/courses/:courseId/lectures" exact>
+                        <Suspense fallback={<Loader active />}>
+                            <Lectures />
+                        </Suspense>
+                    </Route>
+                ) : null}
+                {user ? (
+                    <Route path="/execute-payment" exact>
+                        <Suspense fallback={<Loader active />}>
+                            <ExecutePayment />
                         </Suspense>
                     </Route>
                 ) : null}

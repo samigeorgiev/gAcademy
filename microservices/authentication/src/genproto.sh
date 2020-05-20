@@ -1,1 +1,4 @@
-mkdir -p proto && cp ../../../proto/*.proto ./proto
+#!/bin/bash
+
+mkdir -p proto
+cp ../../../proto/*.proto ./proto

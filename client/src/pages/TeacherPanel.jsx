@@ -1,51 +1,79 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import { Button, Container, Item, Modal } from 'semantic-ui-react';
+import { Button, Container, Item, Label } from 'semantic-ui-react';
 
-import CourseList from '../components/CourseList';
-import CreateCourse from '../components/CreateCourse';
+import { AuthenticationContext } from '../context/authentication';
+
+import useCourseManagement from '../hooks/courseManagement';
+
+import { GetCreatedCoursesRequest } from '../proto/content-management_pb';
+
+import CourseList from '../components/course/CourseList';
+import CreateCourse from '../components/course/CreateCourse';
+import LectureEditList from '../components/lecture/LectureEditList';
 
 import courseImage from '../images/tmp/course.png';
 
 const TeacherPanel = props => {
-    const [isModalShown, setIsModalShown] = useState(false);
+    const [createdCourses, setCreatedCourses] = useState([]);
+    const [isCreateCourseShown, setIsCreateCourseShown] = useState(false);
+    const [selectedCourseLectures, setSelectedCourseLectures] = useState(null);
 
-    const courses = [
-        {
-            id: 1,
-            title: 'React',
-            description: 'Amazing course'
+    const { user } = useContext(AuthenticationContext);
+    const { token } = user;
+
+    const { state, methods } = useCourseManagement();
+    const { getCreatedCourses } = methods;
+
+    useEffect(() => {
+        getCreatedCourses(new GetCreatedCoursesRequest(), token);
+    }, [getCreatedCourses, token]);
+
+    const { response, error } = state;
+    useEffect(() => {
+        if (response && !error) {
+            setCreatedCourses(response.getCreatedcoursesList());
         }
-    ];
+    }, [response, error, setCreatedCourses]);
+
+    const closeCreatedCourseHandler = isNewCourseCreated => {
+        setIsCreateCourseShown(false);
+        if (isNewCourseCreated) {
+            getCreatedCourses(new GetCreatedCoursesRequest(), token);
+        }
+    };
 
     return (
         <>
-            <Modal
-                open={isModalShown}
-                onClose={() => setIsModalShown(false)}
-                size="tiny"
-                centered={false}
-                closeIcon
-                closeOnEscape={false}
-            >
-                <CreateCourse onClose={() => setIsModalShown(false)} />
-            </Modal>
+            {selectedCourseLectures ? (
+                <LectureEditList
+                    course={selectedCourseLectures}
+                    onClose={() => setSelectedCourseLectures(null)}
+                />
+            ) : null}
+            {isCreateCourseShown ? (
+                <CreateCourse onClose={closeCreatedCourseHandler} />
+            ) : null}
             <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
                 <CourseList
-                    isLoading={false}
-                    error={false}
                     header="Created courses"
+                    isLoading={state.isLoading}
+                    error={state.error}
                     missingCoursesMessage="You haven't created any courses"
                 >
-                    {courses.map(course => (
-                        <Item key={course.id}>
+                    {createdCourses.map(course => (
+                        <Item key={course.getId()} as="li">
                             <Item.Image size="tiny" src={courseImage} />
                             <Item.Content>
-                                <Item.Header content={course.title} />
+                                <Item.Header content={course.getTitle()} />
                                 <Item.Description
-                                    content={course.description}
+                                    content={course.getDescription()}
                                 />
                                 <Item.Extra>
+                                    <Label
+                                        content={course.getPrice()}
+                                        icon="euro"
+                                    />
                                     <Button
                                         icon="remove"
                                         floated="right"
@@ -59,19 +87,29 @@ const TeacherPanel = props => {
                                         size="mini"
                                         color="grey"
                                     />
+                                    <Button
+                                        onClick={() =>
+                                            setSelectedCourseLectures(
+                                                course.getId()
+                                            )
+                                        }
+                                        icon="list"
+                                        floated="right"
+                                        size="mini"
+                                    />
                                 </Item.Extra>
                             </Item.Content>
                         </Item>
                     ))}
                 </CourseList>
                 <Button
-                    onClick={() => setIsModalShown(true)}
+                    onClick={() => setIsCreateCourseShown(true)}
                     circular
                     icon="plus"
                     color="green"
                     size="huge"
                     floated="right"
-                    style={{ marginRight: '1rem' }}
+                    style={{ margin: '0 1rem 1rem' }}
                 />
             </Container>
         </>
