@@ -13,13 +13,6 @@ const courseManagementClient = new CourseManagementClient(
 const useCourseManagement = () => {
     const [state, sendRequest] = useGrpc(courseManagementClient);
 
-    const getCourses = useCallback(
-        request => {
-            sendRequest('getCourses', request, {});
-        },
-        [sendRequest]
-    );
-
     const getCourse = useCallback(
         request => {
             sendRequest('getCourse', request, {});
@@ -55,6 +48,20 @@ const useCourseManagement = () => {
         [sendRequest]
     );
 
+    const getCoursesByCategory = useCallback(
+        request => {
+            sendRequest('getCoursesByCategory', request, {});
+        },
+        [sendRequest]
+    );
+
+    const getCoursesByPattern = useCallback(
+        request => {
+            sendRequest('getCoursesByPattern', request, {});
+        },
+        [sendRequest]
+    );
+
     const getCategories = useCallback(
         request => {
             sendRequest('getCategories', request, {});
@@ -65,12 +72,13 @@ const useCourseManagement = () => {
     return {
         state,
         methods: {
-            getCourses,
             getCourse,
             createCourse,
             getCreatedCourses,
             updateCourse,
             deleteCourse,
+            getCoursesByCategory,
+            getCoursesByPattern,
             getCategories
         }
     };

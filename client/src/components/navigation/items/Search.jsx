@@ -1,39 +1,54 @@
 // TODO for refactoring
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Search, Responsive } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
+
+import useCourseManagement from '../../../hooks/courseManagement';
+
+import { GetCoursesByPatternRequest } from '../../../proto/content-management_pb';
 
 const Search_ = props => {
+    const [courses, setCourses] = useState([]);
     const [value, setValue] = useState('');
 
-    const allCourses = [
-        {
-            id: 1,
-            title: 'React',
-            description: 'Amazing course'
-        },
-        {
-            id: 2,
-            title: 'Samuil Georgiev',
-            description: 'Teacher'
-        }
-    ];
+    const history = useHistory();
 
+    const { state, methods } = useCourseManagement();
+
+    const { response, error } = state;
+    useEffect(() => {
+        if (response && !error) {
+            setCourses(
+                response.getCoursesList().map(course => ({
+                    id: course.getId(),
+                    title: course.getTitle(),
+                    description: course.getDescription(),
+                    price: '€ ' + course.getPrice()
+                }))
+            );
+        }
+    }, [response, error, setCourses]);
+
+    const { getCoursesByPattern } = methods;
     const changeHandler = (event, data) => {
         setValue(data.value);
-        console.log(data);
+        const request = new GetCoursesByPatternRequest();
+        request.setPattern(data.value);
+        getCoursesByPattern(request);
     };
 
-    const selectHandler = (event, data) => console.log(data);
+    const selectHandler = (event, data) =>
+        history.push('/courses/' + data.result.id);
 
     return (
         <>
             <Responsive minWidth={Responsive.onlyTablet.maxWidth}>
                 <Search
-                    loading={false}
+                    loading={state.isLoading}
                     onResultSelect={selectHandler}
                     onSearchChange={changeHandler}
-                    results={allCourses}
+                    results={courses}
                     value={value}
                     placeholder="Search for anything"
                     size="big"

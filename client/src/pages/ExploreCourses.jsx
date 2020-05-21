@@ -7,7 +7,7 @@ import { AuthenticationContext } from '../context/authentication';
 
 import useCourseManagement from '../hooks/courseManagement';
 
-import { GetCoursesRequest } from '../proto/content-management_pb';
+import { GetCoursesByCategoryRequest } from '../proto/content-management_pb';
 
 import CourseList from '../components/course/CourseList';
 import EnrollmentConfirmation from '../components/EnrollmentConfirmation';
@@ -25,13 +25,13 @@ const Courses = props => {
     const history = useHistory();
     const location = useLocation();
 
-    const { getCourses } = methods;
+    const { getCoursesByCategory } = methods;
     useEffect(() => {
         const category = new URLSearchParams(location.search).get('category');
-        const request = new GetCoursesRequest();
+        const request = new GetCoursesByCategoryRequest();
         request.setCategoryid(category);
-        getCourses(request);
-    }, [location, getCourses]);
+        getCoursesByCategory(request);
+    }, [location, getCoursesByCategory]);
 
     const { response, error } = state;
     useEffect(() => {
@@ -56,16 +56,18 @@ const Courses = props => {
                     missingCoursesMessage="This category is empty"
                 >
                     {courses.map(course => (
-                        <Item
-                            key={course.getId()}
-                            onClick={() =>
-                                history.push('/courses/' + course.getId())
-                            }
-                            as="li"
-                        >
+                        <Item key={course.getId()} as="li">
                             <Item.Image size="tiny" src={courseImage} />
                             <Item.Content>
-                                <Item.Header content={course.getTitle()} />
+                                <Item.Header
+                                    content={course.getTitle()}
+                                    onClick={() =>
+                                        history.push(
+                                            '/courses/' + course.getId()
+                                        )
+                                    }
+                                    as="a"
+                                />
                                 <Item.Meta content={course.getCreator()} />
                                 <Item.Description
                                     content={course.getDescription()}
