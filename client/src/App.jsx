@@ -7,6 +7,7 @@ import { AuthenticationContext } from './context/authentication';
 
 import Layout from './components/Layout';
 
+const Course = React.lazy(() => import('./pages/Course'));
 const EnrolledCourses = React.lazy(() => import('./pages/EnrolledCourses'));
 const ExecutePayment = React.lazy(() => import('./pages/ExecutePayment'));
 const ExploreCourses = React.lazy(() => import('./pages/ExploreCourses'));
@@ -31,6 +32,11 @@ const App = props => {
                 <Route path="/courses" exact>
                     <Suspense fallback={<Loader active />}>
                         <ExploreCourses />
+                    </Suspense>
+                </Route>
+                <Route path="/courses/:id" exact>
+                    <Suspense fallback={<Loader active />}>
+                        <Course />
                     </Suspense>
                 </Route>
                 {user ? (
