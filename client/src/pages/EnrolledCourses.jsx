@@ -49,7 +49,13 @@ const EnrolledCourses = props => {
                 error={state.error}
             >
                 {courses.map(course => (
-                    <Item key={course.getId()} as="li">
+                    <Item
+                        key={course.getId()}
+                        onClick={() =>
+                            history.push('/courses/' + course.getId())
+                        }
+                        as="li"
+                    >
                         <Item.Image size="tiny" src={courseImage} />
                         <Item.Content>
                             <Item.Header content={course.getTitle()} />

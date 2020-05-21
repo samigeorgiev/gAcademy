@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Button, Container, Item, Label } from 'semantic-ui-react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { AuthenticationContext } from '../context/authentication';
 
@@ -22,6 +22,7 @@ const Courses = props => {
 
     const { state, methods } = useCourseManagement();
 
+    const history = useHistory();
     const location = useLocation();
 
     const { getCourses } = methods;
@@ -55,7 +56,13 @@ const Courses = props => {
                     missingCoursesMessage="This category is empty"
                 >
                     {courses.map(course => (
-                        <Item key={course.getId()} as="li">
+                        <Item
+                            key={course.getId()}
+                            onClick={() =>
+                                history.push('/courses/' + course.getId())
+                            }
+                            as="li"
+                        >
                             <Item.Image size="tiny" src={courseImage} />
                             <Item.Content>
                                 <Item.Header content={course.getTitle()} />
