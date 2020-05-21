@@ -65,11 +65,15 @@ const Course = props => {
                                     <Statistic.Group widths="2" size="mini">
                                         <Statistic>
                                             <Statistic.Value content="122" />
-                                            <Statistic.Label content="Students" />
+                                            <Statistic.Label
+                                                content="Students" //
+                                            />
                                         </Statistic>
                                         <Statistic>
                                             <Statistic.Value content="12" />
-                                            <Statistic.Label content="Lectures" />
+                                            <Statistic.Label
+                                                content="Lectures" //
+                                            />
                                         </Statistic>
                                     </Statistic.Group>
                                 </Card.Meta>
