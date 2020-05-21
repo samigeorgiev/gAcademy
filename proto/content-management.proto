@@ -9,12 +9,13 @@ service AccountManagement {
 }
 
 service CourseManagement {
-	rpc GetCourses (GetCoursesRequest) returns (GetCoursesResponse);
-	rpc GetCourse (GetCourseRequest) returns (GetCourseResponse);
+    rpc GetCourse (GetCourseRequest) returns (GetCourseResponse);
 	rpc CreateCourse (CreateCourseRequest) returns (CreateCourseResponse);
 	rpc GetCreatedCourses (GetCreatedCoursesRequest) returns (GetCreatedCoursesResponse);
 	rpc UpdateCourse (UpdateCourseRequest) returns (UpdateCourseResponse);
 	rpc DeleteCourse (DeleteCourseRequest) returns (DeleteCourseResponse);
+    rpc GetCoursesByCategory (GetCoursesByCategoryRequest) returns (GetCoursesByCategoryResponse);
+    rpc GetCoursesByPattern (GetCoursesByPatternRequest) returns (GetCoursesByPatternResponse);
 	rpc GetCategories (GetCategoriesRequest) returns (GetCategoriesResponse);
 }
 
@@ -40,14 +41,6 @@ message BecomeTeacherRequest {
 
 message BecomeTeacherResponse {
     // Only status code
-}
-
-message GetCoursesRequest {
-	uint32 categoryId = 1;
-}
-
-message GetCoursesResponse {
-	repeated Course courses = 1;
 }
 
 message GetCourseRequest {
@@ -88,6 +81,22 @@ message DeleteCourseRequest {
 
 message DeleteCourseResponse {
 	// Only status code
+}
+
+message GetCoursesByCategoryRequest {
+    uint32 categoryId = 1;
+}
+
+message GetCoursesByCategoryResponse {
+	repeated Course courses = 1;
+}
+
+message GetCoursesByPatternRequest {
+    string pattern = 1;
+}
+
+message GetCoursesByPatternResponse {
+    repeated Course courses = 1;
 }
 
 message GetCategoriesRequest {

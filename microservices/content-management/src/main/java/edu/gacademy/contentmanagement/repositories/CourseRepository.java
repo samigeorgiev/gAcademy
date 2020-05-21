@@ -11,6 +11,8 @@ import java.util.Set;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 
+    Set<Course> findAllByTitleContainingIgnoreCase(String pattern);
+
     @Query("select course " +
             "from Course course " +
             "join fetch course.categories " +

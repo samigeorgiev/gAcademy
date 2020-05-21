@@ -49,16 +49,16 @@ const EnrolledCourses = props => {
                 error={state.error}
             >
                 {courses.map(course => (
-                    <Item
-                        key={course.getId()}
-                        onClick={() =>
-                            history.push('/courses/' + course.getId())
-                        }
-                        as="li"
-                    >
+                    <Item key={course.getId()} as="li">
                         <Item.Image size="tiny" src={courseImage} />
                         <Item.Content>
-                            <Item.Header content={course.getTitle()} />
+                            <Item.Header
+                                content={course.getTitle()}
+                                onClick={() =>
+                                    history.push('/courses/' + course.getId())
+                                }
+                                as="a"
+                            />
                             <Item.Meta content={course.getCreator()} />
                             <Item.Description
                                 content={course.getDescription()}

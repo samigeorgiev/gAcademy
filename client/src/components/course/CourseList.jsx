@@ -8,7 +8,7 @@ const CourseList = props => {
     if (props.children.length) {
         isPlaceholderShown = false;
         content = (
-            <Item.Group divided link as="ul">
+            <Item.Group divided as="ul">
                 {props.children}
             </Item.Group>
         );

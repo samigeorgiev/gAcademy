@@ -34,35 +34,6 @@ public class CourseManagementService extends CourseManagementGrpc.CourseManageme
     }
 
     @Override
-    @Transactional
-    public void getCourses(
-            GetCoursesRequest request,
-            StreamObserver<GetCoursesResponse> responseObserver
-    ) {
-        int categoryId = request.getCategoryId();
-        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
-        if (categoryOptional.isEmpty()) {
-            responseObserver.onError(Status.NOT_FOUND
-                    .withDescription("Category not found")
-                    .asRuntimeException()
-            );
-            return;
-        }
-        Category category = categoryOptional.get();
-
-        Set<Course> courses = category.getCourses();
-        GetCoursesResponse response = GetCoursesResponse
-                .newBuilder()
-                .addAllCourses(
-                        courses.stream().map(Course::toCourseDto).collect(Collectors.toList())
-                )
-                .build();
-
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
-    }
-
-    @Override
     public void getCourse(
             GetCourseRequest request,
             StreamObserver<GetCourseResponse> responseObserver
@@ -199,6 +170,54 @@ public class CourseManagementService extends CourseManagementGrpc.CourseManageme
         courseRepository.delete(course);
 
         responseObserver.onNext(DeleteCourseResponse.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    @Transactional
+    public void getCoursesByCategory(
+        GetCoursesByCategoryRequest request,
+        StreamObserver<GetCoursesByCategoryResponse> responseObserver
+    ) {
+        int categoryId = request.getCategoryId();
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        if (categoryOptional.isEmpty()) {
+            responseObserver.onError(Status.NOT_FOUND
+                .withDescription("Category not found")
+                .asRuntimeException()
+            );
+            return;
+        }
+        Category category = categoryOptional.get();
+
+        Set<Course> courses = category.getCourses();
+        GetCoursesByCategoryResponse response = GetCoursesByCategoryResponse
+            .newBuilder()
+            .addAllCourses(
+                courses.stream().map(Course::toCourseDto).collect(Collectors.toList())
+            )
+            .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getCoursesByPattern(
+        GetCoursesByPatternRequest request,
+        StreamObserver<GetCoursesByPatternResponse> responseObserver
+    ) {
+        String pattern = request.getPattern();
+        Set<Course> courses = courseRepository.findAllByTitleContainingIgnoreCase(pattern);
+
+        GetCoursesByPatternResponse response = GetCoursesByPatternResponse
+            .newBuilder()
+            .addAllCourses(
+                courses.stream().map(Course::toCourseDto).collect(Collectors.toList())
+            )
+            .build();
+
+        responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 

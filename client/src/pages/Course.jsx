@@ -45,7 +45,7 @@ const Course = props => {
         if (response && !error) {
             setCourse(response.getCourse());
         }
-    });
+    }, [response, error, setCourse]);
 
     let segmentContent;
     if (course) {
