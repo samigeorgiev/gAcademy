@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Header } from 'semantic-ui-react';
 
-import VideoPlayer from '../components/VideoPlayer';
+import VideoPlayer from '../components/lecture/VideoPlayer';
 
 const Lectures = props => {
     return (
@@ -13,7 +13,7 @@ const Lectures = props => {
                 size="huge"
                 style={{ marginTop: '2rem' }}
             />
-            <VideoPlayer src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" />
+            <VideoPlayer src="http://localhost:8004/download" />
         </>
     );
 };

@@ -3,5 +3,32 @@ syntax = "proto3";
 package resource_management_control;
 
 service Lecture {
+	rpc AddLecture (AddLectureRequest) returns (AddLectureResponse);
+	rpc GetLecture (GetLectureRequest) returns (GetLectureResponse);
+	rpc GetAllLectures (GetAllLecturesRequest) returns (GetAllLecturesResponse);
+}
 
+message AddLectureRequest {
+	uint32 courseId = 1;
+	string name = 2;
+}
+message AddLectureResponse {
+}
+
+message GetLectureRequest {
+	uint32 lectureId = 1;
+}
+message GetLectureResponse {
+	uint32 lectureId = 1;
+	string name = 2;
+	string url = 3;
+}
+
+message GetAllLecturesRequest {
+	
+}
+message GetAllLecturesResponse {
+	uint32 lectureId = 1;
+	string name = 2;
+	string url = 3;
 }

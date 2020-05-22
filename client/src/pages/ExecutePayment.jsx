@@ -18,19 +18,19 @@ const ExecutePayment = props => {
         const searchParams = new URLSearchParams(location.search);
         const paymentId = searchParams.get('paymentId');
         const payerId = searchParams.get('PayerID');
-        console.log(paymentId, payerId);
+
         const request = new ExecutePaymentRequest();
         request.setPaymentid(paymentId);
         request.setPayerid(payerId);
         executePayment(request);
     }, [location, executePayment]);
 
-    const { response } = state;
+    const { response, error } = state;
     useEffect(() => {
-        if (response) {
-            history.push('/courses');
+        if (response && !error) {
+            history.push('/enrolled-courses');
         }
-    }, [response, history]);
+    }, [response, error, history]);
 
     return <Loader active />;
 };

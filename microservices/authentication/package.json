@@ -1,37 +1,37 @@
 {
-  "name": "authentication",
-  "version": "1.0.0",
-  "description": "Authentication microservice",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "env NODE_ENV=test mocha",
-    "start-local": "node -r dotenv/config src/index.js dotenv_config_path=.env.production",
-    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.development",
-    "start-test": "node -r dotenv/config src/index.js dotenv_config_path=.env.test",
-    "it": "mocha it",
-    "lint": "eslint 'src/**/*.js'"
-  },
-  "author": "Samuil Georgiev",
-  "license": "MIT",
-  "dependencies": {
-    "@grpc/proto-loader": "^0.5.3",
-    "bcrypt": "^4.0.0",
-    "bottlejs": "^1.7.2",
-    "dotenv": "^8.2.0",
-    "grpc": "^1.24.2",
-    "jsonwebtoken": "^8.5.1",
-    "pg": "^7.18.2",
-    "typeorm": "^0.2.24",
-    "validator": "^12.2.0",
-    "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-google": "^0.14.0",
-    "mocha": "^7.1.1",
-    "nodemon": "^2.0.2",
-    "sinon": "^9.0.2"
-  }
+    "name": "authentication",
+    "version": "1.0.0",
+    "description": "Authentication microservice",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "test": "env NODE_ENV=test mocha",
+        "start-local": "node -r dotenv/config src/index.js dotenv_config_path=.env.production",
+        "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.development",
+        "start-test": "node -r dotenv/config src/index.js dotenv_config_path=.env.test",
+        "it": "mocha it",
+        "lint": "eslint 'src/**/*.js'"
+    },
+    "author": "Samuil Georgiev",
+    "license": "MIT",
+    "dependencies": {
+        "@grpc/proto-loader": "^0.5.3",
+        "bcrypt": "^4.0.0",
+        "bottlejs": "^1.7.2",
+        "dotenv": "^8.2.0",
+        "grpc": "^1.24.2",
+        "jsonwebtoken": "^8.5.1",
+        "pg": "^7.18.2",
+        "typeorm": "^0.2.24",
+        "validator": "^12.2.0",
+        "winston": "^3.2.1"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "eslint": "^6.8.0",
+        "eslint-config-google": "^0.14.0",
+        "mocha": "^7.1.1",
+        "nodemon": "^2.0.2",
+        "sinon": "^9.0.2"
+    }
 }

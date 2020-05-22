@@ -1,7 +1,0 @@
-/node_modules
-/.vscode
-/logs
-.env*
-.eslintrc.json
-.prettierrc.json
-yarn-error.log

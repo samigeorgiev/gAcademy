@@ -26,10 +26,11 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: yarn lint
         working-directory: ${{env.working-directory}}
-  account-operations:
+
+  content-management:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./microservices/account-operations
+      working-directory: ./microservices/content-management
     steps:
       - uses: actions/checkout@v2
       - run: ./genproto.sh
@@ -39,6 +40,7 @@ jobs:
           java-version: 13
       - run: mvn -B package
         working-directory: ${{env.working-directory}}
+
   payment:
     runs-on: ubuntu-latest
     env:
@@ -58,6 +60,7 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: flake8 --exclude=proto,__pycache__,env
         working-directory: ${{env.working-directory}}
+
   client:
     runs-on: ubuntu-latest
     env:

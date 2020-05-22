@@ -1,37 +1,37 @@
-# Content-management microservice
+# Account operations microservice
 
 ## Requirements
-- node:13
-- yarn:latest
+
+- maven:3.6
+- jdk:13
+
+## Recommended IDE
+
+IntelliJ Ultimate is recommended IDE for developing this microservice.
 
 ## Configuring
-You should provide `.env` file with proper extension for Node environment with these variables:
-- DB_HOST
-- DB_PORT
+
+You should provide these environment variables:
+
+- DB_URL
 - DB_USERNAME
 - DB_PASSWORD
-- DB_DATABASE
-- DB_SYNCHRONIZE
+- AUTH_URL
+
+Recommended way for doing it is adding them in IntelliJ running configuration or passing them to docker image
 
 ## Running
-Move all proto files to the microservice directory:
 
-`
-$ ./genproto.sh
-`
+Generate proto files:
 
-Install dependencies:
+`$ ./genproto.sh`
 
-`
-$ yarn install
-`
+Compile project:
 
-Start in development mode:
+`$ mvn install`
 
-`
-$ yarn dev
-`
+Start:
 
-## Linting
-All `.js` files should be linted with `eslint`. Config file is `.eslintrc.json`.
-To lint all files run `yarn lint`
+`$ mvn spring-boot:run`
+
+Recommended way for doing all of that is through IntelliJ

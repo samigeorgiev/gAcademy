@@ -29,7 +29,7 @@ Install dependencies:
 
 Generate proto files:
 
-`$ ./genproto.sh`
+`$ ./genproto.sh && ./compileproto.sh`
 
 Start:
 

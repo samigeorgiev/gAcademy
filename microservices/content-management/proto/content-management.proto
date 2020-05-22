@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package content_management;
+
+service Course {
+    rpc NewCourse(NewCourseRequest) returns (NewCourseResponse);
+    rpc GetCourse(GetCourseRequest) returns (GetCourseResponse);
+    rpc GetCoursesByCategory(GetCoursesByCategoryRequest) returns (GetCoursesByCategoryResponse);
+    rpc NewLesson(NewLessonRequest) returns (NewLessonResponse);
+    rpc GetLesson(GetLessonsRequest) returns (GetLessonsResponse);
+    rpc GetCategories(GetCategoriesRequest) returns (GetCategoriesResponse);
+}
+
+message NewCourseRequest {
+    string title = 1;
+    string description = 2;
+    repeated uint32 categoriesIds = 3;
+}
+
+message NewCourseResponse {
+
+}
+
+message GetCourseRequest {
+    uint32 id = 1;
+}
+
+message GetCourseResponse {
+	message Category {
+		uint32 id = 1;
+		string name = 2;
+	}
+	message Teacher {
+		uint32 id = 1;
+	}
+	uint32 id = 1;
+	string title = 2;
+	string description = 3;
+	repeated Category categories = 4;
+	Teacher teachers = 5;
+}
+
+message GetCoursesByCategoryRequest {
+	uint32 id = 1;
+}
+
+message GetCoursesByCategoryResponse {
+	message Course {
+		message Teacher {
+			uint32 id = 1;
+			string name = 2;
+		}	
+		uint32 id = 1;
+		string title = 2;
+		string description = 3;
+		Teacher teacher = 5;
+	}
+	repeated Course courses = 1;
+}
+
+message NewLessonRequest {
+	string title = 1;
+	string content = 2;
+	uint32 teacherId = 3;
+	uint32 categoryId = 4;
+}
+
+message NewLessonResponse {
+	
+}
+
+message GetLessonsRequest {
+	uint32 id = 1;
+}
+
+message GetLessonsResponse {
+	uint32 id = 1;
+	string title = 2;
+	string content = 3;
+}
+
+message GetCategoriesRequest {
+	
+}
+
+message GetCategoriesResponse {
+	message Category {
+		uint32 id = 1;
+		string name = 2;
+	}
+	repeated Category categories = 1;
+}

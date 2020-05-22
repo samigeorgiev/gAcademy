@@ -1,14 +1,13 @@
-FROM node:13.11.0
+FROM maven:3-jdk-13
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY src src
+COPY pom.xml .
 
-RUN yarn install
+RUN mvn install
 
-COPY . .
+ENV PORT 9000
+EXPOSE 9000
 
-ENV PORT 9001
-EXPOSE 9001
-
-CMD ["yarn", "start"]
+CMD ["mvn", "spring-boot:run"]

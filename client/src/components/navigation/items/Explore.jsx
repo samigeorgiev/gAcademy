@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown, Loader } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
 
-import useContentManagement from '../../../hooks/contentManagement';
+import useCourseManagement from '../../../hooks/courseManagement';
 
 import { GetCategoriesRequest } from '../../../proto/content-management_pb';
 
@@ -12,19 +12,19 @@ const Explore = props => {
 
     const history = useHistory();
 
-    const { methods, state } = useContentManagement();
+    const { methods, state } = useCourseManagement();
 
     const { getCategories } = methods;
     useEffect(() => {
         getCategories(new GetCategoriesRequest());
     }, [getCategories]);
 
-    const { response } = state;
+    const { response, error } = state;
     useEffect(() => {
-        if (response) {
+        if (response && !error) {
             setCategories(response.getCategoriesList());
         }
-    }, [response]);
+    }, [response, error]);
 
     return (
         <Dropdown item text="Explore">
@@ -35,7 +35,7 @@ const Explore = props => {
                             key={category.getId()}
                             onClick={() =>
                                 history.push(
-                                    '/explore?category=' + category.getId()
+                                    '/courses?category=' + category.getId()
                                 )
                             }
                         >
