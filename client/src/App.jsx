@@ -4,6 +4,7 @@ import { Loader } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router-dom';
 
 import { AuthenticationContext } from './context/authentication';
+import { CategoriesContext } from './context/categories';
 
 import Layout from './components/Layout';
 
@@ -16,12 +17,19 @@ const TeacherPanel = React.lazy(() => import('./pages/TeacherPanel'));
 
 const App = props => {
     const { user, tryLogIn } = useContext(AuthenticationContext);
+    const { categories, fetchCategories } = useContext(CategoriesContext);
 
     useEffect(() => {
         if (!user) {
             tryLogIn();
         }
     }, [user, tryLogIn]);
+
+    useEffect(() => {
+        if (!categories.length) {
+            fetchCategories();
+        }
+    }, [categories, fetchCategories]);
 
     return (
         <Layout>

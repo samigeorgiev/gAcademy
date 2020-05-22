@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import AuthenticationContextProvider from './context/authentication';
+import CategoriesContextProvider from './context/categories';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -17,7 +18,9 @@ const app = (
     <React.StrictMode>
         <BrowserRouter>
             <AuthenticationContextProvider>
-                <App />
+                <CategoriesContextProvider>
+                    <App />
+                </CategoriesContextProvider>
             </AuthenticationContextProvider>
         </BrowserRouter>
     </React.StrictMode>

@@ -4,49 +4,30 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Dropdown, Form, Message, Modal } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../../context/authentication';
+import { CategoriesContext } from '../../context/categories';
 
 import useCourseManagement from '../../hooks/courseManagement';
 
 import {
-    GetCategoriesRequest,
-    GetCategoriesResponse,
     CreatedCourse,
-    CreateCourseRequest,
-    CreateCourseResponse
+    CreateCourseRequest
 } from '../../proto/content-management_pb';
 
 const CreateCourse = props => {
-    const [allCategories, setAllCategories] = useState([]);
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const { user } = useContext(AuthenticationContext);
+    const { categories: allCategories } = useContext(CategoriesContext);
 
     const { state, methods } = useCourseManagement();
+
     const { response, error } = state;
-
-    const { getCategories } = methods;
-    useEffect(() => {
-        getCategories(new GetCategoriesRequest());
-    }, [getCategories]);
-
-    useEffect(() => {
-        if (response && response instanceof GetCategoriesResponse && !error) {
-            setAllCategories(
-                response.getCategoriesList().map(category => ({
-                    key: category.getId(),
-                    value: category.getId(),
-                    text: category.getName()
-                }))
-            );
-        }
-    }, [response, error, setAllCategories]);
-
     const { onClose } = props;
     useEffect(() => {
-        if (response && response instanceof CreateCourseResponse && !error) {
+        if (response && !error) {
             onClose(true);
         }
     }, [response, error, onClose]);
@@ -112,7 +93,11 @@ const CreateCourse = props => {
                         onChange={(event, data) =>
                             setSelectedCategories(data.value)
                         }
-                        options={allCategories}
+                        options={allCategories.map(category => ({
+                            key: category.getId(),
+                            value: category.getId(),
+                            text: category.getName()
+                        }))}
                         placeholder="Categories"
                         multiple
                         search
