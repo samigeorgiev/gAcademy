@@ -4,6 +4,7 @@ import { Button, Container, Item, Label } from 'semantic-ui-react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { AuthenticationContext } from '../context/authentication';
+import { CategoriesContext } from '../context/categories';
 
 import useCourseManagement from '../hooks/courseManagement';
 
@@ -19,19 +20,21 @@ const Courses = props => {
     const [selectedCourse, setSelectedCourse] = useState(null);
 
     const { user } = useContext(AuthenticationContext);
+    const { categories } = useContext(CategoriesContext);
 
     const { state, methods } = useCourseManagement();
 
     const history = useHistory();
     const location = useLocation();
 
+    const categoryId = new URLSearchParams(location.search).get('category');
+
     const { getCoursesByCategory } = methods;
     useEffect(() => {
-        const category = new URLSearchParams(location.search).get('category');
         const request = new GetCoursesByCategoryRequest();
-        request.setCategoryid(category);
+        request.setCategoryid(categoryId);
         getCoursesByCategory(request);
-    }, [location, getCoursesByCategory]);
+    }, [categoryId, getCoursesByCategory]);
 
     const { response, error } = state;
     useEffect(() => {
@@ -39,6 +42,10 @@ const Courses = props => {
             setCourses(response.getCoursesList());
         }
     }, [response, error]);
+
+    const categoryName = categories
+        .filter(category => category.getId() === +categoryId)[0]
+        .getName();
 
     return (
         <>
@@ -50,7 +57,7 @@ const Courses = props => {
             ) : null}
             <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
                 <CourseList
-                    header="Explore courses"
+                    header={categoryName + ' courses'}
                     isLoading={state.isLoading}
                     error={state.error}
                     missingCoursesMessage="This category is empty"
