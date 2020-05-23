@@ -1,6 +1,9 @@
 # IDE folders
 /.vscode
 
+# compiled proto
+/src/proto
+
 # dependencies
 /node_modules
 
@@ -10,3 +13,6 @@
 # logs
 /logs
 /yarn-error.log
+
+# resources
+/resources

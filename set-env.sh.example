@@ -20,3 +20,6 @@ JWT_VALID_TIME=86400000; export JWT_VALID_TIME
 PAYPAL_MODE=sandbox; export PAYPAL_MODE
 PAYPAL_CLIENT_ID='PayPal developer account is necessary'; export PAYPAL_CLIENT_ID
 PAYPAL_CLIENT_SECRET='PayPal developer account is necessary'; export PAYPAL_CLIENT_SECRET
+
+# Resource management
+MAX_FILE_SIZE=100000000

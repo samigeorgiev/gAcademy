@@ -1,0 +1,8 @@
+/node_modules
+/.vscode
+/logs
+/test
+.env*
+.eslintrc.json
+.prettierrc.json
+yarn-error.log
