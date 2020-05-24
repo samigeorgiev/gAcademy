@@ -20,16 +20,11 @@ server.addService(
     LectureService
 );
 
-const port = process.env.PORT;
-if (process.env.NODE_ENV === 'production') {
-    server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
-} else {
-    server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
-}
+const port = process.env.DB_PORT;
+server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 
 createConnection()
     .then(() => {
         server.start();
     })
     .catch((error) => console.error(error.stack));
-console.log('hi');

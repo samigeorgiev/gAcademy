@@ -24,5 +24,12 @@ module.exports = new EntitySchema({
             cascade: true,
             eager: true,
         },
+        course: {
+            target: 'Course',
+            type: 'many-to-one',
+            joinColumn: true,
+            cascade: true,
+            eager: true,
+        }
     },
 });
