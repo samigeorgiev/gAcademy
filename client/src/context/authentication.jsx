@@ -1,4 +1,3 @@
-// TODO check for refactoring
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
@@ -19,9 +18,9 @@ const AuthenticationContextProvider = props => {
     const [user, setUser] = useState(null);
     const [logOutTimeout, setLogOutTimeout] = useState(null);
 
-    const { state, methods } = useAccountManagement();
-
     const history = useHistory();
+
+    const { state, methods } = useAccountManagement();
 
     const { response, error } = state;
     useEffect(() => {
