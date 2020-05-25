@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Button, Container, Item, Label } from 'semantic-ui-react';
+import { Button, Container, Label } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../context/authentication';
 
@@ -13,6 +13,7 @@ import {
     GetCreatedCoursesResponse
 } from '../proto/content-management_pb';
 
+import CourseEntry from '../components/course/CourseEntry';
 import CourseList from '../components/course/CourseList';
 import CreateCourse from '../components/course/CreateCourse';
 import LectureEditList from '../components/lecture/LectureEditList';
@@ -84,47 +85,32 @@ const TeacherPanel = props => {
                     missingCoursesMessage="You haven't created any courses"
                 >
                     {createdCourses.map(course => (
-                        <Item key={course.getId()} as="li">
-                            <Item.Image size="tiny" src={courseImage} />
-                            <Item.Content>
-                                <Item.Header content={course.getTitle()} />
-                                <Item.Description
-                                    content={course.getDescription()}
-                                />
-                                <Item.Extra>
-                                    <Label
-                                        content={course.getPrice()}
-                                        icon="euro"
-                                    />
-                                    <Button
-                                        onClick={() =>
-                                            deleteCourseHandler(course.getId())
-                                        }
-                                        icon="remove"
-                                        floated="right"
-                                        color="red"
-                                        size="mini"
-                                        inverted
-                                    />
-                                    {/* <Button
-                                        icon="pencil"
-                                        floated="right"
-                                        size="mini"
-                                        color="grey"
-                                    /> */}
-                                    <Button
-                                        onClick={() =>
-                                            setSelectedCourseLectures(
-                                                course.getId()
-                                            )
-                                        }
-                                        icon="list"
-                                        floated="right"
-                                        size="mini"
-                                    />
-                                </Item.Extra>
-                            </Item.Content>
-                        </Item>
+                        <CourseEntry
+                            key={course.getId()}
+                            header={course.getTitle()}
+                            image={courseImage}
+                            description={course.getDescription()}
+                        >
+                            <Label content={course.getPrice()} icon="euro" />
+                            <Button
+                                onClick={() =>
+                                    deleteCourseHandler(course.getId())
+                                }
+                                icon="remove"
+                                floated="right"
+                                color="red"
+                                size="mini"
+                                inverted
+                            />
+                            <Button
+                                onClick={() =>
+                                    setSelectedCourseLectures(course.getId())
+                                }
+                                icon="list"
+                                floated="right"
+                                size="mini"
+                            />
+                        </CourseEntry>
                     ))}
                 </CourseList>
                 <Button

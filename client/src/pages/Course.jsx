@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import {
     Button,
-    Card,
     Grid,
     Image,
     Label,
     Message,
-    Segment,
-    Statistic
+    Segment
 } from 'semantic-ui-react';
 import { useParams } from 'react-router-dom';
 
@@ -18,6 +16,7 @@ import useCourseManagement from '../hooks/courseManagement';
 
 import { GetCourseRequest } from '../proto/content-management_pb';
 
+import CourseCard from '../components/course/CourseCard';
 import EnrollmentConfirmation from '../components/EnrollmentConfirmation';
 
 import courseImage from '../images/tmp/course.png';
@@ -53,52 +52,25 @@ const Course = props => {
             <Grid columns="equal" stretched style={{ height: '100%' }}>
                 <Grid.Row stretched>
                     <Grid.Column width="12">
-                        <Card fluid>
-                            <Card.Content>
-                                <Card.Header
-                                    content={course.getTitle()}
-                                    textAlign="center"
-                                    style={{ margin: '1rem 0' }}
+                        <CourseCard
+                            header={course.getTitle()}
+                            creator={course.getCreator()}
+                            studentsCount={112}
+                            lecturesCount={8}
+                            description={course.getDescription()}
+                        >
+                            <Label content={course.getPrice()} icon="euro" />
+                            {user ? (
+                                <Button
+                                    onClick={() => setIsBuying(true)}
+                                    content="Buy"
+                                    icon="cart"
+                                    primary
+                                    floated="right"
+                                    style={{ background: '#247291' }}
                                 />
-                                <Card.Meta textAlign="center">
-                                    By {course.getCreator()}
-                                    <Statistic.Group widths="2" size="mini">
-                                        <Statistic>
-                                            <Statistic.Value content="122" />
-                                            <Statistic.Label
-                                                content="Students" //
-                                            />
-                                        </Statistic>
-                                        <Statistic>
-                                            <Statistic.Value content="12" />
-                                            <Statistic.Label
-                                                content="Lectures" //
-                                            />
-                                        </Statistic>
-                                    </Statistic.Group>
-                                </Card.Meta>
-                                <Card.Description
-                                    content={course.getDescription()}
-                                    style={{ padding: '1rem' }}
-                                />
-                            </Card.Content>
-                            <Card.Content extra>
-                                <Label
-                                    content={course.getPrice()}
-                                    icon="euro"
-                                />
-                                {user ? (
-                                    <Button
-                                        onClick={() => setIsBuying(true)}
-                                        content="Buy"
-                                        icon="cart"
-                                        primary
-                                        floated="right"
-                                        style={{ background: '#247291' }}
-                                    />
-                                ) : null}
-                            </Card.Content>
-                        </Card>
+                            ) : null}
+                        </CourseCard>
                     </Grid.Column>
                     <Grid.Column width={4}>
                         <Image
