@@ -1,3 +1,4 @@
+// TODO for refactoring
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Button, Container, Item, Label } from 'semantic-ui-react';
