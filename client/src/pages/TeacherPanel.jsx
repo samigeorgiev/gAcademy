@@ -102,12 +102,6 @@ const TeacherPanel = props => {
                                 size="mini"
                                 inverted
                             />
-                            {/* <Button
-                                        icon="pencil"
-                                        floated="right"
-                                        size="mini"
-                                        color="grey"
-                                    /> */}
                             <Button
                                 onClick={() =>
                                     setSelectedCourseLectures(course.getId())
