@@ -4,7 +4,7 @@ const { createConnection } = require('typeorm');
 
 const LectureService = require('./service');
 
-const packageDefinition = protoLoader.loadSync(
+const protoDefinition = protoLoader.loadSync(
     '../../proto/resource-management-control.proto',
     {
         keepCase: true,
@@ -12,7 +12,7 @@ const packageDefinition = protoLoader.loadSync(
         defaults: true,
     }
 );
-const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
+const protoDescriptor = grpc.loadPackageDefinition(protoDefinition);
 
 const server = new grpc.Server();
 server.addService(
@@ -20,7 +20,7 @@ server.addService(
     LectureService
 );
 
-const port = process.env.DB_PORT;
+const port = process.env.PORT || 9002;
 server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 
 createConnection()

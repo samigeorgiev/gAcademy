@@ -17,8 +17,8 @@ module.exports = new EntitySchema({
     },
     relations: {
         resource: {
-            target: 'Lecture',
-            inverseSide: 'lecture',
+            target: 'Resource',
+            inverseSide: 'resource',
             type: 'one-to-one',
             joinColumn: true,
             cascade: true,
