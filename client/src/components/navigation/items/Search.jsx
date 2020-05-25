@@ -1,8 +1,7 @@
-// TODO for refactoring
 import React, { useEffect, useState } from 'react';
 
-import { Search, Responsive } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import { Search, Responsive } from 'semantic-ui-react';
 
 import useCourseManagement from '../../../hooks/courseManagement';
 

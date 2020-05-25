@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Button } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 const Courses = props => {
     const history = useHistory();

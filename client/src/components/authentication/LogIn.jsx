@@ -2,21 +2,20 @@ import React, { useContext, useEffect } from 'react';
 
 import { Modal } from 'semantic-ui-react';
 
-import useAuthentication from '../../hooks/authentication';
-
 import { AuthenticationContext } from '../../context/authentication';
 
-import Form from '../UI/Form';
+import useAuthentication from '../../hooks/authentication';
 
 import { LogInRequest } from '../../proto/authentication_pb';
 
+import Form from '../UI/Form';
+
 const LogIn = props => {
     const { methods, state } = useAuthentication();
-    const { logIn: grpcLogin } = methods;
-    const { isLoading, error, response } = state;
 
     const { logIn } = useContext(AuthenticationContext);
 
+    const { response, error } = state;
     const { onClose } = props;
     useEffect(() => {
         if (response && !error.message) {
@@ -24,6 +23,14 @@ const LogIn = props => {
             onClose();
         }
     }, [response, error, logIn, onClose]);
+
+    const { logIn: grpcLogIn } = methods;
+    const submitHandler = inputsValues => {
+        const request = new LogInRequest();
+        request.setEmail(inputsValues.email);
+        request.setPassword(inputsValues.password);
+        grpcLogIn(request);
+    };
 
     const inputs = {
         email: {
@@ -50,13 +57,6 @@ const LogIn = props => {
         }
     };
 
-    const submitHandler = inputsValues => {
-        const request = new LogInRequest();
-        request.setEmail(inputsValues.email);
-        request.setPassword(inputsValues.password);
-        grpcLogin(request);
-    };
-
     return (
         <Modal
             onClose={props.onClose}
@@ -70,8 +70,8 @@ const LogIn = props => {
                 <Form
                     inputs={inputs}
                     onSubmit={submitHandler}
-                    error={error && error.message}
-                    isLoading={isLoading}
+                    error={state.error && state.error.message}
+                    isLoading={state.isLoading}
                 />
             </Modal.Content>
         </Modal>

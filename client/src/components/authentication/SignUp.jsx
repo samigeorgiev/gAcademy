@@ -1,25 +1,24 @@
 import React, { useContext, useEffect } from 'react';
 
-import validator from 'validator';
 import { Modal } from 'semantic-ui-react';
-
-import useAuthentication from '../../hooks/authentication';
+import validator from 'validator';
 
 import { AuthenticationContext } from '../../context/authentication';
 
-import Form from '../UI/Form';
+import useAuthentication from '../../hooks/authentication';
 
 import { SignUpRequest } from '../../proto/authentication_pb';
+
+import Form from '../UI/Form';
 
 const PASSWORD_LENGTH = { min: 8, max: 64 };
 
 const SignUp = props => {
     const { methods, state } = useAuthentication();
-    const { signUp: grpcSignUp } = methods;
-    const { isLoading, error, response } = state;
 
     const { logIn } = useContext(AuthenticationContext);
 
+    const { response, error } = state;
     const { onClose } = props;
     useEffect(() => {
         if (response && !error.message) {
@@ -27,6 +26,16 @@ const SignUp = props => {
             onClose();
         }
     }, [response, error, logIn, onClose]);
+
+    const { signUp } = methods;
+    const submitHandler = inputsValues => {
+        const request = new SignUpRequest();
+        request.setFirstname(inputsValues.firstName);
+        request.setLastname(inputsValues.lastName);
+        request.setEmail(inputsValues.email);
+        request.setPassword(inputsValues.password);
+        signUp(request);
+    };
 
     const inputs = {
         firstName: {
@@ -77,15 +86,6 @@ const SignUp = props => {
         }
     };
 
-    const submitHandler = inputsValues => {
-        const request = new SignUpRequest();
-        request.setFirstname(inputsValues.firstName);
-        request.setLastname(inputsValues.lastName);
-        request.setEmail(inputsValues.email);
-        request.setPassword(inputsValues.password);
-        grpcSignUp(request);
-    };
-
     return (
         <Modal
             onClose={props.onClose}
@@ -99,8 +99,8 @@ const SignUp = props => {
                 <Form
                     inputs={inputs}
                     onSubmit={submitHandler}
-                    error={error && error.message}
-                    isLoading={isLoading}
+                    error={state.error && state.error.message}
+                    isLoading={state.isLoading}
                 />
             </Modal.Content>
         </Modal>

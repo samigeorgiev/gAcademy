@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 
-import { Dropdown, Image } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import { Dropdown, Image } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../../../../context/authentication';
 
 import profile from '../../../../images/tmp/profile.png';
 
 const Account = props => {
-    const { user, logOut } = useContext(AuthenticationContext);
-
     const history = useHistory();
+
+    const { user, logOut } = useContext(AuthenticationContext);
 
     return (
         <Dropdown
