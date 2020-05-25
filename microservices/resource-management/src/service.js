@@ -16,13 +16,16 @@ router.post('/upload/:token', (req, res) => {
         (error, response) => {
             if (error) {
                 // check for interbal error
-                return res.send(401).json({ message: 'Invalid token' });
+                return res.status(401).json({ message: 'Invalid token' });
             }
             const resourceId = response.id;
-            const filename = `v${new Date().getTime()}.mp4`;
             if (!req.files.resource) {
-                return res.send(422).json({ message: 'Missing resource' });
+                return res.status(422).json({ message: 'Missing resource' });
             }
+            if (req.files.resource.mimetype !== 'video/mp4') {
+                return res.status(422).json({ message: 'Invalid filetype ' });
+            }
+            const filename = `v${new Date().getTime()}.mp4`;
             req.files.resource.mv('resources/' + filename, async err => {
                 if (err) {
                     return res.status(500).json({ message: 'FS error' });
@@ -61,7 +64,7 @@ router.get('/download/:token', (req, res) => {
         async (error, response) => {
             if (error) {
                 // check for interbal error
-                return res.send(401).json({ message: 'Invalid token' });
+                return res.status(401).json({ message: 'Invalid token' });
             }
 
             const resourceId = response.id;
