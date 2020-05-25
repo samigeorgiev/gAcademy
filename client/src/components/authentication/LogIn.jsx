@@ -6,7 +6,7 @@ import useAuthentication from '../../hooks/authentication';
 
 import { AuthenticationContext } from '../../context/authentication';
 
-import Form from './Form';
+import Form from '../UI/Form';
 
 import { LogInRequest } from '../../proto/authentication_pb';
 
@@ -27,23 +27,30 @@ const LogIn = props => {
 
     const inputs = {
         email: {
-            type: 'email',
-            placeholder: 'Email',
-            icon: 'mail',
+            type: 'input',
+            elementConfig: {
+                type: 'email',
+                placeholder: 'Email',
+                icon: 'mail',
+                iconPosition: 'left'
+            },
             validate: () => true,
             validationError: 'Invalid email'
         },
         password: {
-            type: 'password',
-            placeholder: 'Password',
-            icon: 'mail',
+            type: 'input',
+            elementConfig: {
+                type: 'password',
+                placeholder: 'Password',
+                icon: 'lock',
+                iconPosition: 'left'
+            },
             validate: () => true,
             validationError: null
         }
     };
 
-    const submitHandler = (inputsValues, event) => {
-        event.preventDefault();
+    const submitHandler = inputsValues => {
         const request = new LogInRequest();
         request.setEmail(inputsValues.email);
         request.setPassword(inputsValues.password);
@@ -65,7 +72,6 @@ const LogIn = props => {
                     onSubmit={submitHandler}
                     error={error && error.message}
                     isLoading={isLoading}
-                    onClose={props.onClose}
                 />
             </Modal.Content>
         </Modal>

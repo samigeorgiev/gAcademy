@@ -7,7 +7,7 @@ import useAuthentication from '../../hooks/authentication';
 
 import { AuthenticationContext } from '../../context/authentication';
 
-import Form from './Form';
+import Form from '../UI/Form';
 
 import { SignUpRequest } from '../../proto/authentication_pb';
 
@@ -30,39 +30,54 @@ const SignUp = props => {
 
     const inputs = {
         firstName: {
-            type: 'text',
-            placeholder: 'First name',
-            icon: 'user',
+            type: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'First name',
+                icon: 'user',
+                iconPosition: 'left'
+            },
             validate: value => validator.isAlpha(value),
             validationError: 'Invalid first name'
         },
         lastName: {
-            type: 'text',
-            placeholder: 'Last name',
-            icon: 'user',
+            type: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'Last name',
+                icon: 'user',
+                iconPosition: 'left'
+            },
             validate: value => validator.isAlpha(value),
             validationError: 'Invalid last name'
         },
         email: {
-            type: 'email',
-            placeholder: 'Email',
-            icon: 'mail',
+            type: 'input',
+            elementConfig: {
+                type: 'email',
+                placeholder: 'Email',
+                icon: 'mail',
+                iconPosition: 'left'
+            },
             validate: value =>
                 validator.isEmail(validator.normalizeEmail(value)),
             validationError: 'Invalid email'
         },
         password: {
-            type: 'password',
-            placeholder: 'Password',
-            icon: 'lock',
+            type: 'input',
+            elementConfig: {
+                type: 'password',
+                placeholder: 'Password',
+                icon: 'lock',
+                iconPosition: 'left'
+            },
             validate: value => validator.isLength(value, PASSWORD_LENGTH),
             validationError: `Password should be between \
                 ${PASSWORD_LENGTH.min} and ${PASSWORD_LENGTH.max}`
         }
     };
 
-    const submitHandler = (inputsValues, event) => {
-        event.preventDefault();
+    const submitHandler = inputsValues => {
         const request = new SignUpRequest();
         request.setFirstname(inputsValues.firstName);
         request.setLastname(inputsValues.lastName);
@@ -86,7 +101,6 @@ const SignUp = props => {
                     onSubmit={submitHandler}
                     error={error && error.message}
                     isLoading={isLoading}
-                    onClose={props.onClose}
                 />
             </Modal.Content>
         </Modal>

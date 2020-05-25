@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 import { Form, Message } from 'semantic-ui-react';
 
-const AuthenticationForm = props => {
+import Input from './Input';
+
+const Form_ = props => {
     const initialInputsState = {};
     for (const input in props.inputs) {
         initialInputsState[input] = {
@@ -16,8 +18,8 @@ const AuthenticationForm = props => {
     const [inputsState, setInputsState] = useState(initialInputsState);
     const [isFormValid, setIsFormValid] = useState(false);
 
-    const changeInputHandler = (key, event) => {
-        const inputValue = event.target.value;
+    const changeInputHandler = (key, data) => {
+        const inputValue = data.value;
         setInputsState(prevInputsState => {
             const newInputsState = {
                 ...prevInputsState
@@ -43,11 +45,12 @@ const AuthenticationForm = props => {
     };
 
     const submitHandler = event => {
+        event.preventDefault();
         const inputsValues = {};
         for (const input in inputsState) {
             inputsValues[input] = inputsState[input].value;
         }
-        props.onSubmit(inputsValues, event);
+        props.onSubmit(inputsValues);
     };
 
     return (
@@ -57,35 +60,29 @@ const AuthenticationForm = props => {
             error={props.error !== null}
             noValidate
         >
-            <Message
-                error
-                header="Authentication error"
-                content={props.error}
-            />
+            <Message error header="Error occurred" content={props.error} />
             {Object.entries(inputsState).map(([key, input]) => (
-                <Form.Input
+                <Input
                     key={key}
-                    onChange={event => changeInputHandler(key, event)}
-                    iconPosition="left"
+                    type={input.type}
+                    onChange={(event, data) => changeInputHandler(key, data)}
                     error={
                         input.isTouched &&
                         !input.isValid &&
                         input.validationError
                     }
-                    icon={input.icon}
-                    type={input.type}
-                    placeholder={input.placeholder}
+                    elementConfig={input.elementConfig}
                 />
             ))}
             <Form.Button
-                primary
-                fluid
                 content="Submit"
                 disabled={!isFormValid}
+                primary
+                fluid
                 style={{ background: '#247291' }}
             />
         </Form>
     );
 };
 
-export default AuthenticationForm;
+export default Form_;
