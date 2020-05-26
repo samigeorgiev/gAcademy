@@ -17,12 +17,14 @@ message CreateLectureResponse {
 }
 
 message GetLectureRequest {
-	uint32 lectureId = 1;
+	uint32 id = 1;
 }
 message GetLectureResponse {
-	uint32 lectureId = 1;
-	string name = 2;
-	string url = 3;
+	message Lecture {
+		uint32 id = 1;
+		string name = 2;
+	}
+	Lecture lecture = 1;
 }
 
 message GetAllLecturesRequest {

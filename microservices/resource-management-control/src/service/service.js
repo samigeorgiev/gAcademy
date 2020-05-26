@@ -10,35 +10,40 @@ const Resource = require('../entity/ResourceSchema.js');
 exports.createLecture = async (call, callback) => {
     const { courseId, name, url } = call.request;
 
-    const resource = {
-        path: url,
-    };
-    await getRepository(Resource).save(resource);
-    const madeResource = await getRepository(Resource)
-        .createQueryBuilder('resource')
-        .where('resource.path = :path', { path: call.request.url })
-        .getOne();
-    const resourceId = madeResource.id;
-
-    const lecture = {
-        name,
-        resourceId,
-        courseId,
-    };
-    console.log(lecture);
+    const resource = await getConnection()
+        .createQueryBuilder()
+        .insert()
+        .into(Resource)
+        .values([
+            {path: url},
+        ])
+        .execute();
+    const resourceId = resource.raw[0].id;
 
     await getConnection()
         .createQueryBuilder()
         .insert()
         .into(Lecture)
-        .values([{
-            name: lecture.name,
-            resourceId: lecture.resourceId,
-            courseId: lecture.courseId,
-        }])
+        .values([
+            { name: name, resource: resourceId, course: courseId },
+        ])
         .execute();
 
     callback(null);
+};
+
+exports.getLecture = async (call, callback) => {
+    const { id } = call.request;
+
+    const lectureRepository = getRepository(Lecture);
+    const downloadLecture = await lectureRepository.findOne(id);
+
+    const lecture = {
+        id: downloadLecture.id,
+        name: downloadLecture.name,
+    };
+
+    callback(null, {lecture});
 };
 
 exports.getAllLectures = async (call, callback) => {
@@ -47,8 +52,6 @@ exports.getAllLectures = async (call, callback) => {
         .where('lecture.course_id = :courseId',
             { courseId: call.request.courseId })
         .getMany();
-
-    console.log(lectures);
 
     callback(null, {lectures});
 };
