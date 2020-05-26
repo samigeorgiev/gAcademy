@@ -9,9 +9,8 @@ import Courses from './Courses';
 
 const AccountOperations = props => {
     const { user } = useContext(AuthenticationContext);
-    const isLoggedIn = user !== null;
 
-    return isLoggedIn ? (
+    return user ? (
         <>
             <Menu.Item>
                 <Courses />
