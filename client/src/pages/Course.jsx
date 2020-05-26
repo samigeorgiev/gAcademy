@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import { useParams } from 'react-router-dom';
 import {
     Button,
     Grid,
@@ -8,7 +9,6 @@ import {
     Message,
     Segment
 } from 'semantic-ui-react';
-import { useParams } from 'react-router-dom';
 
 import { AuthenticationContext } from '../context/authentication';
 

@@ -55,7 +55,7 @@ const App = props => {
                     </Route>
                 ) : null}
                 {user ? (
-                    <Route path="/courses/:courseId/lectures" exact>
+                    <Route path="/courses/:courseId/lectures/:lectureId?" exact>
                         <Suspense fallback={<Loader active />}>
                             <Lectures />
                         </Suspense>
