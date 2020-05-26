@@ -5,7 +5,7 @@ const { createConnection } = require("typeorm");
 const LectureService = require("./service");
 
 const protoDefinition = protoLoader.loadSync(
-    "./src/proto/authentication.proto",
+    "./src/proto/resource-management-control.proto",
     {
         keepCase: true,
         enums: String,
