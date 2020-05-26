@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Button, Container, Item } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
+import { Button, Container } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../context/authentication';
 
@@ -8,12 +9,15 @@ import useEnrollmentManagement from '../hooks/enrollmentManagement';
 
 import { GetEnrolledCoursesRequest } from '../proto/content-management_pb';
 
+import CourseEntry from '../components/course/CourseEntry';
 import CourseList from '../components/course/CourseList';
 
 import courseImage from '../images/tmp/course.png';
 
 const EnrolledCourses = props => {
     const [courses, setCourses] = useState([]);
+
+    const history = useHistory();
 
     const { user } = useContext(AuthenticationContext);
 
@@ -34,6 +38,9 @@ const EnrolledCourses = props => {
         }
     }, [response, error]);
 
+    const playHandler = courseId =>
+        history.push(`courses/${courseId}/lectures`);
+
     return (
         <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
             <CourseList
@@ -43,23 +50,23 @@ const EnrolledCourses = props => {
                 error={state.error}
             >
                 {courses.map(course => (
-                    <Item key={course.getId()} as="li">
-                        <Item.Image size="tiny" src={courseImage} />
-                        <Item.Content>
-                            <Item.Header content={course.getTitle()} />
-                            <Item.Meta content={course.getCreator()} />
-                            <Item.Description
-                                content={course.getDescription()}
-                            />
-                            <Item.Extra>
-                                <Button
-                                    icon="play"
-                                    floated="right"
-                                    color="green"
-                                />
-                            </Item.Extra>
-                        </Item.Content>
-                    </Item>
+                    <CourseEntry
+                        key={course.getId()}
+                        onClick={() =>
+                            history.push('/courses/' + course.getId())
+                        }
+                        header={course.getTitle()}
+                        image={courseImage}
+                        creator={course.getCreator()}
+                        description={course.getDescription()}
+                    >
+                        <Button
+                            onClick={() => playHandler(course.getId())}
+                            icon="play"
+                            floated="right"
+                            color="green"
+                        />
+                    </CourseEntry>
                 ))}
             </CourseList>
         </Container>

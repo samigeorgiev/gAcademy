@@ -1,26 +1,35 @@
 import React, { useContext, useEffect, Suspense } from 'react';
 
-import { Loader } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router-dom';
+import { Loader } from 'semantic-ui-react';
 
 import { AuthenticationContext } from './context/authentication';
+import { CategoriesContext } from './context/categories';
 
 import Layout from './components/Layout';
 
+const Course = React.lazy(() => import('./pages/Course'));
+const Courses = React.lazy(() => import('./pages/Courses'));
 const EnrolledCourses = React.lazy(() => import('./pages/EnrolledCourses'));
 const ExecutePayment = React.lazy(() => import('./pages/ExecutePayment'));
-const ExploreCourses = React.lazy(() => import('./pages/ExploreCourses'));
 const Lectures = React.lazy(() => import('./pages/Lectures'));
 const TeacherPanel = React.lazy(() => import('./pages/TeacherPanel'));
 
 const App = props => {
     const { user, tryLogIn } = useContext(AuthenticationContext);
+    const { categories, fetchCategories } = useContext(CategoriesContext);
 
     useEffect(() => {
         if (!user) {
             tryLogIn();
         }
     }, [user, tryLogIn]);
+
+    useEffect(() => {
+        if (!categories.length) {
+            fetchCategories();
+        }
+    }, [categories, fetchCategories]);
 
     return (
         <Layout>
@@ -30,7 +39,12 @@ const App = props => {
                 </Route>
                 <Route path="/courses" exact>
                     <Suspense fallback={<Loader active />}>
-                        <ExploreCourses />
+                        <Courses />
+                    </Suspense>
+                </Route>
+                <Route path="/courses/:id" exact>
+                    <Suspense fallback={<Loader active />}>
+                        <Course />
                     </Suspense>
                 </Route>
                 {user ? (

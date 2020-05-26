@@ -1,13 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Button, Container, Item, Label } from 'semantic-ui-react';
+import { Button, Container, Label } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../context/authentication';
 
 import useCourseManagement from '../hooks/courseManagement';
 
-import { GetCreatedCoursesRequest } from '../proto/content-management_pb';
+import {
+    DeleteCourseRequest,
+    DeleteCourseResponse,
+    GetCreatedCoursesRequest,
+    GetCreatedCoursesResponse
+} from '../proto/content-management_pb';
 
+import CourseEntry from '../components/course/CourseEntry';
 import CourseList from '../components/course/CourseList';
 import CreateCourse from '../components/course/CreateCourse';
 import LectureEditList from '../components/lecture/LectureEditList';
@@ -23,24 +29,41 @@ const TeacherPanel = props => {
     const { token } = user;
 
     const { state, methods } = useCourseManagement();
+    const { response, error } = state;
     const { getCreatedCourses } = methods;
 
     useEffect(() => {
         getCreatedCourses(new GetCreatedCoursesRequest(), token);
     }, [getCreatedCourses, token]);
 
-    const { response, error } = state;
     useEffect(() => {
-        if (response && !error) {
+        if (
+            response &&
+            response instanceof GetCreatedCoursesResponse &&
+            !error
+        ) {
             setCreatedCourses(response.getCreatedcoursesList());
         }
     }, [response, error, setCreatedCourses]);
+
+    useEffect(() => {
+        if (response && response instanceof DeleteCourseResponse && !error) {
+            getCreatedCourses(new GetCreatedCoursesRequest(), token);
+        }
+    }, [response, error, getCreatedCourses, token]);
 
     const closeCreatedCourseHandler = isNewCourseCreated => {
         setIsCreateCourseShown(false);
         if (isNewCourseCreated) {
             getCreatedCourses(new GetCreatedCoursesRequest(), token);
         }
+    };
+
+    const { deleteCourse } = methods;
+    const deleteCourseHandler = courseId => {
+        const request = new DeleteCourseRequest();
+        request.setId(courseId);
+        deleteCourse(request, token);
     };
 
     return (
@@ -62,44 +85,32 @@ const TeacherPanel = props => {
                     missingCoursesMessage="You haven't created any courses"
                 >
                     {createdCourses.map(course => (
-                        <Item key={course.getId()} as="li">
-                            <Item.Image size="tiny" src={courseImage} />
-                            <Item.Content>
-                                <Item.Header content={course.getTitle()} />
-                                <Item.Description
-                                    content={course.getDescription()}
-                                />
-                                <Item.Extra>
-                                    <Label
-                                        content={course.getPrice()}
-                                        icon="euro"
-                                    />
-                                    <Button
-                                        icon="remove"
-                                        floated="right"
-                                        color="red"
-                                        size="mini"
-                                        inverted
-                                    />
-                                    <Button
-                                        icon="pencil"
-                                        floated="right"
-                                        size="mini"
-                                        color="grey"
-                                    />
-                                    <Button
-                                        onClick={() =>
-                                            setSelectedCourseLectures(
-                                                course.getId()
-                                            )
-                                        }
-                                        icon="list"
-                                        floated="right"
-                                        size="mini"
-                                    />
-                                </Item.Extra>
-                            </Item.Content>
-                        </Item>
+                        <CourseEntry
+                            key={course.getId()}
+                            header={course.getTitle()}
+                            image={courseImage}
+                            description={course.getDescription()}
+                        >
+                            <Label content={course.getPrice()} icon="euro" />
+                            <Button
+                                onClick={() =>
+                                    deleteCourseHandler(course.getId())
+                                }
+                                icon="remove"
+                                floated="right"
+                                color="red"
+                                size="mini"
+                                inverted
+                            />
+                            <Button
+                                onClick={() =>
+                                    setSelectedCourseLectures(course.getId())
+                                }
+                                icon="list"
+                                floated="right"
+                                size="mini"
+                            />
+                        </CourseEntry>
                     ))}
                 </CourseList>
                 <Button

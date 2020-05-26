@@ -1,8 +1,15 @@
-/node_modules
+# IDE folders
 /.vscode
-/logs
-/test
+
+# dependencies
+/node_modules
+
+# env
 .env*
-.eslintrc.json
-.prettierrc.json
+
+# logs
+/logs
 yarn-error.log
+
+# tests
+/test

@@ -8,7 +8,7 @@ RUN yarn install
 
 COPY . .
 
-ENV PORT 8004
-EXPOSE 8004
+ENV PORT 8000
+EXPOSE 8000
 
 CMD ["yarn", "start"]

@@ -38,6 +38,23 @@ services:
     networks:
       - microservices
 
+  resource-management:
+    build: ./microservices/resource-management
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
+      - MAX_FILE_SIZE=${MAX_FILE_SIZE}
+      - RESOURCE_MANAGEMENT_CONTROL_URL=resource-management-control:9000
+    ports:
+      - "8100:8000" # to be removed
+    networks:
+      - microservices
+
   proxy:
     build: ./proxy
     volumes:
