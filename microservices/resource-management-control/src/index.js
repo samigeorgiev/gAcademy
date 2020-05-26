@@ -1,11 +1,11 @@
-const grpc = require('grpc');
-const protoLoader = require('@grpc/proto-loader');
-const { createConnection } = require('typeorm');
+const grpc = require("grpc");
+const protoLoader = require("@grpc/proto-loader");
+const { createConnection } = require("typeorm");
 
-const LectureService = require('./service');
+const LectureService = require("./service");
 
 const protoDefinition = protoLoader.loadSync(
-    '../../proto/resource-management-control.proto',
+    "./src/proto/authentication.proto",
     {
         keepCase: true,
         enums: String,

@@ -12,6 +12,10 @@ cd microservices/payment
 ./genproto.sh
 cd ../..
 
+cd microservices/resource-management-control/src
+./genproto.sh
+cd ../../..
+
 cd microservices/resource-management/src
 ./genproto.sh
 cd ../../..

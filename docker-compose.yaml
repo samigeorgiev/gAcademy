@@ -38,6 +38,16 @@ services:
     networks:
       - microservices
 
+  resource-management-control:
+    build: ./microservices/resource-management-control
+    environment:
+      - DB_URL=postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_DATABASE
+      - PAYPAL_MODE=${PAYPAL_MODE}
+      - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}
+      - PAYPAL_CLIENT_SECRET=${PAYPAL_CLIENT_SECRET}
+    networks:
+      - microservices
+
   resource-management:
     build: ./microservices/resource-management
     environment:
