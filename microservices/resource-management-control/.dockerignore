@@ -1,0 +1,15 @@
+# IDE folders
+/.vscode
+
+# dependencies
+/node_modules
+
+# env
+.env*
+
+# logs
+/logs
+yarn-error.log
+
+# tests
+/test

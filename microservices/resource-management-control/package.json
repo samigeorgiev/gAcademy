@@ -1,0 +1,25 @@
+{
+  "name": "resource-management-control",
+  "version": "1.0.0",
+  "description": "Resource managment control microservice",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env --exec 'yarn lint && node'",
+    "dev-force": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env",
+    "lint": "eslint 'src/**/*.js'"
+  },
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.4",
+    "dotenv": "^8.2.0",
+    "grpc": "^1.24.2",
+    "pg": "^8.2.1",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.2"
+  }
+}
