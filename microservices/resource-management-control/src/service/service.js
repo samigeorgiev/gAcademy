@@ -42,11 +42,8 @@ exports.createLecture = async (call, callback) => {
 };
 
 exports.getAllLectures = async (call, callback) => {
-    // const { courseId } = call.request;
-
     const lectures = await getRepository(Lecture)
         .createQueryBuilder('lecture')
-        .leftJoinAndSelect('lecture.resource', 'r')
         .where('lecture.course_id = :courseId',
             { courseId: call.request.courseId })
         .getMany();

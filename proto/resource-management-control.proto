@@ -29,14 +29,9 @@ message GetAllLecturesRequest {
 	uint32 courseId = 1;
 }
 message GetAllLecturesResponse {
-	message Resource {
-		uint32 id = 1;
-		string path = 2;
-	}
 	message Lecture {
 		uint32 id = 1;
 		string name = 2;
-		Resource resource = 3;
 	}
 	repeated Lecture lectures = 1;
 }

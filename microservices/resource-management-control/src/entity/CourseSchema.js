@@ -19,12 +19,6 @@ module.exports = new EntitySchema({
         },
     },
     relations: {
-        course_categories: {
-            target: 'CourseCategory',
-            type: 'one-to-many',
-            inverseSide: 'course',
-            cascade: true,
-        },
         creator: {
             target: 'Teacher',
             type: 'many-to-one',
