@@ -6,63 +6,79 @@ const { getConnection } = require('typeorm');
 const errorHandler = require('../errorHandler');
 const Lecture = require('../entity/LectureSchema.js');
 const Resource = require('../entity/ResourceSchema.js');
+/* eslint-disable-next-line no-unused-vars */
+const jwt = require('jsonwebtoken');
 
 exports.createLecture = async (call, callback) => {
-    const { courseId, name, url } = call.request;
+    const { courseId, name } = call.request;
 
-    const resource = await getConnection()
-        .createQueryBuilder()
-        .insert()
-        .into(Resource)
-        .values([
-            {path: url},
-        ])
-        .execute();
+    let resource;
+    try {
+        resource = await getConnection()
+            .createQueryBuilder()
+            .insert()
+            .into(Resource)
+            .values([])
+            .execute();
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
     const resourceId = resource.raw[0].id;
 
-    await getConnection()
-        .createQueryBuilder()
-        .insert()
-        .into(Lecture)
-        .values([
-            { name: name, resource: resourceId, course: courseId },
-        ])
-        .execute();
+    const token = jwt.sign(
+        { resourceId: resourceId },
+        process.env.JWT_SECRET,
+        {
+            expiresIn: process.env.JWT_VALID_TIME
+        }
+    );
+    const url = process.env.RESOURCE_URL + '/upload/' + token;
 
-    callback(null);
+    try {
+        await getConnection()
+            .createQueryBuilder()
+            .insert()
+            .into(Lecture)
+            .values([
+                { name: name, resource: resourceId, course: courseId },
+            ])
+            .execute();
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+
+    callback(null, {url});
 };
 
 exports.getLecture = async (call, callback) => {
     const { id } = call.request;
 
-    let lectureRepository;
-    try {
-        lectureRepository = getRepository(Lecture);
-    } catch (error) {
-        const status = grpc.status.INTERNAL;
-        return errorHandler(callback, status, 'Database error1', error);
-    }
-
-    let downloadLecture;
-    try {
-        downloadLecture = await lectureRepository.findOne(id);
-    } catch (error) {
-        const status = grpc.status.INTERNAL;
-        return errorHandler(callback, status, 'Database error2', error);
-    }
+    const lectureRepository = getRepository(Lecture);
 
     let lecture;
     try {
-        lecture = {
-            id: downloadLecture.id,
-            name: downloadLecture.name,
-        };
+        lecture = await lectureRepository.findOne(id);
     } catch (error) {
         const status = grpc.status.INTERNAL;
-        return errorHandler(callback, status, 'Database error3', error);
+        return errorHandler(callback, status, 'Database error', error);
+    }
+    if (lecture == null) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'No lecture with this id');
     }
 
-    callback(null, {lecture});
+    const token = jwt.sign(
+        { resourceId: lecture.resourceId },
+        process.env.JWT_SECRET,
+        {
+            expiresIn: process.env.JWT_VALID_TIME
+        }
+    );
+    const url = process.env.RESOURCE_URL + '/download/' + token;
+
+    callback(null, {url});
 };
 
 exports.getAllLectures = async (call, callback) => {

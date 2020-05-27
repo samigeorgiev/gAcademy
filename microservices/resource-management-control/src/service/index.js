@@ -3,6 +3,16 @@ const grpc = require('grpc');
 const errorHandler = require('../errorHandler.js');
 
 exports.createLecture = async (call, callback) => {
+    const { courseId, name } = call.request;
+    if (!courseId || courseId == null) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Blank request');
+    }
+    if (!name || name == null) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Blank request');
+    }
+
     service.createLecture(call, callback);
 };
 
@@ -12,6 +22,7 @@ exports.getLecture = async (call, callback) => {
         const status = grpc.status.INVALID_ARGUMENT;
         return errorHandler(callback, status, 'Blank request');
     }
+
     service.getLecture(call, callback);
 };
 
@@ -21,5 +32,6 @@ exports.getAllLectures = async (call, callback) => {
         const status = grpc.status.INVALID_ARGUMENT;
         return errorHandler(callback, status, 'Blank request');
     }
+
     service.getAllLectures(call, callback);
 };

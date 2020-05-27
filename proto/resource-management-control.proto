@@ -11,20 +11,16 @@ service Lecture {
 message CreateLectureRequest {
 	uint32 courseId = 1;
 	string name = 2;
-	string url = 3;
 }
 message CreateLectureResponse {
+	string url = 1;
 }
 
 message GetLectureRequest {
 	uint32 id = 1;
 }
 message GetLectureResponse {
-	message Lecture {
-		uint32 id = 1;
-		string name = 2;
-	}
-	Lecture lecture = 1;
+	string url = 1;
 }
 
 message GetAllLecturesRequest {
