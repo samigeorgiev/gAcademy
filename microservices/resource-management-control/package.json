@@ -15,7 +15,6 @@
     "dotenv": "^8.2.0",
     "grpc": "^1.24.2",
     "pg": "^8.2.1",
-    "proto-loader": "^0.2.0",
     "typeorm": "^0.2.25"
   },
   "devDependencies": {
