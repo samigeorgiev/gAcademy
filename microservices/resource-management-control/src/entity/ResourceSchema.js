@@ -13,6 +13,7 @@ module.exports = new EntitySchema({
         },
         path: {
             type: 'varchar',
+            nullable: true,
         },
     },
     relations: {
