@@ -33,7 +33,9 @@ exports.createLecture = async (call, callback) => {
             expiresIn: process.env.JWT_VALID_TIME
         }
     );
-    const url = process.env.RESOURCE_URL + '/upload/' + token;
+    const url = process.env.RESOURCE_MANAGEMENT_CONTROL_URL +
+    '/upload/' +
+    token;
 
     try {
         await getConnection()
@@ -64,7 +66,7 @@ exports.getLecture = async (call, callback) => {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
     }
-    if (lecture == null) {
+    if (!lecture) {
         const status = grpc.status.INVALID_ARGUMENT;
         return errorHandler(callback, status, 'No lecture with this id');
     }
@@ -76,7 +78,9 @@ exports.getLecture = async (call, callback) => {
             expiresIn: process.env.JWT_VALID_TIME
         }
     );
-    const url = process.env.RESOURCE_URL + '/download/' + token;
+    const url = process.env.RESOURCE_MANAGEMENT_CONTROL_URL +
+    '/download/' +
+    token;
 
     callback(null, {url});
 };
