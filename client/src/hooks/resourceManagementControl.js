@@ -13,6 +13,13 @@ const resourceManagementControlClient = new LectureClient(
 const useResourceManagementControl = () => {
     const [state, sendRequest] = useGrpc(resourceManagementControlClient);
 
+    const createLecture = useCallback(
+        (request, token) => {
+            sendRequest('createLecture', request, { Authorization: token });
+        },
+        [sendRequest]
+    );
+
     const getLectures = useCallback(
         request => {
             sendRequest('getAllLectures', request, {});
@@ -20,9 +27,16 @@ const useResourceManagementControl = () => {
         [sendRequest]
     );
 
+    const getResource = useCallback(
+        request => {
+            sendRequest('getLecture', request, {});
+        },
+        [sendRequest]
+    );
+
     return {
         state,
-        methods: { getLectures }
+        methods: { createLecture, getLectures, getResource }
     };
 };
 
