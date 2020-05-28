@@ -35,6 +35,17 @@ const Input = props => {
                 />
             );
             break;
+        case 'file':
+            element = (
+                <Form.Input
+                    onChange={event =>
+                        props.onChange(event, { value: event.target.files[0] })
+                    }
+                    error={props.error}
+                    {...props.elementConfig}
+                />
+            );
+            break;
         default:
             element = null;
     }

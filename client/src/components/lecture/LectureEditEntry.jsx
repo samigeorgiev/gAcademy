@@ -29,6 +29,7 @@ const LectureEditEntry = props => {
                     defaultValue={props.initialName}
                     transparent
                     size="huge"
+                    style={{ width: '20.75rem' }}
                 />
                 <Button
                     onClick={nameUpdateHandler}
