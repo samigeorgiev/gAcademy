@@ -1,7 +1,6 @@
 const grpc = require('grpc');
 
-const { getRepository } = require('typeorm');
-const { getConnection } = require('typeorm');
+const { getRepository, getConnection } = require('typeorm');
 
 const errorHandler = require('../errorHandler');
 const Lecture = require('../entity/LectureSchema.js');
