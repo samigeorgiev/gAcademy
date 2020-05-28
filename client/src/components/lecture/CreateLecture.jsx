@@ -1,13 +1,28 @@
-// TODO be created with Form comp
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Form, Modal } from 'semantic-ui-react';
+import { Modal } from 'semantic-ui-react';
+
+import Form from '../UI/Form';
 
 const CreateLecture = props => {
-    const [name, setName] = useState('');
-    const [resource, setResource] = useState(null);
-
-    console.log(resource);
+    const inputs = {
+        name: {
+            type: 'input',
+            elementConfig: {
+                placeholder: 'Name'
+            },
+            validate: () => true,
+            validationError: 'Invalid name'
+        },
+        resource: {
+            type: 'file',
+            elementConfig: {
+                type: 'file'
+            },
+            validate: file => file.type === 'video/mp4',
+            validationError: 'Invalid filetype'
+        }
+    };
 
     return (
         <Modal
@@ -19,25 +34,11 @@ const CreateLecture = props => {
         >
             <Modal.Header content="Create new lecture" />
             <Modal.Content>
-                <Form>
-                    <Form.Input
-                        value={name}
-                        onChange={event => setName(event.target.value)}
-                        placeholder="Name"
-                        fluid
-                    />
-                    <Form.Input
-                        type="file"
-                        onChange={event => setResource(event.target.files[0])}
-                        fluid
-                    />
-                    <Form.Button
-                        content="Submit"
-                        primary
-                        fluid
-                        style={{ marginTop: '1rem', background: '247291' }}
-                    />
-                </Form>
+                <Form
+                    inputs={inputs}
+                    onSubmit={data => console.log(data)}
+                    error={null}
+                />
             </Modal.Content>
         </Modal>
     );

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Item, Modal } from 'semantic-ui-react';
+import {
+    Button,
+    Dimmer,
+    Item,
+    Loader,
+    Message,
+    Modal
+} from 'semantic-ui-react';
 
 import useResourceManagementControl from '../../hooks/resourceManagementControl';
 
@@ -32,20 +39,45 @@ const LectureEditList = props => {
         }
     }, [response, error, setLectures]);
 
+    let modalContent = lectures.length ? (
+        <Item.Group divided relaxed>
+            {lectures.map(lecture => (
+                <LectureEditEntry
+                    key={lecture.getId()}
+                    id={lecture.getId()}
+                    initialName={lecture.getName()}
+                />
+            ))}
+        </Item.Group>
+    ) : (
+        <Message header="You haven't created any lectures" />
+    );
+    if (state.error) {
+        modalContent = (
+            <Message
+                error
+                header="Error occurred"
+                content={state.error.message}
+            />
+        );
+    }
+    if (state.isLoading) {
+        modalContent = (
+            <Dimmer active>
+                <Loader />
+            </Dimmer>
+        );
+    }
+
     return (
         <Modal onClose={props.onClose} centered={false} open closeIcon>
+            {isNewLectureFormShown ? (
+                <CreateLecture
+                    onClose={() => setIsNewLectureFormShown(false)}
+                />
+            ) : null}
             <Modal.Header content="Lectures" />
-            <Modal.Content>
-                <Item.Group divided relaxed>
-                    {lectures.map(lecture => (
-                        <LectureEditEntry
-                            key={lecture.getId()}
-                            id={lecture.getId()}
-                            initialName={lecture.getName()}
-                        />
-                    ))}
-                </Item.Group>
-            </Modal.Content>
+            <Modal.Content content={modalContent} />
             <Modal.Actions>
                 <Button content="Reorder" color="blue" size="large" />
                 <Button
@@ -54,11 +86,6 @@ const LectureEditList = props => {
                     color="green"
                     size="large"
                 />
-                {isNewLectureFormShown ? (
-                    <CreateLecture
-                        onClose={() => setIsNewLectureFormShown(false)}
-                    />
-                ) : null}
             </Modal.Actions>
         </Modal>
     );
