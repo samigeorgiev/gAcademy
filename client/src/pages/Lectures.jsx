@@ -15,10 +15,9 @@ const Lectures = props => {
 
     const params = useParams();
 
-    const { courseId } = params;
-
     const { state, methods } = useCourseManagement();
 
+    const { courseId } = params;
     const { getCourse } = methods;
     useEffect(() => {
         const request = new GetCourseRequest();
@@ -41,9 +40,9 @@ const Lectures = props => {
                 size="huge"
                 style={{ marginTop: '2rem' }}
             />
-            <VideoPlayer lectureId={params.lectureId} />
+            <VideoPlayer lecture={params.lectureId} />
             <LectureList
-                courseId={params.courseId}
+                course={params.courseId}
                 currentLecture={+params.lectureId}
             />
         </>

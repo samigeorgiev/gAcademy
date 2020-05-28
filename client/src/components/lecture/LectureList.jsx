@@ -16,13 +16,13 @@ const LectureList = props => {
 
     const { state, methods } = useResourceManagementControl();
 
-    const { courseId } = props;
+    const { course } = props;
     const { getLectures } = methods;
     useEffect(() => {
         const request = new GetLecturesRequest();
-        request.setCourseid(courseId);
+        request.setCourseid(course);
         getLectures(request);
-    }, [courseId, getLectures]);
+    }, [course, getLectures]);
 
     const { response, error } = state;
     useEffect(() => {
@@ -32,7 +32,7 @@ const LectureList = props => {
     }, [response, error, setLectures]);
 
     const lectureClickHandler = id =>
-        history.push(`/courses/${props.courseId}/lectures/${id}`);
+        history.push(`/courses/${props.course}/lectures/${id}`);
 
     return (
         <Segment
