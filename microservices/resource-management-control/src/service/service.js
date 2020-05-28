@@ -27,7 +27,7 @@ exports.createLecture = async (call, callback) => {
     const resourceId = resource.raw[0].id;
 
     const token = jwt.sign(
-        { resourceId: resourceId },
+        { resource_id: resourceId },
         process.env.JWT_SECRET,
         {
             expiresIn: process.env.JWT_VALID_TIME
@@ -70,7 +70,7 @@ exports.getLecture = async (call, callback) => {
     }
 
     const token = jwt.sign(
-        { resourceId: lecture.resourceId },
+        { resource_id: lecture.resourceId },
         process.env.JWT_SECRET,
         {
             expiresIn: process.env.JWT_VALID_TIME
@@ -86,8 +86,8 @@ exports.getAllLectures = async (call, callback) => {
     try {
         lectures = await getRepository(Lecture)
             .createQueryBuilder('lecture')
-            .where('lecture.course_id = :courseId',
-                { courseId: call.request.courseId })
+            .where('lecture.course_id = :course_id',
+                { course_id: call.request.courseId })
             .getMany();
     } catch (error) {
         const status = grpc.status.INTERNAL;

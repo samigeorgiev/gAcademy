@@ -21,6 +21,7 @@ module.exports = new EntitySchema({
             inverseSide: 'resource',
             type: 'one-to-one',
             joinColumn: true,
+            joinColumn: { name: 'resource_id' },
             cascade: true,
             eager: true,
         },
@@ -28,6 +29,7 @@ module.exports = new EntitySchema({
             target: 'Course',
             type: 'many-to-one',
             joinColumn: true,
+            joinColumn: { name: 'course_id' },
             cascade: true,
             eager: true,
         }
