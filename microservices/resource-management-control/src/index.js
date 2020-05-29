@@ -1,15 +1,15 @@
-const grpc = require("grpc");
-const protoLoader = require("@grpc/proto-loader");
-const { createConnection } = require("typeorm");
+const grpc = require('grpc');
+const protoLoader = require('@grpc/proto-loader');
+const { createConnection } = require('typeorm');
 
-const LectureService = require("./service");
+const LectureService = require('./service');
 
 const protoDefinition = protoLoader.loadSync(
-    "./src/proto/resource-management-control.proto",
+    './src/proto/resource-management-control.proto',
     {
         keepCase: true,
         enums: String,
-        defaults: true,
+        defaults: true
     }
 );
 const protoDescriptor = grpc.loadPackageDefinition(protoDefinition);
@@ -27,4 +27,4 @@ createConnection()
     .then(() => {
         server.start();
     })
-    .catch((error) => console.error(error.stack));
+    .catch(error => console.error(error.stack));

@@ -43,5 +43,17 @@ create table enrollments (
     payment_id integer references payments(id)
 );
 
+create table resources (
+    id serial primary key,
+    path varchar
+);
+
+create table lectures (
+    id serial primary key,
+    name varchar not null,
+    course_id integer references courses(id) not null,
+    resource_id integer references resources(id) not null
+);
+
 insert into categories
 values (default, 'Math'), (default, 'History'), (default, 'Programming');

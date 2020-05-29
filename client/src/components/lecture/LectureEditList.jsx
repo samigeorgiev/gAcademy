@@ -73,6 +73,7 @@ const LectureEditList = props => {
         <Modal onClose={props.onClose} centered={false} open closeIcon>
             {isNewLectureFormShown ? (
                 <CreateLecture
+                    course={props.course}
                     onClose={() => setIsNewLectureFormShown(false)}
                 />
             ) : null}
