@@ -32,7 +32,7 @@ exports.createLecture = async (call, callback) => {
             expiresIn: process.env.JWT_VALID_TIME
         }
     );
-    const url = process.env.RESOURCE_MANAGEMENT_CONTROL_URL +
+    const url = process.env.RESOURCE_MANAGEMENT_URL +
     '/upload/' +
     token;
 
@@ -77,7 +77,7 @@ exports.getLecture = async (call, callback) => {
             expiresIn: process.env.JWT_VALID_TIME
         }
     );
-    const url = process.env.RESOURCE_MANAGEMENT_CONTROL_URL +
+    const url = process.env.RESOURCE_MANAGEMENT_URL +
     '/download/' +
     token;
 
@@ -96,7 +96,7 @@ exports.getAllLectures = async (call, callback) => {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
     }
-    if (!lectures || !lectures.length) {
+    if (!lectures && lectures.length != 0) {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Id not found');
     }
