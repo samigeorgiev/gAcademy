@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
-import { Card, Header } from 'semantic-ui-react';
+import { Card, Header, Loader, Message } from 'semantic-ui-react';
 
 import useCourseManagement from '../hooks/courseManagement';
 
@@ -30,6 +30,23 @@ const Home = props => {
         }
     }, [response, error, setCourses]);
 
+    let content = state.isLoading ? (
+        <Loader active />
+    ) : (
+        <Card.Group
+            centered
+            items={courses.map(course => ({
+                image: courseImage,
+                header: course.getTitle(),
+                meta: course.getCreator(),
+                description: course.getDescription(),
+                onClick: () => history.push('courses/' + course.getId()),
+                raised: true,
+                style: { margin: '2rem' }
+            }))}
+        />
+    );
+
     return (
         <>
             <Header
@@ -38,18 +55,16 @@ const Home = props => {
                 as="h1"
                 style={{ margin: '3rem', fontSize: '3rem' }}
             />
-            <Card.Group
-                centered
-                items={courses.map(course => ({
-                    image: courseImage,
-                    header: course.getTitle(),
-                    meta: course.getCreator(),
-                    description: course.getDescription(),
-                    onClick: () => history.push('courses/' + course.getId()),
-                    raised: true,
-                    style: { margin: '2rem' }
-                }))}
-            />
+            {state.error ? (
+                <Message
+                    error
+                    header="Error occurred"
+                    content={state.error.message}
+                    style={{ width: '80%', margin: '0 auto' }}
+                />
+            ) : (
+                content
+            )}
         </>
     );
 };
