@@ -12,9 +12,13 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @GRpcService
@@ -211,6 +215,26 @@ public class CourseManagementService extends CourseManagementGrpc.CourseManageme
         Set<Course> courses = courseRepository.findAllByTitleContainingIgnoreCase(pattern);
 
         GetCoursesByPatternResponse response = GetCoursesByPatternResponse
+            .newBuilder()
+            .addAllCourses(
+                courses.stream().map(Course::toCourseDto).collect(Collectors.toList())
+            )
+            .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getTopCourses(
+        GetTopCoursesRequest request,
+        StreamObserver<GetTopCoursesResponse> responseObserver
+    ) {
+        int limit = request.getLimit();
+        List<Course> courses =
+            courseRepository.findTopOrderByEnrollmentsCount(PageRequest.of(0, limit));
+
+        GetTopCoursesResponse response = GetTopCoursesResponse
             .newBuilder()
             .addAllCourses(
                 courses.stream().map(Course::toCourseDto).collect(Collectors.toList())

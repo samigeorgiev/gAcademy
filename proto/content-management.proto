@@ -16,6 +16,7 @@ service CourseManagement {
 	rpc DeleteCourse (DeleteCourseRequest) returns (DeleteCourseResponse);
     rpc GetCoursesByCategory (GetCoursesByCategoryRequest) returns (GetCoursesByCategoryResponse);
     rpc GetCoursesByPattern (GetCoursesByPatternRequest) returns (GetCoursesByPatternResponse);
+    rpc GetTopCourses (GetTopCoursesRequest) returns (GetTopCoursesResponse);
 	rpc GetCategories (GetCategoriesRequest) returns (GetCategoriesResponse);
 }
 
@@ -96,6 +97,14 @@ message GetCoursesByPatternRequest {
 }
 
 message GetCoursesByPatternResponse {
+    repeated Course courses = 1;
+}
+
+message GetTopCoursesRequest {
+    uint32 limit = 1;
+}
+
+message GetTopCoursesResponse {
     repeated Course courses = 1;
 }
 
