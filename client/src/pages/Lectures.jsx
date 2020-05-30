@@ -48,7 +48,9 @@ const Lectures = props => {
                     style={{ marginTop: '2rem' }}
                 />
             )}
-            <LecturePlayer lecture={params.lectureId} />
+            {params.lectureId ? (
+                <LecturePlayer lecture={params.lectureId} />
+            ) : null}
             <LectureList
                 course={params.courseId}
                 currentLecture={+params.lectureId}

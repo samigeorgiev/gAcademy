@@ -54,12 +54,14 @@ const LectureList = props => {
                 <List divided relaxed size="big">
                     {lectures.map(lecture => (
                         <List.Item key={lecture.getId()}>
-                            <List.Icon
-                                name="angle right"
-                                inverted={
-                                    lecture.getId() !== props.currentLecture
-                                }
-                            />
+                            {props.currentLecture ? (
+                                <List.Icon
+                                    name="angle right"
+                                    inverted={
+                                        lecture.getId() !== props.currentLecture
+                                    }
+                                />
+                            ) : null}
                             <List.Content>
                                 <List.Header
                                     content={lecture.getName()}
