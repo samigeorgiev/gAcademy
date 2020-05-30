@@ -12,6 +12,7 @@ const Course = React.lazy(() => import('./pages/Course'));
 const Courses = React.lazy(() => import('./pages/Courses'));
 const EnrolledCourses = React.lazy(() => import('./pages/EnrolledCourses'));
 const ExecutePayment = React.lazy(() => import('./pages/ExecutePayment'));
+const Home = React.lazy(() => import('./pages/Home'));
 const Lectures = React.lazy(() => import('./pages/Lectures'));
 const TeacherPanel = React.lazy(() => import('./pages/TeacherPanel'));
 
@@ -35,7 +36,9 @@ const App = props => {
         <Layout>
             <Switch>
                 <Route path="/" exact>
-                    <h1>Home Route</h1>
+                    <Suspense fallback={<Loader active />}>
+                        <Home />
+                    </Suspense>
                 </Route>
                 <Route path="/courses" exact>
                     <Suspense fallback={<Loader active />}>
