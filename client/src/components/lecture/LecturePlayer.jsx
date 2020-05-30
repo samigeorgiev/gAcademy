@@ -23,12 +23,10 @@ const LecturePlayer = props => {
         const request = new GetResourceRequest();
         request.setId(lecture);
         getResource(request, token);
-        console.log(lecture);
     }, [lecture, getResource, token]);
 
     const { response, error } = state;
     useEffect(() => {
-        console.log(response);
         if (response && !error) {
             setResourceUrl(response.getUrl());
         }
