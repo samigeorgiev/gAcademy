@@ -23,9 +23,9 @@ const LectureEditList = props => {
     const [isNewLectureFormShown, setIsNewLectureFormShown] = useState(false);
 
     const { state, methods } = useResourceManagementControl();
+    const { getLectures } = methods;
 
     const { course } = props;
-    const { getLectures } = methods;
     useEffect(() => {
         const request = new GetLecturesRequest();
         request.setCourseid(course);
@@ -38,6 +38,15 @@ const LectureEditList = props => {
             setLectures(response.getLecturesList());
         }
     }, [response, error, setLectures]);
+
+    const closeCreateLectureHandler = isNewLectureCreated => {
+        setIsNewLectureFormShown(false);
+        if (isNewLectureCreated) {
+            const request = new GetLecturesRequest();
+            request.setCourseid(props.course);
+            getLectures(request);
+        }
+    };
 
     let modalContent = lectures.length ? (
         <Item.Group divided relaxed>
@@ -74,7 +83,7 @@ const LectureEditList = props => {
             {isNewLectureFormShown ? (
                 <CreateLecture
                     course={props.course}
-                    onClose={() => setIsNewLectureFormShown(false)}
+                    onClose={closeCreateLectureHandler}
                 />
             ) : null}
             <Modal.Header content="Lectures" />

@@ -86,7 +86,7 @@ const CreateLecture = props => {
 
     return (
         <Modal
-            onClose={props.onClose}
+            onClose={() => props.onClose(false)}
             centered={false}
             size="mini"
             open
