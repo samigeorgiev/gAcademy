@@ -6,6 +6,8 @@ service Lecture {
 	rpc CreateLecture (CreateLectureRequest) returns (CreateLectureResponse);
 	rpc GetLecture (GetLectureRequest) returns (GetLectureResponse);
 	rpc GetAllLectures (GetAllLecturesRequest) returns (GetAllLecturesResponse);
+	rpc UpdateLectureName (UpdateLectureNameRequest) returns (UpdateLectureNameResponse);
+	rpc UpdateLectureResource (UpdateLectureResourceRequest) returns (UpdateLectureResourceResponse);
 }
 
 message CreateLectureRequest {
@@ -32,4 +34,19 @@ message GetAllLecturesResponse {
 		string name = 2;
 	}
 	repeated Lecture lectures = 1;
+}
+
+message UpdateLectureNameRequest {
+	uint32 id = 1;
+	string newName = 2;
+}
+message UpdateLectureNameResponse {
+	
+}
+
+message UpdateLectureResourceRequest {
+	uint32 id = 1;
+}
+message UpdateLectureResourceResponse {
+	string url = 1;
 }
