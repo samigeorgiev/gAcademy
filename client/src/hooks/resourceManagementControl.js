@@ -28,8 +28,8 @@ const useResourceManagementControl = () => {
     );
 
     const getResource = useCallback(
-        request => {
-            sendRequest('getLecture', request, {});
+        (request, token) => {
+            sendRequest('getLecture', request, { Authorization: token });
         },
         [sendRequest]
     );
