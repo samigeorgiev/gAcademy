@@ -41,6 +41,7 @@ services:
   resource-management-control:
     build: ./microservices/resource-management-control
     environment:
+      - NODE_ENV=${NODE_ENV}
       - TYPEORM_CONNECTION=postgres
       - TYPEORM_HOST=${DB_HOST}
       - TYPEORM_USERNAME=${DB_USERNAME}
@@ -52,7 +53,7 @@ services:
       - TYPEORM_ENTITIES=src/entity/*.js
       - JWT_SECRET=${RESOURCE_MANAGEMENT_JWT_SECRET}
       - JWT_VALID_TIME=${RESOURCE_MANAGEMENT_JWT_VALID_TIME}
-      - RESOURCE_MANAGEMENT_URL=resource-management:8100
+      - RESOURCE_MANAGEMENT_URL=${RESOURCE_MANAGEMENT_URL}
     networks:
       - microservices
 
@@ -67,6 +68,10 @@ services:
       - DB_DATABASE=${DB_DATABASE}
       - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
       - MAX_FILE_SIZE=${MAX_FILE_SIZE}
+      - JWT_SECRET=${RESOURCE_MANAGEMENT_JWT_SECRET}
+      - JWT_VALID_TIME=${RESOURCE_MANAGEMENT_JWT_VALID_TIME}
+    volumes:
+      - ./microservices/resource-management/resources:/app/resources
     ports:
       - "8100:8000"
 
