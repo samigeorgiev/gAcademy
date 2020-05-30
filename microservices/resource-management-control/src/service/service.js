@@ -105,6 +105,17 @@ exports.getAllLectures = async (call, callback) => {
 
 exports.updateLectureName = async (call, callback) => {
     const { id, newName } = call.request;
+
+    const result = await getConnection()
+        .getRepository(Lecture)
+        .createQueryBuilder('lecture')
+        .where('lecture.id = :id', { id: id})
+        .getOne();
+    if (!result) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Lecture do not exists');
+    }
+
     try {
         await getConnection()
             .createQueryBuilder()
@@ -134,6 +145,10 @@ exports.updateLectureResource = async (call, callback) => {
         const status = grpc.status.INTERNAL;
         return errorHandler(callback, status, 'Database error', error);
     }
+    if (!lecture) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'No lecture');
+    }
     resourceId = lecture.resource.id;
     if (!resourceId) {
         const status = grpc.status.INVALID_ARGUMENT;
@@ -141,7 +156,7 @@ exports.updateLectureResource = async (call, callback) => {
     }
 
     const token = jwt.sign(
-        { resource_id: resourceId },
+        { resourceId: resourceId },
         process.env.JWT_SECRET,
         {
             expiresIn: process.env.JWT_VALID_TIME
