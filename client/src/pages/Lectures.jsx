@@ -8,7 +8,7 @@ import useCourseManagement from '../hooks/courseManagement';
 import { GetCourseRequest } from '../proto/content-management_pb';
 
 import LectureList from '../components/lecture/LectureList';
-import VideoPlayer from '../components/lecture/VideoPlayer';
+import LecturePlayer from '../components/lecture/LecturePlayer';
 
 const Lectures = props => {
     const [course, setCourse] = useState(null);
@@ -40,7 +40,7 @@ const Lectures = props => {
                 size="huge"
                 style={{ marginTop: '2rem' }}
             />
-            <VideoPlayer lecture={params.lectureId} />
+            <LecturePlayer lecture={params.lectureId} />
             <LectureList
                 course={params.courseId}
                 currentLecture={+params.lectureId}
