@@ -52,7 +52,7 @@ const TeacherPanel = props => {
         }
     }, [response, error, getCreatedCourses, token]);
 
-    const closeCreatedCourseHandler = isNewCourseCreated => {
+    const closeCreateCourseHandler = isNewCourseCreated => {
         setIsCreateCourseShown(false);
         if (isNewCourseCreated) {
             getCreatedCourses(new GetCreatedCoursesRequest(), token);
@@ -75,7 +75,7 @@ const TeacherPanel = props => {
                 />
             ) : null}
             {isCreateCourseShown ? (
-                <CreateCourse onClose={closeCreatedCourseHandler} />
+                <CreateCourse onClose={closeCreateCourseHandler} />
             ) : null}
             <Container style={{ maxWidth: '80rem', margin: '2rem auto' }}>
                 <CourseList
