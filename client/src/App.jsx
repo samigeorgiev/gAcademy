@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, Suspense } from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 
 import { AuthenticationContext } from './context/authentication';
