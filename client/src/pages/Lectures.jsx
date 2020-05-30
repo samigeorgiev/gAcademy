@@ -34,12 +34,20 @@ const Lectures = props => {
 
     let content = (
         <>
-            <Header
-                content={course && course.getTitle()}
-                textAlign="center"
-                size="huge"
-                style={{ marginTop: '2rem' }}
-            />
+            {state.isLoading ? (
+                <Loader
+                    inline="centered"
+                    active
+                    style={{ margin: '1rem auto' }}
+                />
+            ) : (
+                <Header
+                    content={course && course.getTitle()}
+                    textAlign="center"
+                    size="huge"
+                    style={{ marginTop: '2rem' }}
+                />
+            )}
             <LecturePlayer lecture={params.lectureId} />
             <LectureList
                 course={params.courseId}
@@ -59,11 +67,7 @@ const Lectures = props => {
         );
     }
 
-    return state.isLoading ? (
-        <Loader inline="centered" active style={{ margin: '1rem auto' }} />
-    ) : (
-        content
-    );
+    return content;
 };
 
 export default Lectures;
