@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+const cors = require('cors');
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const { createConnection } = require('typeorm');
@@ -18,6 +19,8 @@ const main = async () => {
     }
 
     const app = express();
+
+    app.use(cors());
 
     app.use(
         fileUpload({
