@@ -92,3 +92,69 @@ exports.getAllLectures = async (call, callback) => {
     }
     callback(null, { lectures });
 };
+
+exports.updateLectureName = async (call, callback) => {
+    const { id, newName } = call.request;
+
+    const result = await getConnection()
+        .getRepository(Lecture)
+        .createQueryBuilder('lecture')
+        .where('lecture.id = :id', { id: id})
+        .getOne();
+    if (!result) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Lecture do not exists');
+    }
+
+    try {
+        await getConnection()
+            .createQueryBuilder()
+            .update(Lecture)
+            .set({ name: newName })
+            .where('id = :id', { id: id })
+            .execute();
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+
+    callback(null);
+};
+
+exports.updateLectureResource = async (call, callback) => {
+    const { id } = call.request;
+
+    let lecture;
+    try {
+        lecture = await getRepository(Lecture)
+            .createQueryBuilder('lecture')
+            .leftJoinAndSelect('lecture.resource', 'r')
+            .where('lecture.id = :id', { id: id })
+            .getOne();
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+    if (!lecture) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'No lecture');
+    }
+    resourceId = lecture.resource.id;
+    if (!resourceId) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'No resource id');
+    }
+
+    const token = jwt.sign(
+        { resourceId: resourceId },
+        process.env.JWT_SECRET,
+        {
+            expiresIn: process.env.JWT_VALID_TIME
+        }
+    );
+    url = process.env.RESOURCE_MANAGEMENT_URL +
+    '/upload/' +
+    token;
+
+    callback(null, {url});
+};
