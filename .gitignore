@@ -3,3 +3,7 @@
 
 # env
 /set-env.sh
+
+# server start script
+/start.sh
+
