@@ -55,8 +55,8 @@ const Course = props => {
                         <CourseCard
                             header={course.getTitle()}
                             creator={course.getCreator()}
-                            studentsCount={112}
-                            lecturesCount={8}
+                            studentsCount={2}
+                            lecturesCount={3}
                             description={course.getDescription()}
                         >
                             <Label content={course.getPrice()} icon="euro" />

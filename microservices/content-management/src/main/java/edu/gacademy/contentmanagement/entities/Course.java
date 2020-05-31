@@ -3,7 +3,6 @@ package edu.gacademy.contentmanagement.entities;
 import edu.gacademy.contentmanagement.protocols.CreatedCourse;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 

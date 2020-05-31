@@ -62,6 +62,13 @@ const useCourseManagement = () => {
         [sendRequest]
     );
 
+    const getTopCourses = useCallback(
+        request => {
+            sendRequest('getTopCourses', request, {});
+        },
+        [sendRequest]
+    );
+
     const getCategories = useCallback(
         request => {
             sendRequest('getCategories', request, {});
@@ -79,6 +86,7 @@ const useCourseManagement = () => {
             deleteCourse,
             getCoursesByCategory,
             getCoursesByPattern,
+            getTopCourses,
             getCategories
         }
     };

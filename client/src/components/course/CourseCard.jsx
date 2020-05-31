@@ -25,7 +25,7 @@ const CourseCard = props => (
             </Card.Meta>
             <Card.Description
                 content={props.description}
-                style={{ padding: '1rem' }}
+                style={{ padding: '1rem 5rem' }}
             />
         </Card.Content>
         <Card.Content extra content={props.children} />
