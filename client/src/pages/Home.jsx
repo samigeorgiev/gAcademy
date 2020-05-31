@@ -30,7 +30,7 @@ const Home = props => {
         }
     }, [response, error, setCourses]);
 
-    let content = state.isLoading ? (
+    const content = state.isLoading ? (
         <Loader active />
     ) : (
         <Card.Group
