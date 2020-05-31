@@ -7,6 +7,10 @@ More info [here](https://docs.google.com/document/d/1fkdSdzDGGP2k6GoWZbLf5tiuc6X
 
 **Live demo:** [gAcademy](http://sameca.ddns.net:3002)
 
+## Architecture
+
+![architecture](https://github.com/samigeorgiev/gAcademy/blob/develop/architecture.png)
+
 ## Running
 
 ### Requirements
