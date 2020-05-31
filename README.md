@@ -7,7 +7,7 @@ More info [here](https://docs.google.com/document/d/1fkdSdzDGGP2k6GoWZbLf5tiuc6X
 
 **Live demo:** [gAcademy](http://sameca.ddns.net:3002)
 
-**Note:** In Live Demo use **gacad@test.cc** as email and **testtest** as password in PayPal Payments
+**Note:** In Live Demo use **gacad&#8203;@test.cc** as email and **testtest** as password in PayPal Payments
 
 ## Architecture
 
