@@ -1,60 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Button, Input, Item } from 'semantic-ui-react';
+import { Button, Input, Item, Message } from 'semantic-ui-react';
+
+// import { AuthenticationContext } from '../../context/authentication';
+
+import useResourceManagementControl from '../../hooks/resourceManagementControl';
+
+// import { DeleteLectureRequest } from '../../proto/resource-management-control_pb';
 
 const LectureEditEntry = props => {
-    const [name, setName] = useState(props.initialName);
-    const [newResource, setNewResource] = useState(null);
-
-    const nameUpdateHandler = () => {
-        console.log(name);
-        // grpc request fro save
-    };
-
-    const newResourceSaveHandler = () => {
-        console.log(newResource);
-        // tus requet
-    };
+    const { state } = useResourceManagementControl();
 
     const deleteHandler = () => {
         console.log(props.id);
         // grpc req for delete
     };
 
-    return (
+    return state.error ? (
+        <Message error header="Error occurred" content={state.error.message} />
+    ) : (
         <Item>
             <Item.Content>
                 <Input
-                    onChange={event => setName(event.target.value)}
                     defaultValue={props.initialName}
                     transparent
                     size="huge"
                     style={{ width: '20.75rem' }}
                 />
-                <Button
-                    onClick={nameUpdateHandler}
-                    icon="save"
-                    size="mini"
-                    color="green"
-                    disabled={props.initialName === name}
-                />
+                <Button icon="save" size="mini" color="green" disabled={true} />
                 <Item.Extra>
-                    <Input
-                        type="file"
-                        onChange={event =>
-                            setNewResource(event.target.files[0])
-                        }
-                        size="small"
-                    />
+                    <Input type="file" size="small" />
                     <Button
-                        onClick={newResourceSaveHandler}
                         icon="save"
                         size="mini"
                         color="green"
-                        disabled={!newResource}
+                        disabled={true}
                     />
                     <Button
                         onClick={deleteHandler}
+                        loading={state.isLoading}
                         icon="remove"
                         floated="right"
                         color="red"
@@ -62,7 +46,7 @@ const LectureEditEntry = props => {
                         inverted
                     />
                     <Button
-                        onClick={() => {}}
+                        onClick={props.onPlay}
                         icon="play"
                         floated="right"
                         color="green"

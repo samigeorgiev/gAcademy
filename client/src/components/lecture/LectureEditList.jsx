@@ -17,10 +17,12 @@ import {
 
 import CreateLecture from './CreateLecture';
 import LectureEditEntry from './LectureEditEntry';
+import LecturePlayer from './LecturePlayer';
 
 const LectureEditList = props => {
     const [lectures, setLectures] = useState([]);
     const [isNewLectureFormShown, setIsNewLectureFormShown] = useState(false);
+    const [playedLecture, setPlayedLecture] = useState(null);
 
     const { state, methods } = useResourceManagementControl();
     const { getLectures } = methods;
@@ -54,6 +56,7 @@ const LectureEditList = props => {
                 <LectureEditEntry
                     key={lecture.getId()}
                     id={lecture.getId()}
+                    onPlay={() => setPlayedLecture(lecture.getId())}
                     initialName={lecture.getName()}
                 />
             ))}
@@ -86,10 +89,20 @@ const LectureEditList = props => {
                     onClose={closeCreateLectureHandler}
                 />
             ) : null}
+            {playedLecture ? (
+                <Modal
+                    onClose={() => setPlayedLecture(null)}
+                    centered={false}
+                    open
+                    closeIcon
+                >
+                    <LecturePlayer lecture={playedLecture} />
+                </Modal>
+            ) : null}
             <Modal.Header content="Lectures" />
             <Modal.Content content={modalContent} />
             <Modal.Actions>
-                <Button content="Reorder" color="blue" size="large" />
+                {/* <Button content="Reorder" color="blue" size="large" /> */}
                 <Button
                     onClick={() => setIsNewLectureFormShown(true)}
                     content="New"
