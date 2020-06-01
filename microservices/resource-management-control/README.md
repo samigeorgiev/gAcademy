@@ -1,4 +1,4 @@
-# Authentication microservice
+# Resource management control microservice
 
 ## Requirements
 
