@@ -43,6 +43,13 @@ const useResourceManagementControl = () => {
         [sendRequest]
     );
 
+    const deleteLecture = useCallback(
+        (request, token) => {
+            sendRequest('deleteLecture', request, { Authorization: token });
+        },
+        [sendRequest]
+    );
+
     const getResource = useCallback(
         (request, token) => {
             sendRequest('getLecture', request, { Authorization: token });
@@ -57,6 +64,7 @@ const useResourceManagementControl = () => {
             getLectures,
             updateLectureName,
             updateLectureResource,
+            deleteLecture,
             getResource
         }
     };

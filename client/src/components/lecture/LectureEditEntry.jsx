@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { Button, Input, Item, Message } from 'semantic-ui-react';
 
-// import { AuthenticationContext } from '../../context/authentication';
+import { AuthenticationContext } from '../../context/authentication';
 
 import useResourceManagementControl from '../../hooks/resourceManagementControl';
 
-// import { DeleteLectureRequest } from '../../proto/resource-management-control_pb';
+import { DeleteLectureRequest } from '../../proto/resource-management-control_pb';
 
 const LectureEditEntry = props => {
-    const { state } = useResourceManagementControl();
+    const { user } = useContext(AuthenticationContext);
 
+    const { state, methods } = useResourceManagementControl();
+
+    const { response, error } = state;
+    const { onSuccessfulDelete } = props;
+    useEffect(() => {
+        if (response && !error) {
+            onSuccessfulDelete();
+        }
+    }, [response, error, onSuccessfulDelete]);
+
+    const { id } = props;
+    const { deleteLecture } = methods;
+    const { token } = user;
     const deleteHandler = () => {
-        console.log(props.id);
-        // grpc req for delete
+        const request = new DeleteLectureRequest();
+        request.setId(id);
+        deleteLecture(request, token);
     };
 
     return state.error ? (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import {
     Button,
@@ -25,14 +25,18 @@ const LectureEditList = props => {
     const [playedLecture, setPlayedLecture] = useState(null);
 
     const { state, methods } = useResourceManagementControl();
-    const { getLectures } = methods;
 
     const { course } = props;
-    useEffect(() => {
+    const { getLectures } = methods;
+    const fetchLectures = useCallback(() => {
         const request = new GetLecturesRequest();
         request.setCourseid(course);
         getLectures(request);
     }, [course, getLectures]);
+
+    useEffect(() => {
+        fetchLectures();
+    }, [fetchLectures]);
 
     const { response, error } = state;
     useEffect(() => {
@@ -44,9 +48,7 @@ const LectureEditList = props => {
     const closeCreateLectureHandler = isNewLectureCreated => {
         setIsNewLectureFormShown(false);
         if (isNewLectureCreated) {
-            const request = new GetLecturesRequest();
-            request.setCourseid(props.course);
-            getLectures(request);
+            fetchLectures();
         }
     };
 
@@ -57,6 +59,7 @@ const LectureEditList = props => {
                     key={lecture.getId()}
                     id={lecture.getId()}
                     onPlay={() => setPlayedLecture(lecture.getId())}
+                    onSuccessfulDelete={() => fetchLectures()}
                     initialName={lecture.getName()}
                 />
             ))}
