@@ -8,6 +8,7 @@ service Lecture {
 	rpc GetAllLectures (GetAllLecturesRequest) returns (GetAllLecturesResponse);
 	rpc UpdateLectureName (UpdateLectureNameRequest) returns (UpdateLectureNameResponse);
 	rpc UpdateLectureResource (UpdateLectureResourceRequest) returns (UpdateLectureResourceResponse);
+	rpc DeleteLecture (DeleteLectureRequest) returns (DeleteLectureResponse);
 }
 
 message CreateLectureRequest {
@@ -49,4 +50,11 @@ message UpdateLectureResourceRequest {
 }
 message UpdateLectureResourceResponse {
 	string url = 1;
+}
+
+message DeleteLectureRequest {
+	uint32 id = 1;
+}
+message DeleteLectureResponse {
+	
 }

@@ -158,3 +158,52 @@ exports.updateLectureResource = async (call, callback) => {
 
     callback(null, {url});
 };
+
+exports.deleteLecture = async (call, callback) => {
+    const { id } = call.request;
+
+    const lectureRepository = getRepository(Lecture);
+    let lecture;
+    try {
+        lecture = await lectureRepository.findOne(id);
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+    if (!lecture) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'No lecture with this id');
+    }
+    const resourceId = lecture.resource.id;
+
+    let res;
+    try {
+        res = await getConnection()
+            .createQueryBuilder()
+            .delete()
+            .from(Lecture)
+            .where('id = :id', { id: id })
+            .execute();
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+    if (res.affected == 0) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'No lecture with this id');
+    }
+
+    try {
+        await getConnection()
+            .createQueryBuilder()
+            .delete()
+            .from(Resource)
+            .where('id = :id', { id: resourceId })
+            .execute();
+    } catch (error) {
+        const status = grpc.status.INTERNAL;
+        return errorHandler(callback, status, 'Database error', error);
+    }
+
+    callback(null);
+};

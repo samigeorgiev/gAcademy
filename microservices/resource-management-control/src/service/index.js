@@ -51,3 +51,13 @@ exports.updateLectureResource = (call, callback) => {
 
     service.updateLectureResource(call, callback);
 };
+
+exports.deleteLecture = (call, callback) => {
+    const { id } = call.request;
+    if (!id) {
+        const status = grpc.status.INVALID_ARGUMENT;
+        return errorHandler(callback, status, 'Blank request');
+    }
+
+    service.deleteLecture(call, callback);
+};
