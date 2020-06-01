@@ -27,6 +27,22 @@ const useResourceManagementControl = () => {
         [sendRequest]
     );
 
+    const updateLectureName = useCallback(
+        (request, token) => {
+            sendRequest('updateLectureName', request, { Authorization: token });
+        },
+        [sendRequest]
+    );
+
+    const updateLectureResource = useCallback(
+        (request, token) => {
+            sendRequest('updateLectureResource', request, {
+                Authorization: token
+            });
+        },
+        [sendRequest]
+    );
+
     const getResource = useCallback(
         (request, token) => {
             sendRequest('getLecture', request, { Authorization: token });
@@ -36,7 +52,13 @@ const useResourceManagementControl = () => {
 
     return {
         state,
-        methods: { createLecture, getLectures, getResource }
+        methods: {
+            createLecture,
+            getLectures,
+            updateLectureName,
+            updateLectureResource,
+            getResource
+        }
     };
 };
 
