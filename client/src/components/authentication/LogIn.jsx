@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import { Modal } from 'semantic-ui-react';
+import { Button, Divider, Modal } from 'semantic-ui-react';
 
 import { AuthenticationContext } from '../../context/authentication';
 
@@ -72,6 +72,13 @@ const LogIn = props => {
                     onSubmit={submitHandler}
                     error={state.error && state.error.message}
                     isLoading={state.isLoading}
+                />
+                <Divider content="OR" horizontal />
+                <Button
+                    icon="github"
+                    color="black"
+                    content="Log in with GitHub"
+                    fluid
                 />
             </Modal.Content>
         </Modal>
