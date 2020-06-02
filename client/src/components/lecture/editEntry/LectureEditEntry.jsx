@@ -1,12 +1,15 @@
 import React, { useContext, useEffect } from 'react';
 
-import { Button, Input, Item, Message } from 'semantic-ui-react';
+import { Button, Item, Message } from 'semantic-ui-react';
 
-import { AuthenticationContext } from '../../context/authentication';
+import { AuthenticationContext } from '../../../context/authentication';
 
-import useResourceManagementControl from '../../hooks/resourceManagementControl';
+import useResourceManagementControl from '../../../hooks/resourceManagementControl';
 
-import { DeleteLectureRequest } from '../../proto/resource-management-control_pb';
+import { DeleteLectureRequest } from '../../../proto/resource-management-control_pb';
+
+import NameInput from './NameInput';
+import FileInput from './FileInput';
 
 const LectureEditEntry = props => {
     const { user } = useContext(AuthenticationContext);
@@ -35,21 +38,9 @@ const LectureEditEntry = props => {
     ) : (
         <Item>
             <Item.Content>
-                <Input
-                    defaultValue={props.initialName}
-                    transparent
-                    size="huge"
-                    style={{ width: '20.75rem' }}
-                />
-                <Button icon="save" size="mini" color="green" disabled={true} />
+                <NameInput initialName={props.initialName} id={props.id} />
                 <Item.Extra>
-                    <Input type="file" size="small" />
-                    <Button
-                        icon="save"
-                        size="mini"
-                        color="green"
-                        disabled={true}
-                    />
+                    <FileInput id={props.id} />
                     <Button
                         onClick={deleteHandler}
                         loading={state.isLoading}
