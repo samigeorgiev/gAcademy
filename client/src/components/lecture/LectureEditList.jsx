@@ -16,7 +16,7 @@ import {
 } from '../../proto/resource-management-control_pb';
 
 import CreateLecture from './CreateLecture';
-import LectureEditEntry from './LectureEditEntry';
+import LectureEditEntry from './editEntry/LectureEditEntry';
 import LecturePlayer from './LecturePlayer';
 
 const LectureEditList = props => {
