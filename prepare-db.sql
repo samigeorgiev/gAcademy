@@ -15,7 +15,7 @@ create table teachers (
 create table courses (
     id serial primary key,
     title varchar not null,
-    price numeric(5, 2),
+    price numeric(10, 2),
     description text not null,
     creator_id integer references teachers(id) not null
 );

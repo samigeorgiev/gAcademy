@@ -40,21 +40,22 @@ const Search_ = props => {
     const selectHandler = (event, data) =>
         history.push('/courses/' + data.result.id);
 
+    const searchProps = {
+        loading: state.isLoading,
+        onResultSelect: selectHandler,
+        onSearchChange: changeHandler,
+        results: courses,
+        value: value,
+        placeholder: 'Search for anything'
+    };
+
     return (
         <>
             <Responsive minWidth={Responsive.onlyTablet.maxWidth}>
-                <Search
-                    loading={state.isLoading}
-                    onResultSelect={selectHandler}
-                    onSearchChange={changeHandler}
-                    results={courses}
-                    value={value}
-                    placeholder="Search for anything"
-                    size="big"
-                />
+                <Search {...searchProps} size="big" />
             </Responsive>
             <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-                <Search placeholder="Search for anything" size="tiny" />
+                <Search {...searchProps} size="tiny" />
             </Responsive>
         </>
     );
