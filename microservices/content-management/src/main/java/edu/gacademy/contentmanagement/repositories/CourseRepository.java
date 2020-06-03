@@ -37,9 +37,9 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 
     @Query("select course " +
         "from Course course " +
+        "left join course.enrollments enrollment " +
         "join fetch course.creator creator " +
         "join fetch creator.user user " +
-        "join course.enrollments enrollment " +
         "group by course, creator, user " +
         "order by count(enrollment) desc"
     )
