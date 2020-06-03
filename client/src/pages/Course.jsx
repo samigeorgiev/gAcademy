@@ -23,6 +23,8 @@ import courseImage from '../images/tmp/course.png';
 
 const Course = props => {
     const [course, setCourse] = useState(null);
+    const [lecturesCount, setLectureCount] = useState(0);
+    const [enrollmentsCount, setEnrollmentsCount] = useState(0);
     const [isBuying, setIsBuying] = useState(false);
 
     const params = useParams();
@@ -43,8 +45,10 @@ const Course = props => {
     useEffect(() => {
         if (response && !error) {
             setCourse(response.getCourse());
+            setLectureCount(response.getLecturescount());
+            setEnrollmentsCount(response.getEnrollmentscount());
         }
-    }, [response, error, setCourse]);
+    }, [response, error, setCourse, setLectureCount, setEnrollmentsCount]);
 
     let segmentContent;
     if (course) {
@@ -55,8 +59,8 @@ const Course = props => {
                         <CourseCard
                             header={course.getTitle()}
                             creator={course.getCreator()}
-                            studentsCount={2}
-                            lecturesCount={3}
+                            lecturesCount={lecturesCount}
+                            studentsCount={enrollmentsCount}
                             description={course.getDescription()}
                         >
                             <Label content={course.getPrice()} icon="euro" />

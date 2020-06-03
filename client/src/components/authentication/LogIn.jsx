@@ -75,6 +75,7 @@ const LogIn = props => {
                 />
                 <Divider content="OR" horizontal />
                 <Button
+                    disabled
                     icon="github"
                     color="black"
                     content="Log in with GitHub"
