@@ -7,7 +7,7 @@ const useUpload = () => {
 
     const sendRequest = useCallback(
         async (url, resource) => {
-            setIsLoading(false);
+            setIsLoading(true);
             setError(null);
             setResponse(null);
             const request = new FormData();
@@ -19,13 +19,14 @@ const useUpload = () => {
                 });
                 const responseData = await response.json();
 
-                setIsLoading(false);
                 if (!response.ok) {
                     throw new Error(responseData.message);
                 }
                 setResponse(responseData);
             } catch (error) {
                 setError(error);
+            } finally {
+                setIsLoading(false);
             }
         },
         [setIsLoading, setError, setResponse]
