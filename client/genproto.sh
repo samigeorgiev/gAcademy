@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Compiling proto
-mkdir -p proto
+mkdir -p src/proto
 
-cd ../../
+cd ..
 ROOT_DIR=$(pwd)
 
 for FILE in $(ls proto)
