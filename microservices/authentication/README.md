@@ -4,7 +4,6 @@
 
 - node:13
 - yarn:latest
-- docker:latest *Optional*
 
 ## Configuring
 

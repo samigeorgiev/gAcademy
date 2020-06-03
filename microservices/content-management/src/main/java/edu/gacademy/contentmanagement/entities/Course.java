@@ -3,7 +3,6 @@ package edu.gacademy.contentmanagement.entities;
 import edu.gacademy.contentmanagement.protocols.CreatedCourse;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,6 +38,9 @@ public class Course {
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
     private Set<Enrollment> enrollments;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
+    private Set<Lecture> lectures;
 
     public Course() {
     }
@@ -130,6 +132,14 @@ public class Course {
 
     public void setEnrollments(Set<Enrollment> enrolledUser) {
         this.enrollments = enrolledUser;
+    }
+
+    public Set<Lecture> getLectures() {
+        return lectures;
+    }
+
+    public void setLectures(Set<Lecture> lectures) {
+        this.lectures = lectures;
     }
 
     @Override

@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package resource_management_control;
+
+service Lecture {
+	rpc CreateLecture (CreateLectureRequest) returns (CreateLectureResponse);
+	rpc GetLecture (GetLectureRequest) returns (GetLectureResponse);
+	rpc GetAllLectures (GetAllLecturesRequest) returns (GetAllLecturesResponse);
+	rpc UpdateLectureName (UpdateLectureNameRequest) returns (UpdateLectureNameResponse);
+	rpc UpdateLectureResource (UpdateLectureResourceRequest) returns (UpdateLectureResourceResponse);
+	rpc DeleteLecture (DeleteLectureRequest) returns (DeleteLectureResponse);
+}
+
+message CreateLectureRequest {
+	uint32 courseId = 1;
+	string name = 2;
+}
+message CreateLectureResponse {
+	string url = 1;
+}
+
+message GetLectureRequest {
+	uint32 id = 1;
+}
+message GetLectureResponse {
+	string url = 1;
+}
+
+message GetAllLecturesRequest {
+	uint32 courseId = 1;
+}
+message GetAllLecturesResponse {
+	message Lecture {
+		uint32 id = 1;
+		string name = 2;
+	}
+	repeated Lecture lectures = 1;
+}
+
+message UpdateLectureNameRequest {
+	uint32 id = 1;
+	string newName = 2;
+}
+message UpdateLectureNameResponse {
+	
+}
+
+message UpdateLectureResourceRequest {
+	uint32 id = 1;
+}
+message UpdateLectureResourceResponse {
+	string url = 1;
+}
+
+message DeleteLectureRequest {
+	uint32 id = 1;
+}
+message DeleteLectureResponse {
+	
+}

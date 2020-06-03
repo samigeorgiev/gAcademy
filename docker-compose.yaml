@@ -11,8 +11,8 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_DATABASE=${DB_DATABASE}
       - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_VALID_TIME=${JWT_VALID_TIME}
+      - JWT_SECRET=${AUTHENTICATION_JWT_SECRET}
+      - JWT_VALID_TIME=${AUTHENTICATION_JWT_VALID_TIME}
     volumes:
       - ./microservices/authentication/logs:/app/logs
     networks:
@@ -37,6 +37,40 @@ services:
       - PAYPAL_CLIENT_SECRET=${PAYPAL_CLIENT_SECRET}
     networks:
       - microservices
+
+  resource-management-control:
+    build: ./microservices/resource-management-control
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
+      - JWT_SECRET=${RESOURCE_MANAGEMENT_JWT_SECRET}
+      - JWT_VALID_TIME=${RESOURCE_MANAGEMENT_JWT_VALID_TIME}
+      - RESOURCE_MANAGEMENT_URL=${RESOURCE_MANAGEMENT_URL}
+    networks:
+      - microservices
+
+  resource-management:
+    build: ./microservices/resource-management
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
+      - MAX_FILE_SIZE=${MAX_FILE_SIZE}
+      - JWT_SECRET=${RESOURCE_MANAGEMENT_JWT_SECRET}
+      - JWT_VALID_TIME=${RESOURCE_MANAGEMENT_JWT_VALID_TIME}
+    volumes:
+      - ./microservices/resource-management/resources:/app/resources
+    ports:
+      - "8100:8000"
 
   proxy:
     build: ./proxy

@@ -2,10 +2,16 @@
 
 ![Continuos Integration](https://github.com/samigeorgiev/gAcademy/workflows/Continuos%20Integration/badge.svg)
 
-An innovative system for online courses and private lessons.
+An innovative system for online courses and private lessons built with gRPC and microservice architecture.
 More info [here](https://docs.google.com/document/d/1fkdSdzDGGP2k6GoWZbLf5tiuc6XammQNQSOXZIz-FHo/edit?usp=sharing).
 
 **Live demo:** [gAcademy](http://sameca.ddns.net:3002)
+
+**Note:** In Live Demo use **gacad&#8203;@test.cc** as email and **testtest** as password in PayPal Payments
+
+## Architecture
+
+![architecture](https://github.com/samigeorgiev/gAcademy/blob/develop/architecture.png)
 
 ## Running
 
@@ -31,19 +37,23 @@ To run all microservices you should provide these environment variables:
 - DB_DATABASE
 - DB_SYNCHRONIZE
 - NODE_ENV
-- JWT_SECRET
-- JWT_VALID_TIME
+- AUTHENTICATION_JWT_SECRET
+- AUTHENTICATION_JWT_VALID_TIME
 - PAYPAL_MODE
 - PAYPAL_CLIENT_ID
 - PAYPAL_CLIENT_SECRET
+- RESOURCE_MANAGEMENT_URL
+- MAX_FILE_SIZE
+- RESOURCE_MANAGEMENT_JWT_SECRET
+- RESOURCE_MANAGEMENT_JWT_VALID_TIME
 
 The easiest way is with script:
 
 `$ source set-env.sh`
 
-**Note:**: Fastest way for preparing the environment(**except paypal integration**) is running `run-db-on-docker.sh` which creates the database with necessary tables and using `set-env.sh.example` for environments variables.
+**Note:**: Fastest way for preparing the environment(**except paypal integration**) is running `run-db-on-docker.sh` which creates the database with necessary tables and using `set-env.sh.example` for environment variables.
 
-After that you should compile all protocols files:
+After that prepare all protocol files:
 
 `$ ./genproto.sh`
 
@@ -54,7 +64,7 @@ Run all containers as well as the proxy server:
 #### SPA client
 
 Before run it create `.env` with proper extension for node environment and add variables for services url in following format: `REACT_APP_${microservice_name}`
-If you run all of the microservices and the client on the same host use `.env.example`.
+If the microservices and the client are on the same host use `.env.example`.
 
 In the `client/` folder run:
 

@@ -1,53 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 
-import { Dropdown, Loader } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import { Dropdown, Loader } from 'semantic-ui-react';
 
-import useCourseManagement from '../../../hooks/courseManagement';
-
-import { GetCategoriesRequest } from '../../../proto/content-management_pb';
+import { CategoriesContext } from '../../../context/categories';
 
 const Explore = props => {
-    const [categories, setCategories] = useState([]);
-
     const history = useHistory();
 
-    const { methods, state } = useCourseManagement();
+    const { categories } = useContext(CategoriesContext);
 
-    const { getCategories } = methods;
-    useEffect(() => {
-        getCategories(new GetCategoriesRequest());
-    }, [getCategories]);
-
-    const { response, error } = state;
-    useEffect(() => {
-        if (response && !error) {
-            setCategories(response.getCategoriesList());
-        }
-    }, [response, error]);
+    let content;
+    if (categories.length) {
+        content = categories.map(category => (
+            <Dropdown.Item
+                key={category.getId()}
+                onClick={() =>
+                    history.push('/courses?category=' + category.getId())
+                }
+            >
+                {category.getName()}
+            </Dropdown.Item>
+        ));
+    } else {
+        content = (
+            <Dropdown.Item>
+                <Loader active />
+            </Dropdown.Item>
+        );
+    }
 
     return (
-        <Dropdown item text="Explore">
-            <Dropdown.Menu>
-                {categories.length ? (
-                    categories.map(category => (
-                        <Dropdown.Item
-                            key={category.getId()}
-                            onClick={() =>
-                                history.push(
-                                    '/courses?category=' + category.getId()
-                                )
-                            }
-                        >
-                            {category.getName()}
-                        </Dropdown.Item>
-                    ))
-                ) : (
-                    <Dropdown.Item>
-                        <Loader active={state.isLoading} />
-                    </Dropdown.Item>
-                )}
-            </Dropdown.Menu>
+        <Dropdown text="Explore" item>
+            <Dropdown.Menu content={content} />
         </Dropdown>
     );
 };

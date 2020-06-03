@@ -1,4 +1,4 @@
-FROM maven:3-jdk-13
+FROM maven:3-jdk-14
 
 WORKDIR /app
 

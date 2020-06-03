@@ -1,25 +1,24 @@
 import React, { useContext, useEffect } from 'react';
 
+import { Button, Divider, Modal } from 'semantic-ui-react';
 import validator from 'validator';
-import { Modal } from 'semantic-ui-react';
-
-import useAuthentication from '../../hooks/authentication';
 
 import { AuthenticationContext } from '../../context/authentication';
 
-import Form from './Form';
+import useAuthentication from '../../hooks/authentication';
 
 import { SignUpRequest } from '../../proto/authentication_pb';
+
+import Form from '../UI/Form';
 
 const PASSWORD_LENGTH = { min: 8, max: 64 };
 
 const SignUp = props => {
     const { methods, state } = useAuthentication();
-    const { signUp: grpcSignUp } = methods;
-    const { isLoading, error, response } = state;
 
     const { logIn } = useContext(AuthenticationContext);
 
+    const { response, error } = state;
     const { onClose } = props;
     useEffect(() => {
         if (response && !error.message) {
@@ -28,47 +27,63 @@ const SignUp = props => {
         }
     }, [response, error, logIn, onClose]);
 
-    const inputs = {
-        firstName: {
-            type: 'text',
-            placeholder: 'First name',
-            icon: 'user',
-            validate: value => validator.isAlpha(value),
-            validationError: 'Invalid first name'
-        },
-        lastName: {
-            type: 'text',
-            placeholder: 'Last name',
-            icon: 'user',
-            validate: value => validator.isAlpha(value),
-            validationError: 'Invalid last name'
-        },
-        email: {
-            type: 'email',
-            placeholder: 'Email',
-            icon: 'mail',
-            validate: value =>
-                validator.isEmail(validator.normalizeEmail(value)),
-            validationError: 'Invalid email'
-        },
-        password: {
-            type: 'password',
-            placeholder: 'Password',
-            icon: 'lock',
-            validate: value => validator.isLength(value, PASSWORD_LENGTH),
-            validationError: `Password should be between \
-                ${PASSWORD_LENGTH.min} and ${PASSWORD_LENGTH.max}`
-        }
-    };
-
-    const submitHandler = (inputsValues, event) => {
-        event.preventDefault();
+    const { signUp } = methods;
+    const submitHandler = inputsValues => {
         const request = new SignUpRequest();
         request.setFirstname(inputsValues.firstName);
         request.setLastname(inputsValues.lastName);
         request.setEmail(inputsValues.email);
         request.setPassword(inputsValues.password);
-        grpcSignUp(request);
+        signUp(request);
+    };
+
+    const inputs = {
+        firstName: {
+            type: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'First name',
+                icon: 'user',
+                iconPosition: 'left'
+            },
+            validate: value => validator.isAlpha(value),
+            validationError: 'Invalid first name'
+        },
+        lastName: {
+            type: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'Last name',
+                icon: 'user',
+                iconPosition: 'left'
+            },
+            validate: value => validator.isAlpha(value),
+            validationError: 'Invalid last name'
+        },
+        email: {
+            type: 'input',
+            elementConfig: {
+                type: 'email',
+                placeholder: 'Email',
+                icon: 'mail',
+                iconPosition: 'left'
+            },
+            validate: value =>
+                validator.isEmail(validator.normalizeEmail(value)),
+            validationError: 'Invalid email'
+        },
+        password: {
+            type: 'input',
+            elementConfig: {
+                type: 'password',
+                placeholder: 'Password',
+                icon: 'lock',
+                iconPosition: 'left'
+            },
+            validate: value => validator.isLength(value, PASSWORD_LENGTH),
+            validationError: `Password should be between \
+                ${PASSWORD_LENGTH.min} and ${PASSWORD_LENGTH.max}`
+        }
     };
 
     return (
@@ -84,9 +99,16 @@ const SignUp = props => {
                 <Form
                     inputs={inputs}
                     onSubmit={submitHandler}
-                    error={error && error.message}
-                    isLoading={isLoading}
-                    onClose={props.onClose}
+                    error={state.error && state.error.message}
+                    isLoading={state.isLoading}
+                />
+                <Divider content="OR" horizontal />
+                <Button
+                    disabled
+                    icon="github"
+                    color="black"
+                    content="Log in with GitHub"
+                    fluid
                 />
             </Modal.Content>
         </Modal>

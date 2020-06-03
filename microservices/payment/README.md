@@ -8,6 +8,7 @@
 
 You should provide these environments variables:
 
+- PORT
 - DB_URL
 - PAYPAL_MODE
 - PAYPAL_CLIENT_ID

@@ -15,7 +15,7 @@ create table teachers (
 create table courses (
     id serial primary key,
     title varchar not null,
-    price numeric(5, 2),
+    price numeric(10, 2),
     description text not null,
     creator_id integer references teachers(id) not null
 );
@@ -41,6 +41,18 @@ create table enrollments (
     course_id integer references courses(id) not null,
     user_id integer references users(id) not null,
     payment_id integer references payments(id)
+);
+
+create table resources (
+    id serial primary key,
+    path varchar
+);
+
+create table lectures (
+    id serial primary key,
+    name varchar not null,
+    course_id integer references courses(id) not null,
+    resource_id integer references resources(id) not null
 );
 
 insert into categories

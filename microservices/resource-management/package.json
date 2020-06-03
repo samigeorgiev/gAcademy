@@ -1,24 +1,32 @@
 {
   "name": "resource-management",
   "version": "1.0.0",
-  "description": "Resource managment microservice in gAcademy app",
-  "main": "index.js",
-  "license": "MIT",
+  "description": "Resource management microservice",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development --exec 'yarn lint && node'",
-    "dev-force": "nodemon -r dotenv/config index.js dotenv_config_path=.env.development",
-    "lint": "eslint './**/*.js'"
+    "start": "node src/index.js",
+    "test": "env NODE_ENV=test mocha",
+    "start-local": "node -r dotenv/config src/index.js dotenv_config_path=.env.production",
+    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.development",
+    "lint": "eslint 'src/**/*.js'"
   },
+  "author": "Samuil Georgiev",
+  "license": "MIT",
   "dependencies": {
+    "@grpc/proto-loader": "^0.5.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
-    "cors": "^2.8.5",
-    "morgan": "^1.10.0"
+    "grpc": "^1.24.2",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.2.1",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^7.1.0",
     "eslint-config-google": "^0.14.0",
-    "nodemon": "^2.0.2"
+    "mocha": "^7.2.0",
+    "nodemon": "^2.0.4"
   }
 }

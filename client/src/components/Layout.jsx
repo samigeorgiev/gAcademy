@@ -44,10 +44,8 @@ const Layout = props => {
                     showBecomeTeacher={showBecomeTeacher}
                 />
                 <main>
-                    <>
-                        {shownForm && forms[shownForm]}
-                        {props.children}
-                    </>
+                    {shownForm && forms[shownForm]}
+                    {props.children}
                 </main>
             </Sidebar.Pusher>
         </Sidebar.Pushable>

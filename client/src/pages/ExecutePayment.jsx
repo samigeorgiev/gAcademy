@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 
-import { Loader } from 'semantic-ui-react';
 import { useLocation, useHistory } from 'react-router-dom';
+import { Loader } from 'semantic-ui-react';
 
 import usePayment from '../hooks/payment';
 
 import { ExecutePaymentRequest } from '../proto/payment_pb';
 
 const ExecutePayment = props => {
-    const { state, methods } = usePayment();
-
-    const location = useLocation();
     const history = useHistory();
+    const location = useLocation();
+
+    const { state, methods } = usePayment();
 
     const { executePayment } = methods;
     useEffect(() => {

@@ -1,9 +1,9 @@
-# Account operations microservice
+# Content management microservice
 
 ## Requirements
 
 - maven:3.6
-- jdk:13
+- jdk:14
 
 ## Recommended IDE
 
@@ -13,10 +13,11 @@ IntelliJ Ultimate is recommended IDE for developing this microservice.
 
 You should provide these environment variables:
 
+- PORT
 - DB_URL
 - DB_USERNAME
 - DB_PASSWORD
-- AUTH_URL
+- AUTHENTICATION_URL
 
 Recommended way for doing it is adding them in IntelliJ running configuration or passing them to docker image
 

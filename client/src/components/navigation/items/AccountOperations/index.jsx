@@ -5,18 +5,13 @@ import { Button, Menu } from 'semantic-ui-react';
 import { AuthenticationContext } from '../../../../context/authentication';
 
 import Account from './Account';
-import Calendar from './Calendar';
 import Courses from './Courses';
 
 const AccountOperations = props => {
     const { user } = useContext(AuthenticationContext);
-    const isLoggedIn = user !== null;
 
-    return isLoggedIn ? (
+    return user ? (
         <>
-            <Menu.Item>
-                <Calendar />
-            </Menu.Item>
             <Menu.Item>
                 <Courses />
             </Menu.Item>

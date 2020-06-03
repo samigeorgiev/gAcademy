@@ -34,10 +34,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: ./genproto.sh
-        working-directory: ${{env.working-directory}}/src/main
+        working-directory: ${{env.working-directory}}
       - uses: actions/setup-java@v1
         with:
-          java-version: 13
+          java-version: 14
       - run: mvn -B package
         working-directory: ${{env.working-directory}}
 
@@ -61,6 +61,38 @@ jobs:
       - run: python test.py
         working-directory: ${{env.working-directory}}
       - run: flake8 --exclude=proto,__pycache__,env
+        working-directory: ${{env.working-directory}}
+
+  resource-management-control:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./microservices/resource-management-control
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 13.x
+      - run: yarn install --frozen-lockfile
+        working-directory: ${{env.working-directory}}
+      - run: yarn test
+        working-directory: ${{env.working-directory}}
+      - run: yarn lint
+        working-directory: ${{env.working-directory}}
+
+  resource-management:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./microservices/resource-management
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 13.x
+      - run: yarn install --frozen-lockfile
+        working-directory: ${{env.working-directory}}
+      - run: yarn test
+        working-directory: ${{env.working-directory}}
+      - run: yarn lint
         working-directory: ${{env.working-directory}}
 
   client:
