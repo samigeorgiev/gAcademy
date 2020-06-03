@@ -49,7 +49,9 @@ message GetCourseRequest {
 }
 
 message GetCourseResponse {
-	Course course = 1;
+    Course course = 1;
+    uint32 lecturesCount = 2;
+    uint32 enrollmentsCount = 3;
 }
 
 message CreateCourseRequest {
