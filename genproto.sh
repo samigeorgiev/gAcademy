@@ -1,21 +1,17 @@
 #!/bin/bash
 
-cd microservices/authentication/src
+cd microservices/authentication
 ./genproto.sh
-cd ../../..
+cd ../..
 
-cd microservices/content-management/src/main
+cd microservices/content-management
 ./genproto.sh
-cd ../../../..
+cd ../..
 
 cd microservices/payment
 ./genproto.sh
 cd ../..
 
-cd microservices/resource-management-control/src
+cd microservices/resource-management-control
 ./genproto.sh
-cd ../../..
-
-cd microservices/resource-management/src
-./genproto.sh
-cd ../../..
+cd ../..

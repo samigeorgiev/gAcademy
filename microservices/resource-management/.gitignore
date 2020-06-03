@@ -1,9 +1,6 @@
 # IDE folders
 /.vscode
 
-# compiled proto
-/src/proto
-
 # dependencies
 /node_modules
 
