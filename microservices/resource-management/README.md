@@ -4,7 +4,6 @@
 
 - node:13
 - yarn:latest
-- docker:latest *Optional*
 
 ## Configuring
 
@@ -19,7 +18,8 @@ You should provide `.env` file with proper extension for Node environment with t
 - DB_DATABASE
 - DB_SYNCHRONIZE
 - MAX_FILE_SIZE
-- RESOURCE_MANAGEMENT_CONTROL_URL
+- JWT_SECRET
+- JWT_VALID_TIME
 
 ## Running
 
