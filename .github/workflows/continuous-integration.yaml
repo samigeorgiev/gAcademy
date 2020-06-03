@@ -33,7 +33,7 @@ jobs:
       working-directory: ./microservices/content-management
     steps:
       - uses: actions/checkout@v2
-      - run: genproto.sh
+      - run: ./genproto.sh
         working-directory: ${{env.working-directory}}
       - uses: actions/setup-java@v1
         with:
@@ -54,9 +54,9 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: pip install -r requirements-lock.txt
         working-directory: ${{env.working-directory}}
-      - run: genproto.sh
+      - run: ./genproto.sh
         working-directory: ${{env.working-directory}}
-      - run: compileproto.sh
+      - run: ./compileproto.sh
         working-directory: ${{env.working-directory}}
       - run: python test.py
         working-directory: ${{env.working-directory}}
