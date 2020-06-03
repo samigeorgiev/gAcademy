@@ -11,7 +11,7 @@ More info [here](https://docs.google.com/document/d/1fkdSdzDGGP2k6GoWZbLf5tiuc6X
 
 ## Architecture
 
-![architecture](https://github.com/samigeorgiev/gAcademy/blob/develop/architecture.png)
+![architecture](https://github.com/samigeorgiev/gAcademy/blob/master/architecture.png)
 
 ## Running
 
