@@ -2,7 +2,7 @@
 
 ![Continuos Integration](https://github.com/samigeorgiev/gAcademy/workflows/Continuos%20Integration/badge.svg)
 
-An innovative system for online courses and private lessons.
+An innovative system for online courses and private lessons built with gRPC and microservice architecture.
 More info [here](https://docs.google.com/document/d/1fkdSdzDGGP2k6GoWZbLf5tiuc6XammQNQSOXZIz-FHo/edit?usp=sharing).
 
 **Live demo:** [gAcademy](http://sameca.ddns.net:3002)
@@ -49,7 +49,7 @@ The easiest way is with script:
 
 **Note:**: Fastest way for preparing the environment(**except paypal integration**) is running `run-db-on-docker.sh` which creates the database with necessary tables and using `set-env.sh.example` for environment variables.
 
-After that compile all protocol files:
+After that prepare all protocol files:
 
 `$ ./genproto.sh`
 
