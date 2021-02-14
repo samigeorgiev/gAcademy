@@ -64,7 +64,7 @@ Run all containers as well as the proxy server:
 #### SPA client
 
 Before run it create `.env` with proper extension for node environment and add variables for services url in following format: `REACT_APP_${microservice_name}`
-If the microservices and the client are on the same host use `.env.example`.
+For local testing use `.env.example`.
 
 In the `client/` folder run:
 
